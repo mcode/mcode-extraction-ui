@@ -1,4 +1,4 @@
-# mcode-extraction-ui
+# mCODE Extraction UI
 
 An Electron app for configuring and running the various mCODE Extraction Clients. This project is based on [this GitHub template](https://github.com/mgramigna/electron-cra-template) for using [Electron](https://www.electronjs.org/) with [Create React App](https://create-react-app.dev/) (CRA). This template uses a monorepo-esque approach, with one `package.json` for the electron app at the root, and another for the CRA code in the `react-app` directory.
 
