@@ -1,0 +1,72 @@
+{
+  "name": "electron-cra-template",
+  "productName": "electron-cra-template",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "electron/electron.js",
+  "scripts": {
+    "build": "npm run build:frontend && npm run make",
+    "build:frontend": "cd ./react-app && PUBLIC_URL=./ npm run build",
+    "lint": "eslint \"**/*.js\"",
+    "lint:fix": "eslint \"./**/*.js\" --fix",
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "prettier": "prettier --check \"**/*.js\"",
+    "prettier:fix": "prettier --write \"**/*.js\"",
+    "publish": "electron-forge publish",
+    "start": "concurrently -k \"npm:start:frontend\" \"npm:start:electron\"",
+    "start:electron": "wait-on tcp:3000 && electron-forge start",
+    "start:frontend": "cd ./react-app && BROWSER=none npm start"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Your Name Here",
+    "email": "youremail@example.com"
+  },
+  "license": "Apache-2.0",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_cra_template"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "concurrently": "^6.0.2",
+    "electron": "^12.0.6",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "^2.2.1",
+    "wait-on": "^5.3.0"
+  }
+}
