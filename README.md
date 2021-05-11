@@ -1,6 +1,6 @@
-# electron-cra-template
+# mcode-extraction-ui
 
-A GitHub template for using [Electron](https://www.electronjs.org/) with [Create React App](https://create-react-app.dev/) (CRA). This template uses a monorepo-esque approach, with one `package.json` for the electron app at the root, and another for the CRA code in the `react-app` directory.
+An Electron app for configuring and running the various mCODE Extraction Clients. This project is based on [this GitHub template](https://github.com/mgramigna/electron-cra-template) for using [Electron](https://www.electronjs.org/) with [Create React App](https://create-react-app.dev/) (CRA). This template uses a monorepo-esque approach, with one `package.json` for the electron app at the root, and another for the CRA code in the `react-app` directory.
 
 ## Getting Started
 
@@ -42,4 +42,4 @@ window.api.myApiFunction();
 
 ## Building for Production
 
-This template comes pre-loaded with a script `npm run build` that will package both the React app into static assets, and the Electron app into a platform-distributable binary
+This project comes pre-loaded with a script `npm run build` that will package both the React app into static assets, and the Electron app into a platform-distributable binary

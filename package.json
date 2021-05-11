@@ -1,8 +1,8 @@
 {
-  "name": "electron-cra-template",
-  "productName": "electron-cra-template",
+  "name": "mcode-extraction-ui",
+  "productName": "mcode-extraction-ui",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "An Electron-based desktop app for performing mCODE extraction.",
   "main": "electron/electron.js",
   "scripts": {
     "build": "npm run build:frontend && npm run make",
@@ -19,10 +19,9 @@
     "start:frontend": "cd ./react-app && BROWSER=none npm start"
   },
   "keywords": [],
-  "author": {
-    "name": "Your Name Here",
-    "email": "youremail@example.com"
-  },
+  "contributors": [
+    "Seneca Anderson <Seneca_Anderson@student.uml.edu>"
+  ],
   "license": "Apache-2.0",
   "config": {
     "forge": {
