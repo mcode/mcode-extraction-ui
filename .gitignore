@@ -90,3 +90,6 @@ out/
 
 # CRA build
 react-app/build
+
+# VS Code
+.vscode/
