@@ -14,7 +14,7 @@
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
     "publish": "electron-forge publish",
-    "start": "concurrently -k \"npm:start:frontend\" \"npm:start:electron\"",
+    "start": "npm-run-all -p start:frontend start:electron",
     "start:electron": "wait-on tcp:3000 && electron-forge start",
     "start:frontend": "cd ./react-app && BROWSER=none npm start"
   },
@@ -59,12 +59,12 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "concurrently": "^6.0.2",
     "electron": "^12.0.6",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "wait-on": "^5.3.0"
   }

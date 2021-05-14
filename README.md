@@ -9,6 +9,10 @@ An Electron app for configuring and running the various mCODE Extraction Clients
 ```
 npm install
 ```
+If using Windows Subsystem for Linux:
+```
+npm install --platform=win32
+```
 2. Install React dependencies:
 ```
 cd react-app
