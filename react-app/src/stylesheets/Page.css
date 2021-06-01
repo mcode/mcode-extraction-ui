@@ -1,0 +1,32 @@
+/* .page {
+    background-color: white;
+    background-size: cover;
+    height: 100%;
+} */
+
+.page-title {
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 80px;
+    margin-top: 100px;
+}
+
+.nav-button {
+    color: white;
+    border-color: indigo;
+    background-color: indigo;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 16px;
+        
+}
+
+.nav-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
