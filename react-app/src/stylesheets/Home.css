@@ -1,0 +1,25 @@
+.button-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-menu-button {
+    color: white;
+    background-color: indigo;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 16px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 100px;
+    padding-left: 100px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.page-title {
+    color: indigo;
+    margin: 50px;
+    text-align: center;
+}
