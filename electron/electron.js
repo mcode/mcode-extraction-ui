@@ -56,9 +56,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
-  // run extractor - replace 'extractorCall()' with the actual call
-  // should be similar to node_modules/mcode-extraction-framework/src/cli/cli.js
-  console.log("inside extract handler");
-  const result = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
-  return result;
+  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries).then((value) =>  value);
+  return extractedData;
 })

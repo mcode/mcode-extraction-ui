@@ -4,17 +4,9 @@ const { ipcRenderer, contextBridge } = require('electron');
 contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
 
 contextBridge.exposeInMainWorld('api', {
-    hello: () => {
-        // do things!
-        // a function here will be used to call the function in electron.js, which will call the extraction framework
-        console.log('Hello from preload.js!');
-        return true;
-    },
-    extract: (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
+    extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
         //  call function in preload.js
-        ipcRenderer.invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries).then((result) => {
-            // do something with result
-            console.log("extract invoke complete");
-        })
+        const extractedData = await ipcRenderer.invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries).then((value) =>  value);;
+        return extractedData;
     }
 });

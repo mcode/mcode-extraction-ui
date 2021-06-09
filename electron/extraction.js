@@ -7,23 +7,28 @@ const { mcodeApp } = require('../node_modules/mcode-extraction-framework/src/cli
 
 async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) {
     try {
+        let defaultFromDate = fromDate;
+        let defaultToDate = toDate;
+        let defaultDebug = debug;
         if (fromDate.length < 1) {
-            fromDate = undefined;
+            defaultFromDate = undefined;
         }
         if (toDate.length < 1) {
-            toDate = undefined;
+            defaultToDate = undefined;
         }
         if(!debug) {
-            debug = undefined;
+            defaultDebug = undefined;
         }
-        debug = true; // DELETE ME
-        await mcodeApp(MCODEClient, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
+        const extractedData = await mcodeApp(MCODEClient, defaultFromDate, defaultToDate, configFilepath, runLogFilepath, defaultDebug, allEntries).then((value) =>  value);
+        return extractedData;
+
     } catch (e) {
         if (debug) logger.level = 'debug';
         logger.error(e.message);
         logger.debug(e.stack);
         process.exit(1);
     }
+    return undefined;
 }
 
 module.exports = runExtraction;

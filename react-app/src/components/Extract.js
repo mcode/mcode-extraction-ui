@@ -34,10 +34,10 @@ class Extract extends React.Component {
 
   onFilterEndChange = () => this.setState({ filterEnd: !this.state.filterEnd });
 
-  onSubmit = () => {
-    // placeholder to avoid errors -- the filled-in version of this function in extractor-api uses "this"
-    console.log(e);
-        console.log(this.state.configPath);
+    onSubmit() {
+        this.setState({
+            submitted: !this.state.submitted
+        })
 
         // allEntries parameter is true if it's not filtered by date, false if it is
         const filter = !(this.state.filterStart || this.state.filterEnd);
@@ -46,13 +46,11 @@ class Extract extends React.Component {
             this.state.configPath, 
             this.state.runLogPath, 
             this.state.includeDebug, 
-            filter);
-        
-        window.api.hello();
-        this.setState({
-            submitted: !this.state.submitted
-        });
-  };
+            filter).then((value) => {
+                // do things with result
+                console.log(value);
+            });
+    }
 
   render() {
     return (
