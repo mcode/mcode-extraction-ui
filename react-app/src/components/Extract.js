@@ -34,7 +34,7 @@ class Extract extends React.Component {
 
   onFilterEndChange = () => this.setState({ filterEnd: !this.state.filterEnd });
 
-  onSubmit() {
+  onSubmit = () => {
     this.setState({
       submitted: !this.state.submitted,
     });
