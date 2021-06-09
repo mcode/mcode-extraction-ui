@@ -54,7 +54,7 @@ class Extract extends React.Component {
         // do things with result
         console.log(value);
       });
-  }
+  };
 
   render() {
     return (
