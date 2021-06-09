@@ -4,9 +4,11 @@ const { ipcRenderer, contextBridge } = require('electron');
 contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
 
 contextBridge.exposeInMainWorld('api', {
-    extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
-        //  call function in preload.js
-        const extractedData = await ipcRenderer.invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries).then((value) =>  value);;
-        return extractedData;
-    }
+  extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
+    //  call function in preload.js
+    const extractedData = await ipcRenderer
+      .invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries)
+      .then((value) => value);
+    return extractedData;
+  },
 });
