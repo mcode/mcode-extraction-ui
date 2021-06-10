@@ -1,8 +1,4 @@
-// The code below is a copy of cli.js from mcode-extraction-framework
-
-const { MCODEClient } = require('mcode-extraction-framework/src/client/MCODEClient');
-const logger = require('mcode-extraction-framework/src/helpers/logger');
-const { mcodeApp } = require('mcode-extraction-framework/src/cli/app');
+const { logger, mcodeApp, MCODEClient } = require('mcode-extraction-framework');
 
 async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) {
   try {
