@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import PatientData from './PatientData';
-import Result from './Result';
+import ResultTable from './ResultTable';
 
 import '../stylesheets/Home.css';
 
@@ -28,11 +28,7 @@ function ResultPage(props) {
       {patientID < 0 && (
         <div>
           <h1 className="page-title">Results</h1>
-          <div className="result-table">
-            {props.extractedData.forEach((bundle, i) => (
-              <Result bundle={bundle} id={i} />
-            ))}
-          </div>
+          <ResultTable extractedData={props.extractedData} />
           <div className="nav-button-container">
             <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitResultPage}>
               Exit
