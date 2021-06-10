@@ -9,7 +9,7 @@ class Extract extends React.Component {
   constructor(props) {
     super(props);
 
-    const defaultPathToConfig = path.join('test', 'config', 'csv.config.json');
+    const defaultPathToConfig = path.join('sample-extraction-data', 'config', 'csv.config.json');
     const defaultPathToRunLogs = path.join('logs', 'run-logs.json');
     // FIXME - get rid of default config option
     this.state = {

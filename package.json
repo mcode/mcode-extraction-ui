@@ -51,10 +51,8 @@
     }
   },
   "dependencies": {
-    "bootstrap": "^5.0.1",
     "electron-squirrel-startup": "^1.0.0",
-    "mcode-extraction-framework": "github:mcode/mcode-extraction-framework#develop",
-    "react-bootstrap": "^1.6.0"
+    "mcode-extraction-framework": "github:mcode/mcode-extraction-framework#develop"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",

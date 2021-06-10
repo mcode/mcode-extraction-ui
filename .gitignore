@@ -93,3 +93,6 @@ react-app/build
 
 # VS Code
 .vscode/
+
+# sample extraction data
+/sample-extraction-data

@@ -56,8 +56,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
-  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries).then(
-    (value) => value,
-  );
+  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
   return extractedData;
 });
