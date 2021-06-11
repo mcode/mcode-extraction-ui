@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const path = require('path');
+const runExtraction = require('./extraction');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (squirrel) {
@@ -53,3 +54,8 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
+  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
+  return extractedData;
+});
