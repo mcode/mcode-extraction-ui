@@ -28,8 +28,8 @@ async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, d
     if (debug) logger.level = 'debug';
     logger.error(e.message);
     logger.debug(e.stack);
+    return undefined;
   }
-  return undefined;
 }
 
 module.exports = runExtraction;
