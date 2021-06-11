@@ -1,56 +1,40 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap';
 import PatientData from './PatientData';
-import ResultTable from './ResultTable';
+import ResultHeader from './ResultHeader';
+import ResultSidebar from './ResultSidebar';
 
 import '../stylesheets/Home.css';
 
 function ResultPage(props) {
   const [patientID, setPatientID] = useState(-1);
-  const history = useHistory();
-
-  function onExitResultPage() {
-    // reset data values and return to home page
-    history.push('/extract');
-  }
-
-  function onExitPatientData() {
-    setPatientID(-1);
-  }
-
-  function onSave() {
-    // Save the results permanently somehow
-  }
 
   return (
-    <div>
-      {patientID < 0 && (
-        <div>
-          <h1 className="page-title">Results</h1>
-          <ResultTable extractedData={props.extractedData} />
-          <div className="nav-button-container">
-            <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitResultPage}>
-              Exit
-            </Button>
-            <Button className="nav-button" type="submit" variant="nav" id="nav-button" onClick={onSave}>
-              Save
-            </Button>
-          </div>
-        </div>
-      )}
-      {patientID >= 0 && (
-        <div>
-          <h1 className="page-title">Patient {this.state.patientID}</h1>
-          <PatientData bundle={props.extractedData[patientID]} id={patientID} />
-          <div className="nav-button-container">
-            <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitPatientData}>
-              Back
-            </Button>
-          </div>
-        </div>
-      )}
-    </div>
+    <Container fluid>
+      <Row>
+        <Col>
+          <ResultHeader />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} />
+        </Col>
+        <Col>
+          {patientID < 0 && (
+            <div>
+              <p>Select a patient to view their information.</p>
+            </div>
+          )}
+          {patientID >= 0 && (
+            <div>
+              <h1 className="page-title">Patient {this.state.patientID}</h1>
+              <PatientData bundle={props.extractedData[patientID]} id={patientID} />
+            </div>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
