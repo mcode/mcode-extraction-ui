@@ -5,8 +5,6 @@ import '../stylesheets/Home.css';
 
 function Result(props) {
   function onSelectPatient(e) {
-    console.log(e);
-    console.log(e.target.id);
     props.setPatientID(parseInt(e.target.id, 10));
   }
 

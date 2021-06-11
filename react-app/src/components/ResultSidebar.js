@@ -1,7 +1,10 @@
 import React from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { Drawer } from 'react-bootstrap-drawer';
 import Result from './Result';
+
+import 'react-bootstrap-drawer/lib/style.css';
 
 function ResultSidebar(props) {
   const history = useHistory();
@@ -14,11 +17,11 @@ function ResultSidebar(props) {
     // Save the results permanently somehow
   }
   const list = props.extractedData.map((bundle, i) => (
-    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} />
+    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} />
   ));
 
   return (
-    <div>
+    <Drawer className="d-flex flex-column">
       <ListGroup>{list}</ListGroup>
       <div className="nav-button-container">
         <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitResultPage}>
@@ -28,7 +31,7 @@ function ResultSidebar(props) {
           Save
         </Button>
       </div>
-    </div>
+    </Drawer>
   );
 }
 

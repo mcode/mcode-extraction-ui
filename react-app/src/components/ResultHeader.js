@@ -3,7 +3,7 @@ import { Container, Navbar } from 'react-bootstrap';
 
 function ResultHeader() {
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar fixed="top" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand>Results</Navbar.Brand>
       </Container>

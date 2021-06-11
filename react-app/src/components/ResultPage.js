@@ -4,8 +4,6 @@ import PatientData from './PatientData';
 import ResultHeader from './ResultHeader';
 import ResultSidebar from './ResultSidebar';
 
-import '../stylesheets/Home.css';
-
 function ResultPage(props) {
   const [patientID, setPatientID] = useState(-1);
 
