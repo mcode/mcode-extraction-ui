@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Result from './Result';
 
@@ -13,11 +13,13 @@ function ResultSidebar(props) {
   function onSave() {
     // Save the results permanently somehow
   }
-  const list = props.extractedData.map((bundle, i) => <Result bundle={bundle} id={i} />);
+  const list = props.extractedData.map((bundle, i) => (
+    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} />
+  ));
 
   return (
     <div>
-      <div className="result-table">{list}</div>
+      <ListGroup>{list}</ListGroup>
       <div className="nav-button-container">
         <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitResultPage}>
           Exit

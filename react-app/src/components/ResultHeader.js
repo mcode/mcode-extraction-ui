@@ -1,10 +1,13 @@
 import React from 'react';
+import { Container, Navbar } from 'react-bootstrap';
 
 function ResultHeader() {
   return (
-    <div>
-      <h1 className="page-title">Results Header Will Go Here</h1>
-    </div>
+    <Navbar bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand>Results</Navbar.Brand>
+      </Container>
+    </Navbar>
   );
 }
 

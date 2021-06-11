@@ -1,15 +1,22 @@
 import React from 'react';
+import ReactJson from 'react-json-view';
 
-import '../stylesheets/Home.css';
-
-class PatientData extends React.Component {
-  render() {
-    return (
-      <div>
-        <p>This where the JSON schema for patient {this.props.id} will be displayed</p>
-      </div>
-    );
-  }
+function PatientData(props) {
+  return (
+    <div>
+      {props.id < 0 && (
+        <div>
+          <p>Select a patient to view their information.</p>
+        </div>
+      )}
+      {props.id >= 0 && (
+        <div>
+          <h3 className="page-subtitle">Patient {props.id}</h3>
+          <ReactJson src={props.patientJson} />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default PatientData;

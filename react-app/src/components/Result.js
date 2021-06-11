@@ -1,12 +1,19 @@
 import React from 'react';
+import { ListGroup } from 'react-bootstrap';
 
 import '../stylesheets/Home.css';
 
 function Result(props) {
+  function onSelectPatient(e) {
+    console.log(e);
+    console.log(e.target.id);
+    props.setPatientID(parseInt(e.target.id, 10));
+  }
+
   return (
-    <div>
-      <p>This is result item {props.id} listed in the table on the ResultPage</p>
-    </div>
+    <ListGroup.Item action onClick={onSelectPatient} eventKey={props.id} id={props.id}>
+      Patient {props.id}
+    </ListGroup.Item>
   );
 }
 

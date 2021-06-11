@@ -17,21 +17,11 @@ function ResultPage(props) {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col xxl={3} xl={3} lg={3} md={3} sm={3} xs={3}>
           <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} />
         </Col>
         <Col>
-          {patientID < 0 && (
-            <div>
-              <p>Select a patient to view their information.</p>
-            </div>
-          )}
-          {patientID >= 0 && (
-            <div>
-              <h1 className="page-title">Patient {this.state.patientID}</h1>
-              <PatientData bundle={props.extractedData[patientID]} id={patientID} />
-            </div>
-          )}
+          <PatientData patientJson={props.extractedData[patientID]} id={patientID} />
         </Col>
       </Row>
     </Container>
