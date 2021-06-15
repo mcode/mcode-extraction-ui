@@ -5,9 +5,9 @@ import Home from './components/Home';
 import Extract from './components/Extract';
 import ResultPage from './components/ResultPage';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import './stylesheets/Page.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './stylesheets/custom.scss';
+import './stylesheets/Page.scss';
 
 function App() {
   const [extractedData, setExtractedData] = useState(['test', 'test', 'test']);

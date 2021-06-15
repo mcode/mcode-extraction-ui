@@ -4,10 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
-import '../stylesheets/Page.css';
-
 function Extract(props) {
-  const defaultPathToConfig = path.join('test', 'config', 'csv.config.json');
+  const defaultPathToConfig = path.join('sample-extraction-data', 'config', 'csv.config.json');
   // const defaultPathToRunLogs = path.join('logs', 'run-logs.json');
   // FIXME - get rid of default config option
 
@@ -114,9 +112,11 @@ function Extract(props) {
           </Form>
           <div className="nav-button-container">
             <LinkContainer to="/">
-              <Button variant="danger">Cancel</Button>
+              <Button className="nav-button" size="lg" variant="outline-secondary">
+                Cancel
+              </Button>
             </LinkContainer>
-            <Button type="submit" variant="info" onClick={useSubmit}>
+            <Button className="nav-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>
           </div>
@@ -125,7 +125,7 @@ function Extract(props) {
       {submitted && (
         <div>
           <p>The form as been submitted. Running extraction...</p>
-          <Button className="nav-button" type="submit" variant="nav" id="nav-button" onClick={onReset}>
+          <Button className="nav-button" size="lg" variant="outline-secondary" onClick={onReset}>
             Reset
           </Button>
         </div>

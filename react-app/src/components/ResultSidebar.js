@@ -1,10 +1,8 @@
 import React from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, Accordion } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { Drawer } from 'react-bootstrap-drawer';
+import ResultHeader from './ResultHeader';
 import Result from './Result';
-
-import 'react-bootstrap-drawer/lib/style.css';
 
 function ResultSidebar(props) {
   const history = useHistory();
@@ -21,18 +19,25 @@ function ResultSidebar(props) {
   ));
 
   return (
-    <Drawer className="d-flex flex-column">
-      <ListGroup>{list}</ListGroup>
+    <div className="sidebar d-flex flex-column">
+      <ResultHeader />
+      <div className="sidebar-interior">
+        <Accordion defaultActiveKey="0" flush>
+          {list}
+        </Accordion>
+      </div>
       <div className="nav-button-container">
-        <Button className="nav-button" variant="nav" id="nav-button" onClick={onExitResultPage}>
+        <Button className="nav-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
           Exit
         </Button>
-        <Button className="nav-button" type="submit" variant="nav" id="nav-button" onClick={onSave}>
+        <Button className="nav-button" siz="lg" variant="outline-secondary" onClick={onSave}>
           Save
         </Button>
       </div>
-    </Drawer>
+    </div>
   );
 }
 
+// DELETE ME
+//       <h1 className="page-subtitle">Results</h1>
 export default ResultSidebar;

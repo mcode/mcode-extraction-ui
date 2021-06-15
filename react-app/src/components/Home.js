@@ -14,7 +14,9 @@ function Home() {
       <h1 className="page-title">Extractor UI</h1>
       <div className="button-container">
         <LinkContainer to="/extract">
-          <Button className="home-menu-button">Extract New</Button>
+          <Button className="home-menu-button" variant="outline-secondary">
+            Extract New
+          </Button>
         </LinkContainer>
       </div>
     </div>
