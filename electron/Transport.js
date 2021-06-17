@@ -1,4 +1,5 @@
 const Transport = require('winston-transport');
+const stripAnsi = require('strip-ansi');
 
 module.exports = class CustomTransport extends Transport {
   constructor(opts) {
@@ -7,7 +8,8 @@ module.exports = class CustomTransport extends Transport {
   }
 
   log(info, callback) {
-    this.loggedMessages.push(`${info.timestamp} [${info.level}]: ${info.message}`);
+    const level = stripAnsi(info.level);
+    this.loggedMessages.push(`${info.timestamp} [${level}]: ${info.message}`);
     // Perform the writing to the remote service
     callback();
   }
