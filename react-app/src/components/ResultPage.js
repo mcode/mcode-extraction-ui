@@ -7,7 +7,7 @@ import ResultSidebar from './ResultSidebar';
 import '../stylesheets/ResultPage.scss';
 
 function ResultPage(props) {
-  const [patientID, setPatientID] = useState(-1);
+  const [patientID, setPatientID] = useState(null);
 
   return (
     <div>

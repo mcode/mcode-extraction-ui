@@ -38,6 +38,4 @@ function ResultSidebar(props) {
   );
 }
 
-// DELETE ME
-//       <h1 className="page-subtitle">Results</h1>
 export default ResultSidebar;
