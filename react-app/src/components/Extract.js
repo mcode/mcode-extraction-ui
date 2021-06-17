@@ -55,7 +55,11 @@ function Extract(props) {
     window.api.extract(fromDate, toDate, configPath, logPath, includeDebug, filter).then((value) => {
       props.setExtractedData(value.extractedData);
       props.setLoggedMessages(value.loggedMessages);
-      history.push('/results');
+      if (value.extractedData === null) {
+        history.push('/extraction-error');
+      } else {
+        history.push('/results');
+      }
     });
   }
 

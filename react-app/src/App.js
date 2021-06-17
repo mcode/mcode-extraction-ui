@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Extract from './components/Extract';
 import ResultPage from './components/ResultPage';
+import ExtractionError from './components/ExtractionError';
 
 import './stylesheets/custom.scss';
 import './stylesheets/Page.scss';
@@ -26,6 +27,9 @@ function App() {
                 setExtractedData={setExtractedData}
                 loggedMessages={loggedMessages}
               />
+            </Route>
+            <Route path="/extraction-error">
+              <ExtractionError loggedMessages={loggedMessages} />
             </Route>
             <Route path="/">
               <Home />

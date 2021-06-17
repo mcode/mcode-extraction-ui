@@ -1,0 +1,18 @@
+import React from 'react';
+import { ListGroup } from 'react-bootstrap';
+
+function ExtractionError(props) {
+  const list = props.loggedMessages.map((message) => <ListGroup.Item>{message}</ListGroup.Item>);
+  return (
+    <div>
+      <h3 className="page-subtitle">An error occurred during extraction.</h3>
+      <p className="page-text">
+        For more information, view the logs below and/or run extraction again with "Log output debugging information"
+        checked.
+      </p>
+      <ListGroup>{list}</ListGroup>
+    </div>
+  );
+}
+
+export default ExtractionError;
