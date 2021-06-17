@@ -53,7 +53,11 @@ function Extract(props) {
     // allEntries parameter is true if it's not filtered by date, false if it is
     const filter = !(filterStart || filterEnd);
     window.api.extract(fromDate, toDate, configPath, logPath, includeDebug, filter).then((value) => {
-      props.setExtractedData(value);
+      console.log(value);
+      console.log(value.extractedData);
+      console.log(value.loggedMessages);
+      props.setExtractedData(value.extractedData);
+      props.setLoggedMessages(value.loggedMessages);
       history.push('/results');
     });
   }

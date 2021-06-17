@@ -1,7 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const path = require('path');
+const { logger } = require('mcode-extraction-framework');
 const runExtraction = require('./extraction');
+const Transport = require('./Transport');
+
+const loggedMessages = [];
+logger.add(new Transport({ loggedMessages, logger }));
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (squirrel) {
@@ -56,6 +61,7 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
+  loggedMessages.length = 0;
   const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
-  return extractedData;
+  return { extractedData, loggedMessages };
 });

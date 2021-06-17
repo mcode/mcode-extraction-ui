@@ -52,7 +52,8 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mcode-extraction-framework": "git+https://github.com/mcode/mcode-extraction-framework.git#develop"
+    "mcode-extraction-framework": "git+https://github.com/mcode/mcode-extraction-framework.git#develop",
+    "winston-transport": "^4.4.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
