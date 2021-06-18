@@ -5,8 +5,10 @@ import ReactJson from 'react-json-view';
 import '../stylesheets/LogFile.scss';
 
 function PatientData(props) {
-  const list = props.loggedMessages.map((message) => (
-    <ListGroup.Item className="log-message">{message}</ListGroup.Item>
+  const list = props.loggedMessages.map((message, i) => (
+    <ListGroup.Item className="log-message" key={i}>
+      {message}
+    </ListGroup.Item>
   ));
   return (
     <div>
