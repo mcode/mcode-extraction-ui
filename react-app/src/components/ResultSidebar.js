@@ -23,6 +23,15 @@ function ResultSidebar(props) {
       <ResultHeader />
       <div className="sidebar-interior">
         <Accordion defaultActiveKey="0" flush>
+          <Accordion.Item eventKey={-1}>
+            <Accordion.Header
+              onClick={() => {
+                props.setPatientID(-1);
+              }}
+            >
+              Log File
+            </Accordion.Header>
+          </Accordion.Item>
           {list}
         </Accordion>
       </div>
