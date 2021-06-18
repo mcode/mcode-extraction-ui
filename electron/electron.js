@@ -3,7 +3,7 @@ const squirrel = require('electron-squirrel-startup');
 const path = require('path');
 const { logger } = require('mcode-extraction-framework');
 const runExtraction = require('./extraction');
-const Transport = require('./Transport');
+const Transport = require('./InMemoryTransport');
 
 const loggedMessages = [];
 logger.add(new Transport({ loggedMessages, logger }));

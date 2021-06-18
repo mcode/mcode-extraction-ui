@@ -1,7 +1,7 @@
 const Transport = require('winston-transport');
 const stripAnsi = require('strip-ansi');
 
-module.exports = class CustomTransport extends Transport {
+module.exports = class InMemoryTransport extends Transport {
   constructor(opts) {
     super(opts);
     this.loggedMessages = opts.loggedMessages;
