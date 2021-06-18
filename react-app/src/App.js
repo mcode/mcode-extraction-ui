@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import Extract from './components/Extract';
+import ResultPage from './components/ResultPage';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import './stylesheets/Page.css';
+import './stylesheets/custom.scss';
+import './stylesheets/Page.scss';
 
 function App() {
+  const [extractedData, setExtractedData] = useState([]);
+
   return (
     <div className="page">
       <Router>
         <div>
-          {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/extract">
-              <Extract />
+              <Extract setExtractedData={setExtractedData} />
+            </Route>
+            <Route path="/results">
+              <ResultPage extractedData={extractedData} setExtractedData={setExtractedData} />
             </Route>
             <Route path="/">
               <Home />

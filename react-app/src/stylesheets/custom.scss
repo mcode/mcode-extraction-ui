@@ -1,0 +1,12 @@
+@import './_variables.scss';
+
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'info': $info,
+  'success': $success,
+  'warning': $warning,
+  'danger': $danger,
+);
+
+@import '~bootstrap/scss/bootstrap.scss';
