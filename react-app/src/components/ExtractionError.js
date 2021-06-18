@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button, ListGroup } from 'react-bootstrap';
 
 function ExtractionError(props) {
-  const list = props.loggedMessages.map((message) => <ListGroup.Item>{message}</ListGroup.Item>);
+  const list = props.loggedMessages.map((message) => <ListGroup.Item key={message}>{message}</ListGroup.Item>);
   return (
     <div>
       <h3 className="page-subtitle">An error occurred during extraction.</h3>
