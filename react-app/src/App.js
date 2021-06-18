@@ -10,6 +10,7 @@ import './stylesheets/Page.scss';
 
 function App() {
   const [extractedData, setExtractedData] = useState([]);
+  const [loggedMessages, setLoggedMessages] = useState([]);
 
   return (
     <div className="page">
@@ -17,10 +18,14 @@ function App() {
         <div>
           <Switch>
             <Route path="/extract">
-              <Extract setExtractedData={setExtractedData} />
+              <Extract setExtractedData={setExtractedData} setLoggedMessages={setLoggedMessages} />
             </Route>
             <Route path="/results">
-              <ResultPage extractedData={extractedData} setExtractedData={setExtractedData} />
+              <ResultPage
+                extractedData={extractedData}
+                setExtractedData={setExtractedData}
+                loggedMessages={loggedMessages}
+              />
             </Route>
             <Route path="/">
               <Home />

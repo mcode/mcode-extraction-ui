@@ -6,7 +6,7 @@ contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
 contextBridge.exposeInMainWorld('api', {
   extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
     //  call function in preload.js
-    const extractedData = await ipcRenderer.invoke(
+    const results = await ipcRenderer.invoke(
       'run-extraction',
       fromDate,
       toDate,
@@ -15,6 +15,6 @@ contextBridge.exposeInMainWorld('api', {
       debug,
       allEntries,
     );
-    return extractedData;
+    return results;
   },
 });
