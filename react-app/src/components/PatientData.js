@@ -2,8 +2,12 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import ReactJson from 'react-json-view';
 
+import '../stylesheets/LogFile.scss';
+
 function PatientData(props) {
-  const list = props.loggedMessages.map((message) => <ListGroup.Item>{message}</ListGroup.Item>);
+  const list = props.loggedMessages.map((message) => (
+    <ListGroup.Item className="log-message">{message}</ListGroup.Item>
+  ));
   return (
     <div>
       {props.id === null && (
