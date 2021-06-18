@@ -16,7 +16,3 @@ function Result(props) {
 }
 
 export default Result;
-
-// <ListGroup.Item action onClick={onSelectPatient} eventKey={props.id} id={props.id} variant="secondary">
-//  Patient {props.id}
-// </ListGroup.Item>;
