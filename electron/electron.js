@@ -3,11 +3,7 @@ const squirrel = require('electron-squirrel-startup');
 const path = require('path');
 const { logger } = require('mcode-extraction-framework');
 const runExtraction = require('./extraction');
-<<<<<<< HEAD
 const Transport = require('./InMemoryTransport');
-=======
-const Transport = require('./Transport');
->>>>>>> 9286f05 (Add custom transport to retrieve logger messages and store in renderer process)
 
 const loggedMessages = [];
 logger.add(new Transport({ loggedMessages, logger }));
