@@ -57,11 +57,16 @@
   padding-top: 100px;
 }
 
-.nav-button {
+.generic-button {
   font-family: 'Courier New', 'Monaco', monospace;
   font-size: 18px;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+.file-picker {
+  font-size: 14px;
+  margin-left: 20px;
 }
 
 .nav-button-container {

@@ -13,7 +13,7 @@ function ExtractionError(props) {
       </p>
       <div className="button-container">
         <LinkContainer to="/extract">
-          <Button className="nav-button" size="lg" variant="outline-secondary">
+          <Button className="generic-button" size="lg" variant="outline-secondary">
             Extract New
           </Button>
         </LinkContainer>

@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import path from 'path';
 import { useHistory } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
 function Extract(props) {
-  const defaultPathToConfig = path.join('sample-extraction-data', 'config', 'csv.config.json');
-  // const defaultPathToRunLogs = path.join('logs', 'run-logs.json');
-  // FIXME - get rid of default config option
-
-  const [configPath, setConfigPath] = useState(defaultPathToConfig);
-  const [logPath, setLogPath] = useState('');
+  const [configPath, setConfigPath] = useState('Select Config File');
+  const [logPath, setLogPath] = useState('Select Log File');
   const [includeDebug, setIncludeDebug] = useState(false);
   const [filterStart, setFilterStart] = useState(false);
   const [filterEnd, setFilterEnd] = useState(false);
@@ -20,12 +15,26 @@ function Extract(props) {
 
   const history = useHistory();
 
-  function onConfigChange(e) {
-    setConfigPath(e.target.value);
+  function setConfig() {
+    window.api.getFile().then((promise) => {
+      // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
+      if (promise.filePaths[0] !== undefined) {
+        setConfigPath(promise.filePaths[0]);
+      } else {
+        setConfigPath('Error. Please try again');
+      }
+    });
   }
 
-  function onLogChange(e) {
-    setLogPath(e.target.value);
+  function setLog() {
+    window.api.getFile().then((promise) => {
+      // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
+      if (promise.filePaths[0] !== undefined) {
+        setLogPath(promise.filePaths[0]);
+      } else {
+        setLogPath('Error. Please try again');
+      }
+    });
   }
 
   function onIncludeDebugChange() {
@@ -76,11 +85,15 @@ function Extract(props) {
               <Col>
                 <Form.Group controlId="formConfigPath" className="mb-3">
                   <Form.Label className="form-label">Configuration File</Form.Label>
-                  <Form.Control type="text" value={configPath} onChange={onConfigChange} />
+                  <Button className="generic-button file-picker" variant="outline-info" onClick={setConfig}>
+                    {configPath}
+                  </Button>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
                   <Form.Label className="form-label">Previous Log File</Form.Label>
-                  <Form.Control type="text" value={logPath} onChange={onLogChange} />
+                  <Button className="generic-button file-picker" variant="outline-info" onClick={setLog}>
+                    {logPath}
+                  </Button>
                 </Form.Group>
                 <Form.Group controlId="formIncludeDebug">
                   <Form.Check
@@ -117,11 +130,11 @@ function Extract(props) {
           </Form>
           <div className="nav-button-container">
             <LinkContainer to="/">
-              <Button className="nav-button" size="lg" variant="outline-secondary">
+              <Button className="generic-button" size="lg" variant="outline-secondary">
                 Cancel
               </Button>
             </LinkContainer>
-            <Button className="nav-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
+            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>
           </div>
@@ -130,7 +143,7 @@ function Extract(props) {
       {submitted && (
         <div>
           <p>The form as been submitted. Running extraction...</p>
-          <Button className="nav-button" size="lg" variant="outline-secondary" onClick={onReset}>
+          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onReset}>
             Reset
           </Button>
         </div>
