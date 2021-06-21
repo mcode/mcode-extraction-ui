@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { dialog } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const path = require('path');
 const { logger } = require('mcode-extraction-framework');
@@ -13,12 +14,15 @@ if (squirrel) {
   app.quit();
 }
 
+// declare mainWindow ahead of time so that it can be accessed in .handle('get-file')
+let mainWindow;
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
+      enableRemoteModule: true,
       preload: path.join(__dirname, './preload.js'),
     },
   });
@@ -65,3 +69,4 @@ ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath,
   const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
   return { extractedData, loggedMessages };
 });
+ipcMain.handle('get-file', async () => dialog.showOpenDialog(mainWindow, { properties: ['openFile'] }));
