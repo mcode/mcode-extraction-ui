@@ -9,8 +9,8 @@ function Extract(props) {
   const [includeDebug, setIncludeDebug] = useState(false);
   const [filterStart, setFilterStart] = useState(false);
   const [filterEnd, setFilterEnd] = useState(false);
-  const [fromDate] = useState('');
-  const [toDate] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const history = useHistory();
@@ -43,22 +43,28 @@ function Extract(props) {
 
   function onFilterStartChange() {
     setFilterStart(!filterStart);
+    setFromDate('');
   }
 
   function onFilterEndChange() {
     setFilterEnd(!filterEnd);
+    setToDate('');
   }
 
-  // function onFromDateChange(e) {
-  //     setFromDate(e.target.value);
-  // }
+  function onFromDateChange(e) {
+    setFromDate(e.target.value);
+  }
 
-  // function onToDateChange(e) {
-  //     setToDate(e.target.value);
-  // }
+  function onToDateChange(e) {
+    setToDate(e.target.value);
+  }
 
   function useSubmit() {
     setSubmitted(!submitted);
+
+    if (logPath === 'Select Log File') {
+      setLogPath('');
+    }
     // allEntries parameter is true if it's not filtered by date, false if it is
     const filter = !(filterStart || filterEnd);
     window.api.extract(fromDate, toDate, configPath, logPath, includeDebug, filter).then((value) => {
@@ -115,6 +121,11 @@ function Extract(props) {
                     onChange={onFilterStartChange}
                   />
                 </Form.Group>
+                {filterStart && (
+                  <Form.Group controlId="formStartDate">
+                    <Form.Control type="date" label="Start Date" onChange={onFromDateChange} value={fromDate} />
+                  </Form.Group>
+                )}
               </Col>
               <Col>
                 <Form.Group controlId="formIncludeEndDate">
@@ -125,6 +136,11 @@ function Extract(props) {
                     onChange={onFilterEndChange}
                   />
                 </Form.Group>
+                {filterEnd && (
+                  <Form.Group controlId="formEndDate">
+                    <Form.Control type="date" label="End Date" onChange={onToDateChange} value={toDate} />
+                  </Form.Group>
+                )}
               </Col>
             </Row>
           </Form>
