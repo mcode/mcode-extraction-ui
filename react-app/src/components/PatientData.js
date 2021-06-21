@@ -5,10 +5,10 @@ import LogList from './LogList';
 function PatientData(props) {
   return (
     <div>
-      {props.id === null && !props.showLogs && (
-        <div className="page-text">
-          <p>Select a patient to view their information or click on "Log File" to view the logger messages.</p>
-        </div>
+      {props.id === null && (
+        <p className="page-text padding-100">
+          Select a patient to view their information or click on "Log File" to view the logger messages.
+        </p>
       )}
       {props.showLogs && (
         <div>

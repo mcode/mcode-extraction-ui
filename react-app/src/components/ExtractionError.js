@@ -1,9 +1,9 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import LogList from './LogList';
 
 function ExtractionError(props) {
-  const list = props.loggedMessages.map((message) => <ListGroup.Item key={message}>{message}</ListGroup.Item>);
   return (
     <div>
       <h3 className="page-subtitle">An error occurred during extraction.</h3>
@@ -18,7 +18,7 @@ function ExtractionError(props) {
           </Button>
         </LinkContainer>
       </div>
-      <ListGroup>{list}</ListGroup>
+      <LogList loggedMessages={props.loggedMessages} />
     </div>
   );
 }
