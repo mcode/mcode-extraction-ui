@@ -14,18 +14,10 @@ function ResultPage(props) {
       <Container fluid>
         <Row>
           <Col xxl={3} xl={3} lg={3} md={3} sm={3} xs={3} className="sidebar-col">
-            <ResultSidebar
-              extractedData={props.extractedData}
-              setPatientID={setPatientID}
-              loggedMessages={props.loggedMessages}
-            />
+            <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} />
           </Col>
           <Col>
-            <PatientData
-              patientJson={props.extractedData[patientID]}
-              id={patientID}
-              loggedMessages={props.loggedMessages}
-            />
+            <PatientData patientJson={props.extractedData[patientID]} id={patientID} />
           </Col>
         </Row>
       </Container>
