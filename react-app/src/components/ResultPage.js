@@ -17,7 +17,11 @@ function ResultPage(props) {
             <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} />
           </Col>
           <Col>
-            <PatientData patientJson={props.extractedData[patientID]} id={patientID} />
+            <PatientData
+              patientJson={props.extractedData[patientID]}
+              id={patientID}
+              loggedMessages={props.loggedMessages}
+            />
           </Col>
         </Row>
       </Container>
