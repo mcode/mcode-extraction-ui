@@ -12,8 +12,8 @@ function PatientData(props) {
       )}
       {props.id !== null && props.id === -1 && (
         <div>
-          <h3 className="page-subtitle">Log File</h3>
           <LogList loggedMessages={props.loggedMessages} />
+          <h3 className="page-subtitle sticky-item">Log File</h3>
         </div>
       )}
       {props.id !== null && props.id >= 0 && (
