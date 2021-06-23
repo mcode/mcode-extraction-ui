@@ -5,12 +5,12 @@ import LogList from './LogList';
 function PatientData(props) {
   return (
     <div>
-      {props.id === null && (
+      {props.id === null && !props.showLogs && (
         <div className="page-text">
           <p>Select a patient to view their information or click on "Log File" to view the logger messages.</p>
         </div>
       )}
-      {props.id !== null && props.id === -1 && (
+      {props.showLogs && (
         <div>
           <h3 className="page-subtitle sticky-item">Log File</h3>
           <LogList loggedMessages={props.loggedMessages} />

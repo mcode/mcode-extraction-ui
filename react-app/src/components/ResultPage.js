@@ -8,18 +8,20 @@ import '../stylesheets/ResultPage.scss';
 
 function ResultPage(props) {
   const [patientID, setPatientID] = useState(null);
+  const [showLogs, setShowLogs] = useState(false);
 
   return (
     <div>
       <Container fluid>
         <Row>
           <Col xxl={3} xl={3} lg={3} md={3} sm={3} xs={3} className="sidebar-col">
-            <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} />
+            <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} setShowLogs={setShowLogs} />
           </Col>
           <Col>
             <PatientData
               patientJson={props.extractedData[patientID]}
               id={patientID}
+              showLogs={showLogs}
               loggedMessages={props.loggedMessages}
             />
           </Col>

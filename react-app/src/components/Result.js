@@ -7,6 +7,7 @@ function Result(props) {
       <Accordion.Header
         onClick={() => {
           props.setPatientID(props.id);
+          props.setShowLogs(false);
         }}
       >
         Patient {props.id}

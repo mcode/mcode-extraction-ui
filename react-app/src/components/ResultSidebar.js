@@ -14,8 +14,9 @@ function ResultSidebar(props) {
   function onSave() {
     // Save the results permanently somehow
   }
+
   const list = props.extractedData.map((bundle, i) => (
-    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} />
+    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} setShowLogs={props.setShowLogs} />
   ));
 
   return (
@@ -26,7 +27,8 @@ function ResultSidebar(props) {
           <Accordion.Item eventKey={-1}>
             <Accordion.Header
               onClick={() => {
-                props.setPatientID(-1);
+                props.setPatientID(null);
+                props.setShowLogs(true);
               }}
             >
               Log File
