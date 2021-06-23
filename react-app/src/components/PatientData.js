@@ -16,7 +16,7 @@ function PatientData(props) {
           <LogList loggedMessages={props.loggedMessages} />
         </div>
       )}
-      {props.id !== null && props.id >= 0 && (
+      {props.id !== null && !props.showLogs && (
         <div className="patient-json-display">
           <ReactJson src={props.patientJson} collapsed={3} />
         </div>
