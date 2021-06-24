@@ -14,8 +14,9 @@ function ResultSidebar(props) {
   function onSave() {
     // Save the results permanently somehow
   }
+
   const list = props.extractedData.map((bundle, i) => (
-    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} />
+    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} setShowLogs={props.setShowLogs} />
   ));
 
   return (
@@ -23,6 +24,16 @@ function ResultSidebar(props) {
       <ResultHeader />
       <div className="sidebar-interior">
         <Accordion defaultActiveKey="0" flush>
+          <Accordion.Item eventKey={-1}>
+            <Accordion.Header
+              onClick={() => {
+                props.setPatientID(null);
+                props.setShowLogs(true);
+              }}
+            >
+              Log File
+            </Accordion.Header>
+          </Accordion.Item>
           {list}
         </Accordion>
       </div>
