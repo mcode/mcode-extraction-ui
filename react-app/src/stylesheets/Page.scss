@@ -1,4 +1,14 @@
 @import './_variables.scss';
+.page-background {
+  background-color: $light-shade;
+  background-size: cover;
+  height: 100vh;
+}
+.page-card {
+  background-color: $light-shade;
+  height: 80%;
+  width: 80%;
+}
 
 .row {
   flex-wrap: nowrap;
@@ -26,8 +36,12 @@
 }
 
 .page-text {
+  color: $dark-shade;
   font-size: 20px;
-  padding-top: 100px;
+  text-align: center;
+}
+
+.text-centered {
   text-align: center;
 }
 
@@ -38,13 +52,26 @@
   width: 100%;
 }
 
+.padding-100 {
+  padding-top: 100px;
+}
+
 .nav-button {
   font-family: 'Courier New', 'Monaco', monospace;
   font-size: 18px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .nav-button-container {
   display: flex;
   justify-content: space-between;
   margin: 20px;
+}
+
+.button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
