@@ -6,7 +6,7 @@ import LogList from './LogList';
 function ExtractionError(props) {
   return (
     <div>
-      <h3 className="page-subtitle">An error occurred during extraction.</h3>
+      <h3 className="page-subtitle text-centered">An error occurred during extraction.</h3>
       <p className="page-text">
         For more information, view the logs below and/or run extraction again with "Log output debugging information"
         checked.
@@ -18,7 +18,7 @@ function ExtractionError(props) {
           </Button>
         </LinkContainer>
       </div>
-      <LogList loggedMessages={props.loggedMessages} />
+      <LogList loggedMessages={props.loggedMessages} listType="" />
     </div>
   );
 }

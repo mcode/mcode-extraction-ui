@@ -9,7 +9,7 @@ function LogList(props) {
       {message}
     </ListGroup.Item>
   ));
-  return <ListGroup className="log-list">{list}</ListGroup>;
+  return <ListGroup className={props.listType}>{list}</ListGroup>;
 }
 
 export default LogList;
