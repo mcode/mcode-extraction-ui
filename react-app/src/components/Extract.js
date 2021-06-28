@@ -20,8 +20,6 @@ function Extract(props) {
       // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
       if (promise.filePaths[0] !== undefined) {
         setConfigPath(promise.filePaths[0]);
-      } else {
-        setConfigPath('Error. Please try again');
       }
     });
   }
@@ -31,8 +29,6 @@ function Extract(props) {
       // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
       if (promise.filePaths[0] !== undefined) {
         setLogPath(promise.filePaths[0]);
-      } else {
-        setLogPath('Error. Please try again');
       }
     });
   }
@@ -62,9 +58,6 @@ function Extract(props) {
   function useSubmit() {
     setSubmitted(!submitted);
 
-    if (logPath === 'Select Log File') {
-      setLogPath('');
-    }
     // allEntries parameter is true if it's not filtered by date, false if it is
     const filter = !(filterStart || filterEnd);
     window.api.extract(fromDate, toDate, configPath, logPath, includeDebug, filter).then((value) => {
