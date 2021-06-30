@@ -10,10 +10,11 @@ function Result(props) {
     const allResourceTypesPath = 'Bundle.descendants().resource.resourceType';
     const uniqueResourceTypes = _.uniq(fhirpath.evaluate(props.bundle, allResourceTypesPath));
 
-    const countThisResource = (resourceType) =>
-      `Bundle.descendants().where(resource.resourceType = '${resourceType}').count()`;
     uniqueResourceTypes.forEach((resourceType) => {
-      const count = fhirpath.evaluate(props.bundle, countThisResource(resourceType));
+      const count = fhirpath.evaluate(
+        props.bundle,
+        `Bundle.descendants().where(resource.resourceType = '${resourceType}').count()`,
+      );
       resourceList.push({ resourceType, count });
     });
 
@@ -22,8 +23,8 @@ function Result(props) {
 
   function getResourceList() {
     const resourceList = countResources();
-    return resourceList.map((item, i) => (
-      <p key={i}>
+    return resourceList.map((item) => (
+      <p key={item.resourceType}>
         {item.resourceType}: {item.count}
       </p>
     ));
