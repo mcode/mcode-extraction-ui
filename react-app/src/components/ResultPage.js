@@ -15,7 +15,12 @@ function ResultPage(props) {
       <Container fluid>
         <Row>
           <Col xxl={3} xl={3} lg={3} md={3} sm={3} xs={3} className="sidebar-col">
-            <ResultSidebar extractedData={props.extractedData} setPatientID={setPatientID} setShowLogs={setShowLogs} />
+            <ResultSidebar
+              extractedData={props.extractedData}
+              loggedMessages={props.loggedMessages}
+              setPatientID={setPatientID}
+              setShowLogs={setShowLogs}
+            />
           </Col>
           <Col>
             <PatientData
