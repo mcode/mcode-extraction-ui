@@ -18,7 +18,6 @@ function ResultSidebar(props) {
   function getLoggerStats() {
     let errors = 0;
     let warnings = 0;
-    let debugs = 0;
     let total = 0;
 
     props.loggedMessages.forEach((log) => {
@@ -28,20 +27,14 @@ function ResultSidebar(props) {
       if (log.level === 'warn') {
         warnings += 1;
       }
-      if (log.level === 'debug') {
-        debugs += 1;
-      }
       total += 1;
     });
 
     return (
       <Accordion.Body>
-        <p key={0}>Errors: {errors}</p>
-        <p key={1}>Warnings: {warnings}</p>
-        <p key={2}>Debug Messages: {debugs}</p>
-        <p className="emphasized-list-text" key={3}>
-          Total Messages: {total}
-        </p>
+        <p className="emphasized-list-text">Total Messages: {total}</p>
+        <p>Errors: {errors}</p>
+        <p>Warnings: {warnings}</p>
       </Accordion.Body>
     );
   }
