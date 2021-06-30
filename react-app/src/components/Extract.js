@@ -24,7 +24,7 @@ function Extract(props) {
     });
   }
 
-  function deleteConfig() {
+  function clearConfig() {
     setConfigPath('No File Chosen');
   }
 
@@ -37,7 +37,7 @@ function Extract(props) {
     });
   }
 
-  function deleteLog() {
+  function clearLog() {
     setLogPath('No File Chosen');
   }
 
@@ -95,11 +95,11 @@ function Extract(props) {
                   <div className="file-picker-box">
                     <Form.Label className="form-label file-name">{configPath}</Form.Label>
                     <div className="file-button-container">
-                      <Button className="generic-button file-picker" variant="outline-info" onClick={setConfig}>
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setConfig}>
                         Upload File
                       </Button>
-                      <Button className="generic-button file-picker" variant="outline-info" onClick={deleteConfig}>
-                        Delete
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearConfig}>
+                        Clear
                       </Button>
                     </div>
                   </div>
@@ -109,11 +109,11 @@ function Extract(props) {
                   <div className="file-picker-box">
                     <Form.Label className="form-label file-name">{logPath}</Form.Label>
                     <div className="file-button-container">
-                      <Button className="generic-button file-picker" variant="outline-info" onClick={setLog}>
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setLog}>
                         Upload File
                       </Button>
-                      <Button className="generic-button file-picker" variant="outline-info" onClick={deleteLog}>
-                        Delete
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearLog}>
+                        Clear
                       </Button>
                     </div>
                   </div>
