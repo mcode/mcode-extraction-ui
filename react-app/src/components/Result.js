@@ -49,8 +49,8 @@ function Result(props) {
         Patient {props.id + 1}
       </Accordion.Header>
       <Accordion.Body>
-        {getResourceList()}
         <p className="emphasized-list-text">Total Resources: {getNumResources()}</p>
+        {getResourceList()}
       </Accordion.Body>
     </Accordion.Item>
   );
