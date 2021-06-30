@@ -1,4 +1,18 @@
 @import './_variables.scss';
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.form-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .page-background {
   background-color: $light-shade;
   background-size: cover;

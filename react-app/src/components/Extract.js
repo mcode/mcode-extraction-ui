@@ -4,8 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
 function Extract(props) {
-  const [configPath, setConfigPath] = useState('Select Config File');
-  const [logPath, setLogPath] = useState('Select Log File');
+  const [configPath, setConfigPath] = useState('No File Chosen');
+  const [logPath, setLogPath] = useState('No File Chosen');
   const [includeDebug, setIncludeDebug] = useState(false);
   const [filterStart, setFilterStart] = useState(false);
   const [filterEnd, setFilterEnd] = useState(false);
@@ -24,6 +24,10 @@ function Extract(props) {
     });
   }
 
+  function deleteConfig() {
+    setConfigPath('No File Chosen');
+  }
+
   function setLog() {
     window.api.getFile().then((promise) => {
       // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
@@ -31,6 +35,10 @@ function Extract(props) {
         setLogPath(promise.filePaths[0]);
       }
     });
+  }
+
+  function deleteLog() {
+    setLogPath('No File Chosen');
   }
 
   function onIncludeDebugChange() {
@@ -75,23 +83,29 @@ function Extract(props) {
     setSubmitted(!submitted);
   }
   return (
-    <div>
+    <div className="page-container">
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
-        <div>
-          <Form>
+        <div className="page-container">
+          <Form className="form-container">
             <Row>
               <Col>
                 <Form.Group controlId="formConfigPath" className="mb-3">
-                  <Form.Label className="form-label">Configuration File</Form.Label>
+                  <Form.Label className="form-label">{configPath}</Form.Label>
                   <Button className="generic-button file-picker" variant="outline-info" onClick={setConfig}>
-                    {configPath}
+                    Upload File
+                  </Button>
+                  <Button className="generic-button file-picker" variant="outline-info" onClick={deleteConfig}>
+                    Delete
                   </Button>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
-                  <Form.Label className="form-label">Previous Log File</Form.Label>
+                  <Form.Label className="form-label">{logPath}</Form.Label>
                   <Button className="generic-button file-picker" variant="outline-info" onClick={setLog}>
-                    {logPath}
+                    Upload File
+                  </Button>
+                  <Button className="generic-button file-picker" variant="outline-info" onClick={deleteLog}>
+                    Delete
                   </Button>
                 </Form.Group>
                 <Form.Group controlId="formIncludeDebug">
