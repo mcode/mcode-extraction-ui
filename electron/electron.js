@@ -68,4 +68,9 @@ ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath,
   const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
   return { extractedData, loggedMessages };
 });
-ipcMain.handle('get-file', async () => dialog.showOpenDialog(mainWindow, { properties: ['openFile'] }));
+ipcMain.handle('get-file', async () =>
+  dialog.showOpenDialog(mainWindow, {
+    filters: [{ name: 'JSON', extensions: ['json'] }],
+    properties: ['openFile'],
+  }),
+);
