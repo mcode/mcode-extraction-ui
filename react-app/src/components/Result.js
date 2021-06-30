@@ -7,9 +7,6 @@ const fhirpath = require('fhirpath');
 function Result(props) {
   function countResources() {
     const resourceList = [];
-    // iterate through resources array, checking the resourceType of each entry
-    // if (new type),
-
     const allResourceTypesPath = 'Bundle.descendants().resource.resourceType';
     const uniqueResourceTypes = _.uniq(fhirpath.evaluate(props.bundle, allResourceTypesPath));
 
