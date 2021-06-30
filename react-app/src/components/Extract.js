@@ -91,22 +91,32 @@ function Extract(props) {
             <Row>
               <Col>
                 <Form.Group controlId="formConfigPath" className="mb-3">
-                  <Form.Label className="form-label">{configPath}</Form.Label>
-                  <Button className="generic-button file-picker" variant="outline-info" onClick={setConfig}>
-                    Upload File
-                  </Button>
-                  <Button className="generic-button file-picker" variant="outline-info" onClick={deleteConfig}>
-                    Delete
-                  </Button>
+                  <Form.Label className="form-label">Select Configuration File</Form.Label>
+                  <div className="file-picker-box">
+                    <Form.Label className="form-label file-name">{configPath}</Form.Label>
+                    <div className="file-button-container">
+                      <Button className="generic-button file-picker" variant="outline-info" onClick={setConfig}>
+                        Upload File
+                      </Button>
+                      <Button className="generic-button file-picker" variant="outline-info" onClick={deleteConfig}>
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
-                  <Form.Label className="form-label">{logPath}</Form.Label>
-                  <Button className="generic-button file-picker" variant="outline-info" onClick={setLog}>
-                    Upload File
-                  </Button>
-                  <Button className="generic-button file-picker" variant="outline-info" onClick={deleteLog}>
-                    Delete
-                  </Button>
+                  <Form.Label className="form-label">Select Configuration File</Form.Label>
+                  <div className="file-picker-box">
+                    <Form.Label className="form-label file-name">{logPath}</Form.Label>
+                    <div className="file-button-container">
+                      <Button className="generic-button file-picker" variant="outline-info" onClick={setLog}>
+                        Upload File
+                      </Button>
+                      <Button className="generic-button file-picker" variant="outline-info" onClick={deleteLog}>
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
                 </Form.Group>
                 <Form.Group controlId="formIncludeDebug">
                   <Form.Check
