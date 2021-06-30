@@ -105,7 +105,7 @@ function Extract(props) {
                   </div>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
-                  <Form.Label className="form-label">Select Configuration File</Form.Label>
+                  <Form.Label className="form-label">Select Log File</Form.Label>
                   <div className="file-picker-box">
                     <Form.Label className="form-label file-name">{logPath}</Form.Label>
                     <div className="file-button-container">
