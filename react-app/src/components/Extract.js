@@ -93,7 +93,6 @@ function Extract(props) {
                 <Form.Group controlId="formConfigPath" className="mb-3">
                   <Form.Label className="form-label">Select Configuration File</Form.Label>
                   <div className="file-picker-box">
-                    <Form.Label className="form-label file-name">{configPath}</Form.Label>
                     <div className="file-button-container">
                       <Button className="generic-button narrow-button" variant="outline-info" onClick={setConfig}>
                         Upload File
@@ -102,12 +101,12 @@ function Extract(props) {
                         Clear
                       </Button>
                     </div>
+                    <Form.Label className="form-label file-name">{configPath}</Form.Label>
                   </div>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
                   <Form.Label className="form-label">Select Log File</Form.Label>
                   <div className="file-picker-box">
-                    <Form.Label className="form-label file-name">{logPath}</Form.Label>
                     <div className="file-button-container">
                       <Button className="generic-button narrow-button" variant="outline-info" onClick={setLog}>
                         Upload File
@@ -116,6 +115,7 @@ function Extract(props) {
                         Clear
                       </Button>
                     </div>
+                    <Form.Label className="form-label file-name">{logPath}</Form.Label>
                   </div>
                 </Form.Group>
                 <Form.Group controlId="formIncludeDebug">
