@@ -8,6 +8,7 @@ function ResultSidebar(props) {
   const history = useHistory();
   const [showSavedAlert, setShowSavedAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
 
   function onExitResultPage() {
     // reset data values and return to home page
@@ -15,16 +16,20 @@ function ResultSidebar(props) {
   }
 
   function onSave() {
-    window.api.getOutputPath().then((savePath) => {
-      if (!savePath.canceled) {
-        const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
-        if (result) {
-          setShowSavedAlert(true);
-        } else {
-          setShowErrorAlert(true);
+    if (props.extractedData.length > 0) {
+      window.api.getOutputPath().then((savePath) => {
+        if (!savePath.canceled) {
+          const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+          if (result) {
+            setShowSavedAlert(true);
+          } else {
+            setShowErrorAlert(true);
+          }
         }
-      }
-    });
+      });
+    } else {
+      setShowNoFilesAlert(true);
+    }
   }
 
   function getLoggerStats() {
@@ -73,7 +78,7 @@ function ResultSidebar(props) {
       </div>
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
-          <Alert.Heading>Files Saved</Alert.Heading>
+          <Alert.Heading>Files saved</Alert.Heading>
         </Alert>
       )}
       {showErrorAlert && (
@@ -81,7 +86,12 @@ function ResultSidebar(props) {
           <Alert.Heading>Error: Unable to save file(s)</Alert.Heading>
         </Alert>
       )}
-      {!showSavedAlert && !showErrorAlert && (
+      {showNoFilesAlert && (
+        <Alert variant="warning" show={showNoFilesAlert} onClose={() => setShowNoFilesAlert(false)} dismissible>
+          <Alert.Heading>Error: No patient data to save</Alert.Heading>
+        </Alert>
+      )}
+      {!showSavedAlert && !showErrorAlert && !showNoFilesAlert && (
         <div className="sidebar-button-container">
           <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
             Exit
