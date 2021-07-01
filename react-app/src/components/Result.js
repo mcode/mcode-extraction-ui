@@ -46,7 +46,7 @@ function Result(props) {
           props.setShowLogs(false);
         }}
       >
-        Patient {props.id + 1}
+        Patient {props.id}
       </Accordion.Header>
       <Accordion.Body>
         <p className="emphasized-list-text">Total Resources: {getNumResources(resourceList)}</p>
