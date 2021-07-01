@@ -23,6 +23,10 @@ async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, d
       defaultDebug,
       allEntries,
     ).then((value) => value);
+
+    if (!extractedData) {
+      return null;
+    }
     return extractedData;
   } catch (e) {
     if (debug) logger.level = 'debug';
