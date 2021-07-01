@@ -16,11 +16,13 @@ function ResultSidebar(props) {
 
   function onSave() {
     window.api.getOutputPath().then((savePath) => {
-      const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
-      if (result) {
-        setShowSavedAlert(true);
-      } else {
-        setShowErrorAlert(true);
+      if (!savePath.canceled) {
+        const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+        if (result) {
+          setShowSavedAlert(true);
+        } else {
+          setShowErrorAlert(true);
+        }
       }
     });
   }
