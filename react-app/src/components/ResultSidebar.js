@@ -15,6 +15,27 @@ function ResultSidebar(props) {
     // Save the results permanently somehow
   }
 
+  function getLoggerStats() {
+    let errors = 0;
+    let warnings = 0;
+
+    props.loggedMessages.forEach((log) => {
+      if (log.level === 'error') {
+        errors += 1;
+      }
+      if (log.level === 'warn') {
+        warnings += 1;
+      }
+    });
+
+    return (
+      <Accordion.Body>
+        <p>Errors: {errors}</p>
+        <p>Warnings: {warnings}</p>
+      </Accordion.Body>
+    );
+  }
+
   const list = props.extractedData.map((bundle, i) => (
     <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} setShowLogs={props.setShowLogs} />
   ));
@@ -33,6 +54,7 @@ function ResultSidebar(props) {
             >
               Log File
             </Accordion.Header>
+            {getLoggerStats()}
           </Accordion.Item>
           {list}
         </Accordion>

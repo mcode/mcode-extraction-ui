@@ -4,9 +4,9 @@ import { ListGroup } from 'react-bootstrap';
 import '../stylesheets/LogList.scss';
 
 function LogList(props) {
-  const list = props.loggedMessages.map((message, i) => (
+  const list = props.loggedMessages.map((log, i) => (
     <ListGroup.Item className="log-message" key={i}>
-      {message}
+      {log.message}
     </ListGroup.Item>
   ));
   return <ListGroup className={props.listType}>{list}</ListGroup>;
