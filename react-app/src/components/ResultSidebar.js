@@ -1,18 +1,22 @@
-import React from 'react';
-import { Button, Accordion } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Alert, Button, Accordion } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ResultHeader from './ResultHeader';
 import Result from './Result';
 
 function ResultSidebar(props) {
   const history = useHistory();
+  const [showSavedAlert, setShowSavedAlert] = useState(false);
   function onExitResultPage() {
     // reset data values and return to home page
     history.push('/extract');
   }
 
   function onSave() {
-    // Save the results permanently somehow
+    window.api.getOutputPath().then((savePath) => {
+      window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+      setShowSavedAlert(true);
+    });
   }
 
   function getLoggerStats() {
@@ -59,6 +63,9 @@ function ResultSidebar(props) {
           {list}
         </Accordion>
       </div>
+      <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
+        <Alert.Heading>Files Saved</Alert.Heading>
+      </Alert>
       <div className="sidebar-button-container">
         <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
           Exit
