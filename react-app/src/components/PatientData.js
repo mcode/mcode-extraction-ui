@@ -18,7 +18,7 @@ function PatientData(props) {
       )}
       {props.id !== null && !props.showLogs && (
         <div className="patient-json-display">
-          <ReactJson src={props.patientJson} collapsed={3} />
+          <ReactJson src={props.patientJson} collapsed={4} />
         </div>
       )}
     </div>

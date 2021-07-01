@@ -1,31 +1,44 @@
 import React, { useState } from 'react';
-import path from 'path';
 import { useHistory } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
 function Extract(props) {
-  const defaultPathToConfig = path.join('sample-extraction-data', 'config', 'csv.config.json');
-  // const defaultPathToRunLogs = path.join('logs', 'run-logs.json');
-  // FIXME - get rid of default config option
-
-  const [configPath, setConfigPath] = useState(defaultPathToConfig);
-  const [logPath, setLogPath] = useState('');
+  const [configPath, setConfigPath] = useState('No File Chosen');
+  const [logPath, setLogPath] = useState('No File Chosen');
   const [includeDebug, setIncludeDebug] = useState(false);
   const [filterStart, setFilterStart] = useState(false);
   const [filterEnd, setFilterEnd] = useState(false);
-  const [fromDate] = useState('');
-  const [toDate] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const history = useHistory();
 
-  function onConfigChange(e) {
-    setConfigPath(e.target.value);
+  function setConfig() {
+    window.api.getFile().then((promise) => {
+      // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
+      if (promise.filePaths[0] !== undefined) {
+        setConfigPath(promise.filePaths[0]);
+      }
+    });
   }
 
-  function onLogChange(e) {
-    setLogPath(e.target.value);
+  function clearConfig() {
+    setConfigPath('No File Chosen');
+  }
+
+  function setLog() {
+    window.api.getFile().then((promise) => {
+      // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
+      if (promise.filePaths[0] !== undefined) {
+        setLogPath(promise.filePaths[0]);
+      }
+    });
+  }
+
+  function clearLog() {
+    setLogPath('No File Chosen');
   }
 
   function onIncludeDebugChange() {
@@ -34,22 +47,25 @@ function Extract(props) {
 
   function onFilterStartChange() {
     setFilterStart(!filterStart);
+    setFromDate('');
   }
 
   function onFilterEndChange() {
     setFilterEnd(!filterEnd);
+    setToDate('');
   }
 
-  // function onFromDateChange(e) {
-  //     setFromDate(e.target.value);
-  // }
+  function onFromDateChange(e) {
+    setFromDate(e.target.value);
+  }
 
-  // function onToDateChange(e) {
-  //     setToDate(e.target.value);
-  // }
+  function onToDateChange(e) {
+    setToDate(e.target.value);
+  }
 
   function useSubmit() {
     setSubmitted(!submitted);
+
     // allEntries parameter is true if it's not filtered by date, false if it is
     const filter = !(filterStart || filterEnd);
     window.api.extract(fromDate, toDate, configPath, logPath, includeDebug, filter).then((value) => {
@@ -67,20 +83,40 @@ function Extract(props) {
     setSubmitted(!submitted);
   }
   return (
-    <div>
+    <div className="page-container">
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
-        <div>
-          <Form>
+        <div className="page-container">
+          <Form className="form-container">
             <Row>
               <Col>
                 <Form.Group controlId="formConfigPath" className="mb-3">
-                  <Form.Label className="form-label">Configuration File</Form.Label>
-                  <Form.Control type="text" value={configPath} onChange={onConfigChange} />
+                  <Form.Label className="form-label">Select Configuration File</Form.Label>
+                  <div className="file-picker-box">
+                    <div className="file-button-container">
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setConfig}>
+                        Upload File
+                      </Button>
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearConfig}>
+                        Clear
+                      </Button>
+                    </div>
+                    <Form.Label className="form-label file-name">{configPath}</Form.Label>
+                  </div>
                 </Form.Group>
                 <Form.Group controlId="formLogPath">
-                  <Form.Label className="form-label">Previous Log File</Form.Label>
-                  <Form.Control type="text" value={logPath} onChange={onLogChange} />
+                  <Form.Label className="form-label">Select Log File</Form.Label>
+                  <div className="file-picker-box">
+                    <div className="file-button-container">
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setLog}>
+                        Upload File
+                      </Button>
+                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearLog}>
+                        Clear
+                      </Button>
+                    </div>
+                    <Form.Label className="form-label file-name">{logPath}</Form.Label>
+                  </div>
                 </Form.Group>
                 <Form.Group controlId="formIncludeDebug">
                   <Form.Check
@@ -102,6 +138,11 @@ function Extract(props) {
                     onChange={onFilterStartChange}
                   />
                 </Form.Group>
+                {filterStart && (
+                  <Form.Group controlId="formStartDate">
+                    <Form.Control type="date" label="Start Date" onChange={onFromDateChange} value={fromDate} />
+                  </Form.Group>
+                )}
               </Col>
               <Col>
                 <Form.Group controlId="formIncludeEndDate">
@@ -112,16 +153,21 @@ function Extract(props) {
                     onChange={onFilterEndChange}
                   />
                 </Form.Group>
+                {filterEnd && (
+                  <Form.Group controlId="formEndDate">
+                    <Form.Control type="date" label="End Date" onChange={onToDateChange} value={toDate} />
+                  </Form.Group>
+                )}
               </Col>
             </Row>
           </Form>
           <div className="nav-button-container">
             <LinkContainer to="/">
-              <Button className="nav-button" size="lg" variant="outline-secondary">
+              <Button className="generic-button" size="lg" variant="outline-secondary">
                 Cancel
               </Button>
             </LinkContainer>
-            <Button className="nav-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
+            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>
           </div>
@@ -130,7 +176,7 @@ function Extract(props) {
       {submitted && (
         <div>
           <p>The form as been submitted. Running extraction...</p>
-          <Button className="nav-button" size="lg" variant="outline-secondary" onClick={onReset}>
+          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onReset}>
             Reset
           </Button>
         </div>

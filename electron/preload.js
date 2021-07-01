@@ -17,4 +17,5 @@ contextBridge.exposeInMainWorld('api', {
     );
     return results;
   },
+  getFile: async () => ipcRenderer.invoke('get-file'),
 });

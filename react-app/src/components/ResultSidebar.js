@@ -38,10 +38,10 @@ function ResultSidebar(props) {
         </Accordion>
       </div>
       <div className="nav-button-container">
-        <Button className="nav-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
+        <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
           Exit
         </Button>
-        <Button className="nav-button" siz="lg" variant="outline-secondary" onClick={onSave}>
+        <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
           Save
         </Button>
       </div>
