@@ -1,8 +1,7 @@
 import React from 'react';
 import { Accordion } from 'react-bootstrap';
-
-const _ = require('lodash');
-const fhirpath = require('fhirpath');
+import _ from 'lodash';
+import fhirpath from 'fhirpath';
 
 function Result(props) {
   function countResources() {
@@ -21,8 +20,7 @@ function Result(props) {
     return _.sortBy(resourceList, ['resourceType', 'count']);
   }
 
-  function getResourceList() {
-    const resourceList = countResources();
+  function getFormattedList(resourceList) {
     return resourceList.map((item) => (
       <p key={item.resourceType}>
         {item.resourceType}: {item.count}
@@ -30,13 +28,15 @@ function Result(props) {
     ));
   }
 
-  function getNumResources() {
+  function getNumResources(resourceList) {
     let total = 0;
-    countResources().forEach((item) => {
+    resourceList.forEach((item) => {
       total += parseInt(item.count, 10);
     });
     return total;
   }
+
+  const resourceList = countResources();
 
   return (
     <Accordion.Item eventKey={props.id}>
@@ -49,8 +49,8 @@ function Result(props) {
         Patient {props.id + 1}
       </Accordion.Header>
       <Accordion.Body>
-        <p className="emphasized-list-text">Total Resources: {getNumResources()}</p>
-        {getResourceList()}
+        <p className="emphasized-list-text">Total Resources: {getNumResources(resourceList)}</p>
+        {getFormattedList(resourceList)}
       </Accordion.Body>
     </Accordion.Item>
   );
