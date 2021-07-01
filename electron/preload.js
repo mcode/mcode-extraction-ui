@@ -23,6 +23,7 @@ contextBridge.exposeInMainWorld('api', {
     return savePath;
   },
   saveOutput: async (savePath, extractedData) => {
-    await ipcRenderer.invoke('save-output', savePath, extractedData);
+    const result = await ipcRenderer.invoke('save-output', savePath, extractedData);
+    return result;
   },
 });

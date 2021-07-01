@@ -85,8 +85,14 @@ ipcMain.handle('get-output-path', async () => {
 });
 
 ipcMain.handle('save-output', async (event, savePath, extractedData) => {
-  extractedData.forEach((bundle, i) => {
-    const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
-    fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
-  });
+  try {
+    extractedData.forEach((bundle, i) => {
+      const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
+      fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
+      // 'false' as in 'no error'
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
 });

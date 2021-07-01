@@ -7,6 +7,8 @@ import Result from './Result';
 function ResultSidebar(props) {
   const history = useHistory();
   const [showSavedAlert, setShowSavedAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+
   function onExitResultPage() {
     // reset data values and return to home page
     history.push('/extract');
@@ -14,8 +16,12 @@ function ResultSidebar(props) {
 
   function onSave() {
     window.api.getOutputPath().then((savePath) => {
-      window.api.saveOutput(savePath.filePaths[0], props.extractedData);
-      setShowSavedAlert(true);
+      const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+      if (result) {
+        setShowSavedAlert(true);
+      } else {
+        setShowErrorAlert(true);
+      }
     });
   }
 
@@ -63,17 +69,26 @@ function ResultSidebar(props) {
           {list}
         </Accordion>
       </div>
-      <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
-        <Alert.Heading>Files Saved</Alert.Heading>
-      </Alert>
-      <div className="sidebar-button-container">
-        <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
-          Exit
-        </Button>
-        <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
-          Save
-        </Button>
-      </div>
+      {showSavedAlert && (
+        <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
+          <Alert.Heading>Files Saved</Alert.Heading>
+        </Alert>
+      )}
+      {showErrorAlert && (
+        <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+          <Alert.Heading>Error: Unable to save file(s)</Alert.Heading>
+        </Alert>
+      )}
+      {!showSavedAlert && !showErrorAlert && (
+        <div className="sidebar-button-container">
+          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
+            Exit
+          </Button>
+          <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
+            Save
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
