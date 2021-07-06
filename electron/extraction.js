@@ -22,7 +22,7 @@ async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, d
       runLogFilepath,
       defaultDebug,
       allEntries,
-    ).then((value) => value);
+    );
 
     if (!extractedData) {
       return null;
