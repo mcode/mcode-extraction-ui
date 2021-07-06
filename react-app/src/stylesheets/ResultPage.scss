@@ -26,6 +26,15 @@
   flex-direction: column;
   justify-content: flex-start;
   height: 100vh;
+  overflow-y: scroll;
+  padding-right: 0px;
+}
+
+.sidebar-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .patient-json-display {
