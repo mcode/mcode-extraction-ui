@@ -38,10 +38,33 @@ function Result(props) {
 
   function getLabel() {
     // attempt to get MRN and name with fhirpath
-    const mrnPath = 'Bundle.descendants().resource.resourceType';
-    const namePath = 'Bundle.descendants().resource.resourceType';
+    const mrn = fhirpath.evaluate(props.bundle, "Bundle.descendants().resource.where(resourceType='Patient').id")[0];
+    const name = fhirpath.evaluate(
+      props.bundle,
+      "Bundle.descendants().resource.where(resourceType='Patient').name.text",
+    )[0];
+    const resourceID = fhirpath.evaluate(
+      props.bundle,
+      "Bundle.descendants().where(resource.resourceType='Patient').fullUrl",
+    )[0];
 
     // if both MRN and name -- return string w / both
+    if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0) {
+      const label = mrn.concat(': ').concat(name);
+      return label;
+    }
+    if (typeof mrn === 'string' && mrn.length > 0) {
+      return mrn;
+    }
+    if (typeof name === 'string' && name.length > 0) {
+      return name;
+    }
+    if (typeof resourceID === 'string' && resourceID.length > 0) {
+      return resourceID;
+    }
+    let label = 'Patient';
+    label = label.concat(' ').concat(props.id.toString());
+    return label;
 
     // if either MRN or name -- return string / the available one
 
@@ -55,12 +78,13 @@ function Result(props) {
   return (
     <Accordion.Item eventKey={props.id}>
       <Accordion.Header
+        className="result-label"
         onClick={() => {
           props.setPatientID(props.id);
           props.setShowLogs(false);
         }}
       >
-        Patient {props.id}
+        {getLabel()}
       </Accordion.Header>
       <Accordion.Body>
         <p className="emphasized-list-text">Total Resources: {getNumResources(resourceList)}</p>
