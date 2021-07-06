@@ -36,6 +36,20 @@ function Result(props) {
     return total;
   }
 
+  function getLabel() {
+    // attempt to get MRN and name with fhirpath
+    const mrnPath = 'Bundle.descendants().resource.resourceType';
+    const namePath = 'Bundle.descendants().resource.resourceType';
+
+    // if both MRN and name -- return string w / both
+
+    // if either MRN or name -- return string / the available one
+
+    // if neither MRN nor name -- "Patient " + patient_resource_id
+
+    // if no patient resource ID -- return "Patient " + props.id
+  }
+
   const resourceList = countResources();
 
   return (
