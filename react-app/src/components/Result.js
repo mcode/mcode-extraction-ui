@@ -51,20 +51,20 @@ function Result(props) {
     // if both MRN and name -- return string w / both
     if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0) {
       const label = mrn.concat(': ').concat(name);
-      return label;
+      return <p className="accordion-result-label">{label}</p>;
     }
     if (typeof mrn === 'string' && mrn.length > 0) {
-      return mrn;
+      return <p className="accordion-result-label">{mrn}</p>;
     }
     if (typeof name === 'string' && name.length > 0) {
-      return name;
+      return <p className="accordion-result-label">{name}</p>;
     }
     if (typeof resourceID === 'string' && resourceID.length > 0) {
-      return resourceID;
+      return <p className="accordion-result-label">{resourceID}</p>;
     }
     let label = 'Patient';
     label = label.concat(' ').concat(props.id.toString());
-    return label;
+    return <p className="accordion-result-label">{label}</p>;
 
     // if either MRN or name -- return string / the available one
 
@@ -78,7 +78,6 @@ function Result(props) {
   return (
     <Accordion.Item eventKey={props.id}>
       <Accordion.Header
-        className="result-label"
         onClick={() => {
           props.setPatientID(props.id);
           props.setShowLogs(false);
