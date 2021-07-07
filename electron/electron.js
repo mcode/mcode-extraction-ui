@@ -90,8 +90,10 @@ ipcMain.handle('save-output', async (event, savePath, extractedData) => {
       const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
       fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
     });
+    // retuerning true indicates that the save process succeeded
     return true;
   } catch (error) {
+    // returning false indicates that something went wrong during the save process
     return false;
   }
 });
