@@ -49,7 +49,7 @@ function Result(props) {
       "Bundle.descendants().resource.where(resourceType='Patient').identifier.extension.valueCode",
     )[0];
 
-    if (typeof isMasked === 'string' && isMasked === 'masked') {
+    if (isMasked === 'masked') {
       isMasked = true;
     } else {
       isMasked = false;
