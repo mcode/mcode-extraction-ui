@@ -93,7 +93,7 @@ ipcMain.handle('save-output', async (event, savePath, extractedData) => {
     // retuerning true indicates that the save process succeeded
     return true;
   } catch (error) {
-    // returning false indicates that something went wrong during the save process
-    return false;
+    // return the error message
+    return error.message;
   }
 });

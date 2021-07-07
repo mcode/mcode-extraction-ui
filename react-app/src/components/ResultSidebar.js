@@ -8,6 +8,7 @@ function ResultSidebar(props) {
   const history = useHistory();
   const [showSavedAlert, setShowSavedAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
 
   function onExitResultPage() {
@@ -32,13 +33,15 @@ function ResultSidebar(props) {
           return null;
         })
         .then((result) => {
-          if (result) {
+          if (result === true) {
             // if saveOutput() returns true, then the save process succeeded
             setShowSavedAlert(true);
-          } else if (result !== null) {
-            // if saveOutput() returns false, then the save process succeeded. If result is null, the process was cancelled, and nothing should be done.
+          } else if (typeof result === 'string') {
+            // if the result is a string, that means the save process returned an error message
+            setErrorMessage(result);
             setShowErrorAlert(true);
           }
+          // If result is null, the process was cancelled, and nothing should be done.
         });
     } else {
       setShowNoFilesAlert(true);
@@ -97,6 +100,7 @@ function ResultSidebar(props) {
       {showErrorAlert && (
         <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
           <Alert.Heading>Error: Unable to save file(s)</Alert.Heading>
+          <p>{errorMessage}</p>
         </Alert>
       )}
       {showNoFilesAlert && (
