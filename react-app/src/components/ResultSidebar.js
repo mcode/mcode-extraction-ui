@@ -42,6 +42,12 @@ function ResultSidebar(props) {
             setShowErrorAlert(true);
           }
           // If result is null, the process was cancelled, and nothing should be done.
+        })
+        .catch((error) => {
+          setShowErrorAlert(true);
+          setErrorMessage(error.message);
+          setShowSavedAlert(false);
+          setShowNoFilesAlert(false);
         });
     } else {
       setShowNoFilesAlert(true);
