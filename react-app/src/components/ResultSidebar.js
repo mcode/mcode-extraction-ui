@@ -17,16 +17,29 @@ function ResultSidebar(props) {
 
   function onSave() {
     if (props.extractedData.length > 0) {
-      window.api.getOutputPath().then((savePath) => {
-        if (!savePath.canceled) {
-          const result = window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+      window.api
+        .getOutputPath()
+        .then((savePath) => {
+          if (!savePath.canceled) {
+            return savePath;
+          }
+          return null;
+        })
+        .then((savePath) => {
+          if (savePath) {
+            return window.api.saveOutput(savePath.filePaths[0], props.extractedData);
+          }
+          return null;
+        })
+        .then((result) => {
           if (result) {
+            // if saveOutput() returns true, then the save process succeeded
             setShowSavedAlert(true);
-          } else {
+          } else if (result !== null) {
+            // if saveOutput() returns false, then the save process succeeded. If result is null, the process was cancelled, and nothing should be done.
             setShowErrorAlert(true);
           }
-        }
-      });
+        });
     } else {
       setShowNoFilesAlert(true);
     }
