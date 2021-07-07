@@ -77,6 +77,7 @@ ipcMain.handle('get-file', async () =>
 
 ipcMain.handle('get-output-path', async () => {
   const options = {
+    buttonLabel: 'Save',
     title: 'Select Output Folder',
     defaultPath: app.getPath('downloads'),
     properties: ['openDirectory', 'createDirectory'],
