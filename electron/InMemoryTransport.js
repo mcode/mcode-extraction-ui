@@ -8,10 +8,7 @@ module.exports = class InMemoryTransport extends Transport {
   }
 
   log(info, callback) {
-    const MESSAGE_SYMBOL = Symbol.for('message');
-    const message = info[MESSAGE_SYMBOL];
-    const strippedMessage = stripAnsi(message);
-    this.loggedMessages.push({ message: strippedMessage, level: stripAnsi(info.level) });
+    this.loggedMessages.push({ message: info.message, level: stripAnsi(info.level), timestamp: info.timestamp });
     // Perform the writing to the remote service
     callback();
   }
