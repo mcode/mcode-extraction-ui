@@ -59,7 +59,7 @@ function ResultSidebar(props) {
           {list}
         </Accordion>
       </div>
-      <div className="nav-button-container">
+      <div className="sidebar-button-container">
         <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
           Exit
         </Button>
