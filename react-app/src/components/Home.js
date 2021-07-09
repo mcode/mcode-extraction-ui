@@ -18,7 +18,7 @@ function Home() {
             Extract New
           </Button>
         </LinkContainer>
-        <LinkContainer to="/config-menu">
+        <LinkContainer to="/config-editor">
           <Button className="home-menu-button" variant="outline-secondary">
             Configuration File Editor
           </Button>

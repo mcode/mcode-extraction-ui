@@ -5,7 +5,6 @@ import Home from './components/Home';
 import Extract from './components/Extract';
 import ResultPage from './components/ResultPage';
 import ExtractionError from './components/ExtractionError';
-import ConfigMenu from './components/ConfigMenu';
 import ConfigEditor from './components/ConfigEditor';
 
 import './stylesheets/custom.scss';
@@ -32,9 +31,6 @@ function App() {
             </Route>
             <Route path="/extraction-error">
               <ExtractionError loggedMessages={loggedMessages} />
-            </Route>
-            <Route path="/config-menu">
-              <ConfigMenu />
             </Route>
             <Route path="/config-editor">
               <ConfigEditor />
