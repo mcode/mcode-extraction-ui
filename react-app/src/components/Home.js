@@ -6,7 +6,7 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
-import '../stylesheets/Home.css';
+import '../stylesheets/Home.scss';
 
 function Home() {
   return (
@@ -16,6 +16,11 @@ function Home() {
         <LinkContainer to="/extract">
           <Button className="home-menu-button" variant="outline-secondary">
             Extract New
+          </Button>
+        </LinkContainer>
+        <LinkContainer to="/config-menu">
+          <Button className="home-menu-button" variant="outline-secondary">
+            Configuration File Editor
           </Button>
         </LinkContainer>
       </div>
