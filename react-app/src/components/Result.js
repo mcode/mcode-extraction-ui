@@ -43,36 +43,27 @@ function Result(props) {
       const mrn = patient.id;
       const name = patient.name[0].text;
 
-      let isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0];
-
-      if (isMasked === 'masked') {
-        isMasked = true;
-      } else {
-        isMasked = false;
-      }
+      const isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0] === 'masked';
 
       // if both MRN and name -- return string w / both
       if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
         const label = mrn.concat(': ').concat(name);
         return <p className="accordion-result-label">{label}</p>;
       }
+      // if either MRN or name -- return string / the available one
       if (typeof name === 'string' && name.length > 0) {
         return <p className="accordion-result-label">{name}</p>;
       }
+      // if neither MRN nor name -- "Patient " + patient_resource_id
       if (typeof mrn === 'string' && mrn.length > 0) {
         return <p className="accordion-result-label">{mrn}</p>;
       }
     }
 
+    // if no patient resource ID -- return "Patient " + props.id
     let label = 'Patient';
     label = label.concat(' ').concat(props.id.toString());
     return <p className="accordion-result-label">{label}</p>;
-
-    // if either MRN or name -- return string / the available one
-
-    // if neither MRN nor name -- "Patient " + patient_resource_id
-
-    // if no patient resource ID -- return "Patient " + props.id
   }
 
   const resourceList = countResources();
