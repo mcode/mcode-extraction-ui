@@ -5,19 +5,18 @@ import '../stylesheets/LogList.scss';
 
 function LogList(props) {
   function getVariant(level) {
-    if (level === 'info') {
-      return 'success';
+    switch (level) {
+      case 'info':
+        return 'success';
+      case 'warn':
+        return 'warning';
+      case 'error':
+        return 'danger';
+      case 'debug':
+        return 'primary';
+      default:
+        return 'primary';
     }
-    if (level === 'warn') {
-      return 'warning';
-    }
-    if (level === 'error') {
-      return 'danger';
-    }
-    if (level === 'debug') {
-      return 'primary';
-    }
-    return 'primary';
   }
   const list = props.loggedMessages.map((log, i) => (
     <ListGroup.Item className="log-message" key={i}>
