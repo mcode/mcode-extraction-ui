@@ -14,7 +14,7 @@ function ResultPage(props) {
     <div>
       <Container fluid>
         <Row>
-          <Col xxl={3} xl={3} lg={3} md={3} sm={3} xs={3} className="sidebar-col">
+          <Col sm={1} xs={3} className="sidebar-col">
             <ResultSidebar
               extractedData={props.extractedData}
               loggedMessages={props.loggedMessages}
