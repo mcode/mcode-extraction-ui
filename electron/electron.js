@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const { dialog } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
+const fs = require('fs');
 const path = require('path');
 const { logger } = require('mcode-extraction-framework');
 const runExtraction = require('./extraction');
@@ -74,3 +74,27 @@ ipcMain.handle('get-file', async () =>
     properties: ['openFile'],
   }),
 );
+
+ipcMain.handle('get-output-path', async () => {
+  const options = {
+    buttonLabel: 'Save',
+    title: 'Select Output Folder',
+    defaultPath: app.getPath('downloads'),
+    properties: ['openDirectory', 'createDirectory'],
+  };
+  return dialog.showOpenDialog(null, options, (savePath) => savePath);
+});
+
+ipcMain.handle('save-output', async (event, savePath, extractedData) => {
+  try {
+    extractedData.forEach((bundle, i) => {
+      const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
+      fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
+    });
+    // retuerning true indicates that the save process succeeded
+    return true;
+  } catch (error) {
+    // return the error message
+    return error.message;
+  }
+});
