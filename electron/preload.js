@@ -26,4 +26,8 @@ contextBridge.exposeInMainWorld('api', {
     const result = await ipcRenderer.invoke('save-output', savePath, extractedData);
     return result;
   },
+  saveConfigAs: async (schema) => {
+    const result = await ipcRenderer.invoke('save-config-as', schema);
+    return result;
+  },
 });
