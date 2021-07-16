@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 // import ResultHeader from './ResultHeader';
-import PatientData from './PatientData';
+import PatientData from './OutputDisplay';
 import ResultSidebar from './ResultSidebar';
 
 import '../stylesheets/ResultPage.scss';
