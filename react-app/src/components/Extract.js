@@ -162,11 +162,11 @@ function Extract(props) {
             </Row>
           </Form>
           <div className="nav-button-container">
-            <LinkContainer to="/">
-              <Button className="generic-button" size="lg" variant="outline-secondary">
-                Cancel
-              </Button>
-            </LinkContainer>
+            <Button className="generic-button" size="lg" variant="outline-secondary">
+              <LinkContainer to="/">
+                <p className="button-text">Cancel</p>
+              </LinkContainer>
+            </Button>
             <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>
