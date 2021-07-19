@@ -38,7 +38,14 @@ function ResultSidebar(props) {
   }
 
   const list = props.extractedData.map((bundle, i) => (
-    <Result bundle={bundle} id={i} setPatientID={props.setPatientID} key={i} setShowLogs={props.setShowLogs} />
+    <Result
+      bundle={bundle}
+      id={i}
+      setPatientID={props.setPatientID}
+      key={i}
+      setShowLogs={props.setShowLogs}
+      setShowSaveForm={props.setShowSaveForm}
+    />
   ));
 
   return (

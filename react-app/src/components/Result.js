@@ -74,6 +74,7 @@ function Result(props) {
         onClick={() => {
           props.setPatientID(props.id);
           props.setShowLogs(false);
+          props.setShowSaveForm(false);
         }}
       >
         {getLabel()}
