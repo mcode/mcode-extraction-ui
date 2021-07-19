@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+import fhirpath from 'fhirpath';
+import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
 
 function SaveOutputForm(props) {
   const [outputPath, setOutputPath] = useState('No Folder Selected');
@@ -28,6 +30,80 @@ function SaveOutputForm(props) {
 
   function toggleSaveLogs() {
     setSaveLogs(!saveLogs);
+  }
+
+  function getLabel(bundle, id) {
+    // attempt to get MRN and name with fhirpath
+    const patient = fhirpath.evaluate(bundle, "Bundle.descendants().resource.where(resourceType='Patient')")[0];
+    if (patient) {
+      const mrn = patient.id;
+      const name = patient.name[0].text;
+
+      const isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0] === 'masked';
+
+      // if both MRN and name -- return string w / both
+      if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
+        const label = mrn.concat(': ').concat(name);
+        return <p className="accordion-result-label">{label}</p>;
+      }
+      // if either MRN or name -- return string / the available one
+      if (typeof name === 'string' && name.length > 0) {
+        return <p className="accordion-result-label">{name}</p>;
+      }
+      // if neither MRN nor name -- "Patient " + patient_resource_id
+      if (typeof mrn === 'string' && mrn.length > 0) {
+        return <p className="accordion-result-label">{mrn}</p>;
+      }
+    }
+
+    // if no patient resource ID -- return "Patient " + props.id
+    let label = 'Patient';
+    label = label.concat(' ').concat(id.toString());
+    return label;
+  }
+
+  //   const [whichFiles, setWhichFiles] = useState({});
+  //   let tempWhichFiles = { ...whichFiles };
+  //   props.extractedData.forEach((bundle, i) => {
+  //     tempWhichFiles = {
+  //       ...tempWhichFiles,
+  //       [getLabel(bundle, i)]: true,
+  //     };
+  //   });
+  //   setWhichFiles({ ...tempWhichFiles });
+  //   console.log(whichFiles);
+
+  const [refresh, callRefresh] = useState(false);
+  let whichFiles = {};
+
+  function togglePatientCheckbox(e) {
+    console.log(e);
+    console.log('e.target.id: ', e.target.id);
+    console.log('e.target.checked: ', e.target.checked);
+    whichFiles = { ...whichFiles, [e.target.id]: e.target.checked };
+    if (!e.target.checked && selectAll) {
+      setSelectAll(false);
+    }
+    callRefresh(!refresh);
+  }
+
+  function getPatientCheckboxes() {
+    const list = props.extractedData.map((bundle, i) => {
+      const label = `Patient ${i}`;
+      console.log('Label ', i, ': ', label);
+      whichFiles = { ...whichFiles, [label]: true };
+      return (
+        <Form.Check
+          type="checkbox"
+          label={label}
+          key={label}
+          id={label}
+          checked={whichFiles[label]}
+          onChange={togglePatientCheckbox}
+        />
+      );
+    });
+    return list;
   }
 
   function onSave() {
@@ -92,6 +168,7 @@ function SaveOutputForm(props) {
               <Form.Group controlId="formConfigPath" className="mb-3">
                 <Form.Label className="form-label">Select Files to Save</Form.Label>
                 <Form.Check type="checkbox" label="Select All" checked={selectAll} onChange={toggleSelectAll} />
+                {getPatientCheckboxes()}
               </Form.Group>
             </Col>
           </Row>
