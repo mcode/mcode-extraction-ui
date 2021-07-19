@@ -18,15 +18,6 @@ function SaveOutputForm(props) {
     setOutputPath('No Folder Selected');
   }
 
-  function toggleSelectAll() {
-    // modify which files will be saved first, so that there's no issues with state update delays
-    if (!selectAll) {
-      // make all the other files to save true
-    }
-    // set select all
-    setSelectAll(!selectAll);
-  }
-
   function toggleSaveLogs() {
     setSaveLogs(!saveLogs);
   }
@@ -43,15 +34,15 @@ function SaveOutputForm(props) {
       // if both MRN and name -- return string w / both
       if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
         const label = mrn.concat(': ').concat(name);
-        return <p className="accordion-result-label">{label}</p>;
+        return label;
       }
       // if either MRN or name -- return string / the available one
       if (typeof name === 'string' && name.length > 0) {
-        return <p className="accordion-result-label">{name}</p>;
+        return name;
       }
       // if neither MRN nor name -- "Patient " + patient_resource_id
       if (typeof mrn === 'string' && mrn.length > 0) {
-        return <p className="accordion-result-label">{mrn}</p>;
+        return mrn;
       }
     }
 
@@ -63,7 +54,7 @@ function SaveOutputForm(props) {
 
   let defaultWhichFiles = {};
   props.extractedData.forEach((bundle, i) => {
-    const label = `Patient ${i}`;
+    const label = getLabel(bundle, i);
     defaultWhichFiles = {
       ...defaultWhichFiles,
       [label]: true,
@@ -86,7 +77,7 @@ function SaveOutputForm(props) {
   function getPatientCheckboxes() {
     console.log(whichFiles);
     const list = props.extractedData.map((bundle, i) => {
-      const label = `Patient ${i}`;
+      const label = getLabel(bundle, i);
       return (
         <Form.Check
           type="checkbox"
@@ -99,6 +90,22 @@ function SaveOutputForm(props) {
       );
     });
     return list;
+  }
+
+  function toggleSelectAll() {
+    // modify which files will be saved first, so that there's no issues with state update delays
+    if (!selectAll) {
+      props.extractedData.forEach((bundle, i) => {
+        const label = getLabel(bundle, i);
+        defaultWhichFiles = {
+          ...defaultWhichFiles,
+          [label]: true,
+        };
+      });
+      setWhichFiles({ ...defaultWhichFiles });
+    }
+    // set select all
+    setSelectAll(!selectAll);
   }
 
   function onSave() {
