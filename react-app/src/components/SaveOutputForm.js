@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import fhirpath from 'fhirpath';
-import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
 
 function SaveOutputForm(props) {
   const [outputPath, setOutputPath] = useState('No Folder Selected');
@@ -62,36 +61,32 @@ function SaveOutputForm(props) {
     return label;
   }
 
-  //   const [whichFiles, setWhichFiles] = useState({});
-  //   let tempWhichFiles = { ...whichFiles };
-  //   props.extractedData.forEach((bundle, i) => {
-  //     tempWhichFiles = {
-  //       ...tempWhichFiles,
-  //       [getLabel(bundle, i)]: true,
-  //     };
-  //   });
-  //   setWhichFiles({ ...tempWhichFiles });
-  //   console.log(whichFiles);
+  let defaultWhichFiles = {};
+  props.extractedData.forEach((bundle, i) => {
+    const label = `Patient ${i}`;
+    defaultWhichFiles = {
+      ...defaultWhichFiles,
+      [label]: true,
+    };
+  });
+  const [whichFiles, setWhichFiles] = useState({ ...defaultWhichFiles });
 
-  const [refresh, callRefresh] = useState(false);
-  let whichFiles = {};
+  // let whichFiles = {};
 
   function togglePatientCheckbox(e) {
     console.log(e);
     console.log('e.target.id: ', e.target.id);
     console.log('e.target.checked: ', e.target.checked);
-    whichFiles = { ...whichFiles, [e.target.id]: e.target.checked };
+    setWhichFiles({ ...whichFiles, [e.target.id]: e.target.checked });
     if (!e.target.checked && selectAll) {
       setSelectAll(false);
     }
-    callRefresh(!refresh);
   }
 
   function getPatientCheckboxes() {
+    console.log(whichFiles);
     const list = props.extractedData.map((bundle, i) => {
       const label = `Patient ${i}`;
-      console.log('Label ', i, ': ', label);
-      whichFiles = { ...whichFiles, [label]: true };
       return (
         <Form.Check
           type="checkbox"
