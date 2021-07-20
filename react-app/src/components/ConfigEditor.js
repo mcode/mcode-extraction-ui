@@ -6,7 +6,6 @@ import LinkButton from './LinkButton';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
-  const [containerClass, setContainerClass] = useState('flex-alignment-container');
   const schema = {
     $id: 'https://example.com/person.schema.json',
     $schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -21,15 +20,10 @@ function ConfigEditor() {
   };
 
   function toggleForm() {
-    if (showForm) {
-      setContainerClass('flex-alignment-container');
-    } else {
-      setContainerClass('page-container');
-    }
     setShowForm(!showForm);
   }
   return (
-    <div className={containerClass}>
+    <div className="flex-start-container">
       <h1 className="page-title">Configuration Editor</h1>
       {!showForm && (
         <div className="button-container">
@@ -39,7 +33,7 @@ function ConfigEditor() {
           <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Back" path="/" />
         </div>
       )}
-      {showForm && <ConfigForm schema={schema} setShowForm={setShowForm} setContainerClass={setContainerClass} />}
+      {showForm && <ConfigForm schema={schema} setShowForm={setShowForm} />}
     </div>
   );
 }
