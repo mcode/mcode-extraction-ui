@@ -3,19 +3,17 @@ import { Alert, Button } from 'react-bootstrap';
 
 function ConfigForm(props) {
   const [showSavedAlert, setShowSavedAlert] = useState(false);
+  const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   function onSaveAs() {
     window.api
       .saveConfigAs(props.schema)
       .then((result) => {
-        if (result === true) {
+        if (result !== null) {
           // if saveOutput() returns true, then the save process succeeded
           setShowSavedAlert(true);
-        } else if (typeof result === 'string') {
-          // if the result is a string, that means the save process returned an error message
-          setErrorMessage(result);
-          setShowErrorAlert(true);
+          setSavedMessage('Files saved to '.concat(result));
         }
         // If result is null, the process was cancelled, and nothing should be done.
       })
@@ -34,6 +32,7 @@ function ConfigForm(props) {
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
           <Alert.Heading>Files saved</Alert.Heading>
+          <p>{savedMessage}</p>
         </Alert>
       )}
       {showErrorAlert && (

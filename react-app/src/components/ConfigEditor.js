@@ -23,7 +23,7 @@ function ConfigEditor() {
     setShowForm(!showForm);
   }
   return (
-    <div className="page-container">
+    <div>
       <h1 className="page-title">Configuration Editor</h1>
       {!showForm && (
         <div className="button-container">
