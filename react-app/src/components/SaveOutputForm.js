@@ -65,9 +65,6 @@ function SaveOutputForm(props) {
   // let whichFiles = {};
 
   function togglePatientCheckbox(e) {
-    console.log(e);
-    console.log('e.target.id: ', e.target.id);
-    console.log('e.target.checked: ', e.target.checked);
     setWhichFiles({ ...whichFiles, [e.target.id]: e.target.checked });
     if (!e.target.checked && selectAll) {
       setSelectAll(false);
@@ -75,7 +72,6 @@ function SaveOutputForm(props) {
   }
 
   function getPatientCheckboxes() {
-    console.log(whichFiles);
     const list = props.extractedData.map((bundle, i) => {
       const label = getLabel(bundle, i);
       return (
