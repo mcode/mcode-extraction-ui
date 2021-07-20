@@ -24,10 +24,11 @@ function ConfigForm(props) {
       });
   }
   function onBack() {
+    props.setContainerClass('flex-alignment-container');
     props.setShowForm(false);
   }
   return (
-    <div className="page-container">
+    <div className="flex-alignment-container">
       <p className="page-text text-centered">The config editor form will display here.</p>
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>

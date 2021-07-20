@@ -4,30 +4,10 @@ const { ipcRenderer, contextBridge } = require('electron');
 contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
 
 contextBridge.exposeInMainWorld('api', {
-  extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
-    //  call function in preload.js
-    const results = await ipcRenderer.invoke(
-      'run-extraction',
-      fromDate,
-      toDate,
-      configFilepath,
-      runLogFilepath,
-      debug,
-      allEntries,
-    );
-    return results;
-  },
+  extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) =>
+    ipcRenderer.invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries),
   getFile: async () => ipcRenderer.invoke('get-file'),
-  getOutputPath: async () => {
-    const savePath = await ipcRenderer.invoke('get-output-path');
-    return savePath;
-  },
-  saveOutput: async (savePath, extractedData) => {
-    const result = await ipcRenderer.invoke('save-output', savePath, extractedData);
-    return result;
-  },
-  saveConfigAs: async (schema) => {
-    const result = await ipcRenderer.invoke('save-config-as', schema);
-    return result;
-  },
+  getOutputPath: async () => ipcRenderer.invoke('get-output-path'),
+  saveOutput: async (savePath, extractedData) => ipcRenderer.invoke('save-output', savePath, extractedData),
+  saveConfigAs: async (schema) => ipcRenderer.invoke('save-config-as', schema),
 });
