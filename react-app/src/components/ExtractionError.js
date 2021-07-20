@@ -1,7 +1,6 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Button } from 'react-bootstrap';
 import LogList from './LogList';
+import LinkButton from './LinkButton';
 
 function ExtractionError(props) {
   return (
@@ -12,11 +11,7 @@ function ExtractionError(props) {
         checked.
       </p>
       <div className="button-container">
-        <LinkContainer to="/extract">
-          <Button className="generic-button" size="lg" variant="outline-secondary">
-            Extract New
-          </Button>
-        </LinkContainer>
+        <LinkButton className="generic-button" variant="outline-secondary" text="Extract New" path="/extract" />
       </div>
       <LogList loggedMessages={props.loggedMessages} listType="" />
     </div>

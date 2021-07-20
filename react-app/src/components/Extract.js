@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+
+import LinkButton from './LinkButton';
 
 function Extract(props) {
   const [configPath, setConfigPath] = useState('No File Chosen');
@@ -162,11 +163,7 @@ function Extract(props) {
             </Row>
           </Form>
           <div className="nav-button-container">
-            <Button className="generic-button" size="lg" variant="outline-secondary">
-              <LinkContainer to="/">
-                <p className="button-text">Cancel</p>
-              </LinkContainer>
-            </Button>
+            <LinkButton className="generic-button" size="lg" variant="outline-secondary" text="Cancel" path="/" />
             <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
+import LinkButton from './LinkButton';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
@@ -30,12 +30,7 @@ function ConfigEditor() {
           <Button className="vertical-menu-button" variant="outline-secondary" onClick={toggleForm}>
             Create New
           </Button>
-
-          <Button className="vertical-menu-button" variant="outline-secondary" onClick={toggleForm}>
-            <LinkContainer to="/">
-              <p className="button-text">Back</p>
-            </LinkContainer>
-          </Button>
+          <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Back" path="/" />
         </div>
       )}
       {showForm && <ConfigForm schema={schema} setShowForm={setShowForm} />}
