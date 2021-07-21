@@ -91,10 +91,34 @@ ipcMain.handle('save-output', async (event, savePath, extractedData) => {
       const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
       fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
     });
-    // retuerning true indicates that the save process succeeded
+    // returning true indicates that the save process succeeded
     return true;
   } catch (error) {
     // return the error message
     return error.message;
   }
+});
+
+ipcMain.handle('save-config-as', async (event, configJSON) => {
+  const options = {
+    defaultPath: app.getPath('downloads'),
+    filters: [{ name: 'JSON', extensions: ['json'] }],
+    properties: ['createDirectory'],
+  };
+  return dialog
+    .showSaveDialog(null, options)
+    .then((savePath) => {
+      if (!savePath.canceled) {
+        return savePath.filePath;
+      }
+      return null;
+    })
+    .then((savePath) => {
+      if (savePath !== null) {
+        fs.writeFileSync(savePath, JSON.stringify(configJSON), 'utf8');
+      }
+      // returning a path indicates that the save process succeeded
+      // returning null indicates that the save process was cancelled
+      return savePath;
+    });
 });
