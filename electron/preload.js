@@ -9,5 +9,5 @@ contextBridge.exposeInMainWorld('api', {
   getFile: async () => ipcRenderer.invoke('get-file'),
   getOutputPath: async () => ipcRenderer.invoke('get-output-path'),
   saveOutput: async (savePath, extractedData) => ipcRenderer.invoke('save-output', savePath, extractedData),
-  saveConfigAs: async (schema) => ipcRenderer.invoke('save-config-as', schema),
+  saveConfigAs: async (configJSON) => ipcRenderer.invoke('save-config-as', configJSON),
 });

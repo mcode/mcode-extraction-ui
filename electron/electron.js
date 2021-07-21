@@ -99,9 +99,10 @@ ipcMain.handle('save-output', async (event, savePath, extractedData) => {
   }
 });
 
-ipcMain.handle('save-config-as', async (event, schema) => {
+ipcMain.handle('save-config-as', async (event, configJSON) => {
   const options = {
     defaultPath: app.getPath('downloads'),
+    filters: [{ name: 'JSON', extensions: ['json'] }],
     properties: ['createDirectory'],
   };
   return dialog
@@ -114,7 +115,7 @@ ipcMain.handle('save-config-as', async (event, schema) => {
     })
     .then((savePath) => {
       if (savePath !== null) {
-        fs.writeFileSync(savePath, JSON.stringify(schema), 'utf8');
+        fs.writeFileSync(savePath, JSON.stringify(configJSON), 'utf8');
       }
       // returning a path indicates that the save process succeeded
       // returning null indicates that the save process was cancelled

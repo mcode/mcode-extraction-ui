@@ -8,7 +8,7 @@ function ConfigForm(props) {
   const [errorMessage, setErrorMessage] = useState('');
   function onSaveAs() {
     window.api
-      .saveConfigAs(props.schema)
+      .saveConfigAs(props.configJSON)
       .then((result) => {
         if (result !== null) {
           // if saveOutput() returns true, then the save process succeeded

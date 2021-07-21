@@ -6,7 +6,7 @@ import LinkButton from './LinkButton';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
-  const schema = {
+  const configJSON = {
     $id: 'https://example.com/person.schema.json',
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     title: 'Person',
@@ -14,7 +14,7 @@ function ConfigEditor() {
     properties: {
       placeholder: {
         type: 'string',
-        description: 'This is a placeholder for an actual config JSON schema',
+        description: 'This is a placeholder for an actual config JSON',
       },
     },
   };
@@ -33,7 +33,7 @@ function ConfigEditor() {
           <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Back" path="/" />
         </div>
       )}
-      {showForm && <ConfigForm schema={schema} setShowForm={setShowForm} />}
+      {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} />}
     </div>
   );
 }
