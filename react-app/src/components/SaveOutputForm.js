@@ -202,7 +202,7 @@ function SaveOutputForm(props) {
         )}
         {showNoFilesAlert && (
           <Alert variant="warning" show={showNoFilesAlert} onClose={() => setShowNoFilesAlert(false)} dismissible>
-            <Alert.Heading>Error: No patient data to save</Alert.Heading>
+            <Alert.Heading>Warning: No patient data to save</Alert.Heading>
           </Alert>
         )}
       </div>
