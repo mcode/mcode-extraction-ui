@@ -90,7 +90,6 @@ ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) =
     const logPath = path.join(savePath, 'logged-messages.log');
     let messages = '';
     loggedMessages.forEach((log) => {
-      console.log('Log: ', log);
       messages = messages.concat(`${log.timestamp} [${log.level}]:${log.message}\n`);
     });
     fs.writeFileSync(logPath, messages, 'utf8');
