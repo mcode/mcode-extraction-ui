@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactJson from 'react-json-view';
-import { Alert } from 'react-bootstrap';
 import LogList from './LogList';
 import SaveOutputForm from './SaveOutputForm';
 
-function PatientData(props) {
-  const [showSavedAlert, setShowSavedAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
-
+function OutputDisplay(props) {
   return (
     <div>
       {props.id === null && !props.showLogs && !props.showSaveForm && (
@@ -31,30 +25,12 @@ function PatientData(props) {
       {props.showSaveForm && (
         <SaveOutputForm
           extractedData={props.extractedData}
-          setShowSavedAlert={setShowSavedAlert}
-          setShowErrorAlert={setShowErrorAlert}
-          setErrorMessage={setErrorMessage}
-          setShowNoFilesAlert={setShowNoFilesAlert}
+          setShowSaveForm={props.setShowSaveForm}
+          loggedMessages={props.loggedMessages}
         />
-      )}
-      {showSavedAlert && (
-        <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
-          <Alert.Heading>Files saved</Alert.Heading>
-        </Alert>
-      )}
-      {showErrorAlert && (
-        <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
-          <Alert.Heading>Error: Unable to save file(s)</Alert.Heading>
-          <p>{errorMessage}</p>
-        </Alert>
-      )}
-      {showNoFilesAlert && (
-        <Alert variant="warning" show={showNoFilesAlert} onClose={() => setShowNoFilesAlert(false)} dismissible>
-          <Alert.Heading>Error: No patient data to save</Alert.Heading>
-        </Alert>
       )}
     </div>
   );
 }
 
-export default PatientData;
+export default OutputDisplay;

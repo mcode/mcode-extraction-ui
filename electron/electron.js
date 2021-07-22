@@ -77,7 +77,7 @@ ipcMain.handle('get-file', async () =>
 
 ipcMain.handle('get-output-path', async () => {
   const options = {
-    buttonLabel: 'Save',
+    buttonLabel: 'Select Folder',
     title: 'Select Output Folder',
     defaultPath: app.getPath('downloads'),
     properties: ['openDirectory', 'createDirectory'],
@@ -85,18 +85,22 @@ ipcMain.handle('get-output-path', async () => {
   return dialog.showOpenDialog(null, options, (savePath) => savePath);
 });
 
-ipcMain.handle('save-output', async (event, savePath, extractedData) => {
-  try {
-    extractedData.forEach((bundle, i) => {
-      const outputFile = path.join(savePath, `mcode-extraction-patient-${i + 1}.json`);
-      fs.writeFileSync(outputFile, JSON.stringify(bundle), 'utf8');
+ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) => {
+  if (saveLogs) {
+    const logPath = path.join(savePath, 'logged-messages.log');
+    let messages = '';
+    loggedMessages.forEach((log) => {
+      console.log('Log: ', log);
+      messages = messages.concat(`${log.timestamp} [${log.level}]:${log.message}\n`);
     });
-    // returning true indicates that the save process succeeded
-    return true;
-  } catch (error) {
-    // return the error message
-    return error.message;
+    fs.writeFileSync(logPath, messages, 'utf8');
   }
+  outputBundles.forEach((data) => {
+    const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
+    fs.writeFileSync(outputFile, JSON.stringify(data.bundle), 'utf8');
+  });
+  // returning true indicates that the save process succeeded
+  return true;
 });
 
 ipcMain.handle('save-config-as', async (event, configJSON) => {

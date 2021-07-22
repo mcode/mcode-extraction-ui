@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 // import ResultHeader from './ResultHeader';
-import PatientData from './OutputDisplay';
+import OutputDisplay from './OutputDisplay';
 import ResultSidebar from './ResultSidebar';
 
 import '../stylesheets/ResultPage.scss';
@@ -25,7 +25,7 @@ function ResultPage(props) {
             />
           </Col>
           <Col>
-            <PatientData
+            <OutputDisplay
               patientJson={props.extractedData[patientID]}
               extractedData={props.extractedData}
               id={patientID}

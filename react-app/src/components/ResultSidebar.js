@@ -61,7 +61,7 @@ function ResultSidebar(props) {
                 props.setShowSaveForm(false);
               }}
             >
-              Log File
+              Logger Messages
             </Accordion.Header>
             {getLoggerStats()}
           </Accordion.Item>

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 import fhirpath from 'fhirpath';
 
 function SaveOutputForm(props) {
   const [outputPath, setOutputPath] = useState('No Folder Selected');
   const [selectAll, setSelectAll] = useState(true);
   const [saveLogs, setSaveLogs] = useState(false);
+
+  const [showSavedAlert, setShowSavedAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
+
   function onSetOutputPath() {
     window.api.getOutputPath().then((savePath) => {
       if (!savePath.canceled) {
@@ -105,27 +111,29 @@ function SaveOutputForm(props) {
   }
 
   function onSave() {
-    if (props.extractedData.length > 0) {
+    const outputBundles = [];
+    props.extractedData.forEach((bundle, i) => {
+      if (whichFiles[getLabel(bundle, i)] === true) {
+        outputBundles.push({ bundle, index: i });
+      }
+    });
+    if (outputBundles.length > 0) {
       window.api
-        .saveOutput(outputPath, props.extractedData)
+        .saveOutput(outputPath, outputBundles, props.loggedMessages, saveLogs)
         .then((result) => {
           if (result === true) {
             // if saveOutput() returns true, then the save process succeeded
-            props.setShowSavedAlert(true);
-          } else if (typeof result === 'string') {
-            // if the result is a string, that means the save process returned an error message
-            props.setErrorMessage(result);
-            props.setShowErrorAlert(true);
+            setShowSavedAlert(true);
           }
         })
         .catch((error) => {
-          props.setShowErrorAlert(true);
-          props.setErrorMessage(error.message);
-          props.setShowSavedAlert(false);
-          props.setShowNoFilesAlert(false);
+          setShowErrorAlert(true);
+          setErrorMessage(error.message);
+          setShowSavedAlert(false);
+          setShowNoFilesAlert(false);
         });
     } else {
-      props.setShowNoFilesAlert(true);
+      setShowNoFilesAlert(true);
     }
   }
   function onCancel() {
@@ -157,7 +165,7 @@ function SaveOutputForm(props) {
           <Row>
             <Col>
               <Form.Group controlId="formConfigPath" className="mb-3">
-                <Form.Check type="checkbox" label="Save Log File" checked={saveLogs} onChange={toggleSaveLogs} />
+                <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
               </Form.Group>
             </Col>
           </Row>
@@ -171,14 +179,32 @@ function SaveOutputForm(props) {
             </Col>
           </Row>
         </Form>
-        <div className="nav-button-container">
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
-            Save
-          </Button>
-        </div>
+        {!showSavedAlert && !showErrorAlert && !showNoFilesAlert && (
+          <div className="nav-button-container">
+            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
+              Save
+            </Button>
+          </div>
+        )}
+        {showSavedAlert && (
+          <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
+            <Alert.Heading>Files saved</Alert.Heading>
+          </Alert>
+        )}
+        {showErrorAlert && (
+          <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+            <Alert.Heading>Error: Unable to save file(s)</Alert.Heading>
+            <p>{errorMessage}</p>
+          </Alert>
+        )}
+        {showNoFilesAlert && (
+          <Alert variant="warning" show={showNoFilesAlert} onClose={() => setShowNoFilesAlert(false)} dismissible>
+            <Alert.Heading>Error: No patient data to save</Alert.Heading>
+          </Alert>
+        )}
       </div>
     </div>
   );
