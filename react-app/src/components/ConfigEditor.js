@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
 import LinkButton from './LinkButton';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [configJSON, setConfigJSON] = useState({
     $id: 'https://example.com/person.schema.json',
     $schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -45,7 +47,8 @@ function ConfigEditor() {
         }
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage(error.message);
+        setShowErrorAlert(true);
       });
   }
 
@@ -62,6 +65,12 @@ function ConfigEditor() {
           </Button>
           <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Back" path="/" />
         </div>
+      )}
+      {showErrorAlert && (
+        <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+          <Alert.Heading>Error: Unable to load file</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
       )}
       {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} />}
     </div>
