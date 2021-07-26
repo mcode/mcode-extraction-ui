@@ -67,10 +67,12 @@ function ConfigEditor() {
         </div>
       )}
       {showErrorAlert && (
-        <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
-          <Alert.Heading>Error: Unable to load file</Alert.Heading>
-          <p>{errorMessage}</p>
-        </Alert>
+        <div className="flex-end-container">
+          <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+            <Alert.Heading>Error: Unable to load file</Alert.Heading>
+            <p>{errorMessage}</p>
+          </Alert>
+        </div>
       )}
       {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} />}
     </div>
