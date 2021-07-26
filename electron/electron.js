@@ -75,6 +75,8 @@ ipcMain.handle('get-file', async () =>
   }),
 );
 
+ipcMain.handle('read-file', async (event, filePath) => fs.readFileSync(filePath, 'utf8'));
+
 ipcMain.handle('get-output-path', async () => {
   const options = {
     buttonLabel: 'Save',

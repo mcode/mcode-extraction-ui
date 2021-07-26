@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('api', {
   extract: async (fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) =>
     ipcRenderer.invoke('run-extraction', fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries),
   getFile: async () => ipcRenderer.invoke('get-file'),
+  readFile: async (filePath) => ipcRenderer.invoke('read-file', filePath),
   getOutputPath: async () => ipcRenderer.invoke('get-output-path'),
   saveOutput: async (savePath, extractedData) => ipcRenderer.invoke('save-output', savePath, extractedData),
   saveConfigAs: async (configJSON) => ipcRenderer.invoke('save-config-as', configJSON),
