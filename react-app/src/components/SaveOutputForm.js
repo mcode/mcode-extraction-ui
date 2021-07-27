@@ -2,6 +2,36 @@ import React, { useState } from 'react';
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 import fhirpath from 'fhirpath';
 
+function getLabel(bundle, id) {
+  // attempt to get MRN and name with fhirpath
+  const patient = fhirpath.evaluate(bundle, "Bundle.descendants().resource.where(resourceType='Patient')")[0];
+  if (patient) {
+    const mrn = patient.id;
+    const name = patient.name[0].text;
+
+    const isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0] === 'masked';
+
+    // if both MRN and name -- return string w / both
+    if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
+      const label = mrn.concat(': ').concat(name);
+      return label;
+    }
+    // if either MRN or name -- return string / the available one
+    if (typeof name === 'string' && name.length > 0) {
+      return name;
+    }
+    // if neither MRN nor name -- "Patient " + patient_resource_id
+    if (typeof mrn === 'string' && mrn.length > 0) {
+      return mrn;
+    }
+  }
+
+  // if no patient resource ID -- return "Patient " + props.id
+  let label = 'Patient';
+  label = label.concat(' ').concat(id.toString());
+  return label;
+}
+
 function SaveOutputForm(props) {
   const [outputPath, setOutputPath] = useState('No Folder Selected');
   const [selectAll, setSelectAll] = useState(true);
@@ -11,6 +41,16 @@ function SaveOutputForm(props) {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
+
+  let defaultWhichFiles = {};
+  props.extractedData.forEach((bundle, i) => {
+    const label = getLabel(bundle, i);
+    defaultWhichFiles = {
+      ...defaultWhichFiles,
+      [label]: true,
+    };
+  });
+  const [whichFiles, setWhichFiles] = useState({ ...defaultWhichFiles });
 
   function onSetOutputPath() {
     window.api.getOutputPath().then((savePath) => {
@@ -28,51 +68,21 @@ function SaveOutputForm(props) {
     setSaveLogs(!saveLogs);
   }
 
-  function getLabel(bundle, id) {
-    // attempt to get MRN and name with fhirpath
-    const patient = fhirpath.evaluate(bundle, "Bundle.descendants().resource.where(resourceType='Patient')")[0];
-    if (patient) {
-      const mrn = patient.id;
-      const name = patient.name[0].text;
-
-      const isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0] === 'masked';
-
-      // if both MRN and name -- return string w / both
-      if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
-        const label = mrn.concat(': ').concat(name);
-        return label;
-      }
-      // if either MRN or name -- return string / the available one
-      if (typeof name === 'string' && name.length > 0) {
-        return name;
-      }
-      // if neither MRN nor name -- "Patient " + patient_resource_id
-      if (typeof mrn === 'string' && mrn.length > 0) {
-        return mrn;
-      }
-    }
-
-    // if no patient resource ID -- return "Patient " + props.id
-    let label = 'Patient';
-    label = label.concat(' ').concat(id.toString());
-    return label;
-  }
-
-  let defaultWhichFiles = {};
-  props.extractedData.forEach((bundle, i) => {
-    const label = getLabel(bundle, i);
-    defaultWhichFiles = {
-      ...defaultWhichFiles,
-      [label]: true,
-    };
-  });
-  const [whichFiles, setWhichFiles] = useState({ ...defaultWhichFiles });
-
-  // let whichFiles = {};
-
   function togglePatientCheckbox(e) {
     setWhichFiles({ ...whichFiles, [e.target.id]: e.target.checked });
-    if (!e.target.checked && selectAll) {
+    if (e.target.checked) {
+      let isAll = true;
+      props.extractedData.forEach((bundle, i) => {
+        const label = getLabel(bundle, i);
+        // don't check current key, because state won't be updated yet
+        if (label !== e.target.id && whichFiles[label] === false) {
+          isAll = false;
+        }
+      });
+      setSelectAll(isAll);
+    }
+    // if unchecking a checkbox, selectAll should be false
+    if (!e.target.checked) {
       setSelectAll(false);
     }
   }
@@ -102,6 +112,15 @@ function SaveOutputForm(props) {
         defaultWhichFiles = {
           ...defaultWhichFiles,
           [label]: true,
+        };
+      });
+      setWhichFiles({ ...defaultWhichFiles });
+    } else {
+      props.extractedData.forEach((bundle, i) => {
+        const label = getLabel(bundle, i);
+        defaultWhichFiles = {
+          ...defaultWhichFiles,
+          [label]: false,
         };
       });
       setWhichFiles({ ...defaultWhichFiles });
@@ -146,7 +165,7 @@ function SaveOutputForm(props) {
         <Form className="form-container">
           <Row>
             <Col>
-              <Form.Group controlId="formConfigPath" className="mb-3">
+              <Form.Group controlId="outputFolder" className="mb-3">
                 <Form.Label className="form-label">Select Output Folder</Form.Label>
                 <div className="file-picker-box">
                   <div className="file-button-container">
@@ -164,14 +183,14 @@ function SaveOutputForm(props) {
           </Row>
           <Row>
             <Col>
-              <Form.Group controlId="formConfigPath" className="mb-3">
+              <Form.Group controlId="saveLogs" className="mb-3">
                 <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
               </Form.Group>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Form.Group controlId="formConfigPath" className="mb-3">
+              <Form.Group controlId="selectFiles" className="mb-3">
                 <Form.Label className="form-label">Select Files to Save</Form.Label>
                 <Form.Check type="checkbox" label="Select All" checked={selectAll} onChange={toggleSelectAll} />
                 {getPatientCheckboxes()}
