@@ -33,7 +33,6 @@ function getLabel(bundle, id) {
 }
 
 function SaveOutputForm(props) {
-  const [outputPath, setOutputPath] = useState('No Folder Selected');
   const [selectAll, setSelectAll] = useState(true);
   const [saveLogs, setSaveLogs] = useState(false);
 
@@ -51,18 +50,6 @@ function SaveOutputForm(props) {
     };
   });
   const [whichFiles, setWhichFiles] = useState({ ...defaultWhichFiles });
-
-  function onSetOutputPath() {
-    window.api.getOutputPath().then((savePath) => {
-      if (!savePath.canceled) {
-        setOutputPath(savePath.filePaths[0]);
-      }
-    });
-  }
-
-  function clearOutputPath() {
-    setOutputPath('No Folder Selected');
-  }
 
   function toggleSaveLogs() {
     setSaveLogs(!saveLogs);
@@ -138,7 +125,19 @@ function SaveOutputForm(props) {
     });
     if (outputBundles.length > 0) {
       window.api
-        .saveOutput(outputPath, outputBundles, props.loggedMessages, saveLogs)
+        .getOutputPath()
+        .then((savePath) => {
+          if (!savePath.canceled) {
+            return savePath.filePaths[0];
+          }
+          return null;
+        })
+        .then((outputPath) => {
+          if (outputPath !== null) {
+            return window.api.saveOutput(outputPath, outputBundles, props.loggedMessages, saveLogs);
+          }
+          return null;
+        })
         .then((result) => {
           if (result === true) {
             // if saveOutput() returns true, then the save process succeeded
@@ -165,24 +164,6 @@ function SaveOutputForm(props) {
         <Form className="form-container">
           <Row>
             <Col>
-              <Form.Group controlId="outputFolder" className="mb-3">
-                <Form.Label className="form-label">Select Output Folder</Form.Label>
-                <div className="file-picker-box">
-                  <div className="file-button-container">
-                    <Button className="generic-button narrow-button" variant="outline-info" onClick={onSetOutputPath}>
-                      Select Folder
-                    </Button>
-                    <Button className="generic-button narrow-button" variant="outline-info" onClick={clearOutputPath}>
-                      Clear
-                    </Button>
-                  </div>
-                  <Form.Label className="form-label file-name">{outputPath}</Form.Label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <Form.Group controlId="saveLogs" className="mb-3">
                 <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
               </Form.Group>
@@ -204,7 +185,7 @@ function SaveOutputForm(props) {
               Cancel
             </Button>
             <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
-              Save
+              Save As
             </Button>
           </div>
         )}
