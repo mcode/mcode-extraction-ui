@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
-import { getLabel } from './patientUtils';
+import getLabel from './patientUtils';
 
 function SaveOutputForm(props) {
   const [saveLogs, setSaveLogs] = useState(false);
@@ -133,7 +133,13 @@ function SaveOutputForm(props) {
             <Col>
               <Form.Group controlId="selectFiles" className="mb-3">
                 <Form.Label className="form-label">Select Files to Save</Form.Label>
-                <Form.Check type="checkbox" label="Select All" checked={isAllSelected()} onChange={toggleSelectAll} />
+                <Form.Check
+                  type="checkbox"
+                  label="Select All"
+                  checked={isAllSelected()}
+                  onChange={toggleSelectAll}
+                  className="emphasized-list-text"
+                />
                 {getPatientCheckboxes()}
               </Form.Group>
             </Col>

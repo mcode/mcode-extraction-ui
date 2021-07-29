@@ -30,4 +30,4 @@ function getLabel(bundle, id) {
   return label;
 }
 
-module.exports = { getLabel };
+export default getLabel;
