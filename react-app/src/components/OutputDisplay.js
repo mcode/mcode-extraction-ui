@@ -7,7 +7,7 @@ function OutputDisplay(props) {
   return (
     <div>
       {props.id === null && !props.showLogs && !props.showSaveForm && (
-        <p className="page-text padding-100">
+        <p className="page-text text-centered padding-100">
           Select a patient to view their information or click on "Log File" to view the logger messages.
         </p>
       )}

@@ -6,7 +6,7 @@ function ExtractionError(props) {
   return (
     <div>
       <h3 className="page-subtitle text-centered">An error occurred during extraction.</h3>
-      <p className="page-text">
+      <p className="page-text text-centered">
         For more information, view the logs below and/or run extraction again with "Log output debugging information"
         checked.
       </p>

@@ -118,15 +118,8 @@ function SaveOutputForm(props) {
         <Form className="form-container">
           <Row>
             <Col>
-              <Form.Group controlId="saveLogs" className="mb-3">
-                <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <Form.Group controlId="selectFiles" className="mb-3">
-                <Form.Label className="form-label">Select Files to Save</Form.Label>
+                <Form.Label className="form-label page-text">Select Patients to Save</Form.Label>
                 <Form.Check
                   type="checkbox"
                   label="Select All"
@@ -135,6 +128,14 @@ function SaveOutputForm(props) {
                   className="emphasized-list-text"
                 />
                 {getPatientCheckboxes()}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="saveLogs" className="mb-3">
+                <p className="page-text">Additional Save Options</p>
+                <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
               </Form.Group>
             </Col>
           </Row>
