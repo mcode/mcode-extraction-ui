@@ -10,7 +10,7 @@ function SaveOutputForm(props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [showNoFilesAlert, setShowNoFilesAlert] = useState(false);
 
-  let defaultWhichFiles = {};
+  const defaultWhichFiles = {};
   props.extractedData.forEach((bundle, i) => {
     const label = getLabel(bundle, i);
     defaultWhichFiles[label] = true;
@@ -58,19 +58,13 @@ function SaveOutputForm(props) {
     if (!isAllSelected()) {
       props.extractedData.forEach((bundle, i) => {
         const label = getLabel(bundle, i);
-        defaultWhichFiles = {
-          ...defaultWhichFiles,
-          [label]: true,
-        };
+        defaultWhichFiles[label] = true;
       });
       setWhichFiles({ ...defaultWhichFiles });
     } else {
       props.extractedData.forEach((bundle, i) => {
         const label = getLabel(bundle, i);
-        defaultWhichFiles = {
-          ...defaultWhichFiles,
-          [label]: false,
-        };
+        defaultWhichFiles[label] = false;
       });
       setWhichFiles({ ...defaultWhichFiles });
     }
