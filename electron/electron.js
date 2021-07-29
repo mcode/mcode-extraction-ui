@@ -77,7 +77,7 @@ ipcMain.handle('get-file', async () =>
 
 ipcMain.handle('get-output-path', async () => {
   const options = {
-    buttonLabel: 'Select Folder',
+    buttonLabel: 'Save to Folder',
     title: 'Select Output Folder',
     defaultPath: app.getPath('downloads'),
     properties: ['openDirectory', 'createDirectory'],
@@ -96,7 +96,7 @@ ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) =
   }
   outputBundles.forEach((data) => {
     const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
-    fs.writeFileSync(outputFile, JSON.stringify(data.bundle), 'utf8');
+    fs.writeFileSync(outputFile, JSON.stringify(data.bundle, null, 2), 'utf8');
   });
   // returning true indicates that the save process succeeded
   return true;

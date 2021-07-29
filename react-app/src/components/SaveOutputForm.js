@@ -1,39 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
-import fhirpath from 'fhirpath';
-
-function getLabel(bundle, id) {
-  // attempt to get MRN and name with fhirpath
-  const patient = fhirpath.evaluate(bundle, "Bundle.descendants().resource.where(resourceType='Patient')")[0];
-  if (patient) {
-    const mrn = patient.id;
-    const name = patient.name[0].text;
-
-    const isMasked = fhirpath.evaluate(patient, 'Patient.identifier.extension.valueCode')[0] === 'masked';
-
-    // if both MRN and name -- return string w / both
-    if (typeof mrn === 'string' && mrn.length > 0 && typeof name === 'string' && name.length > 0 && !isMasked) {
-      const label = mrn.concat(': ').concat(name);
-      return label;
-    }
-    // if either MRN or name -- return string / the available one
-    if (typeof name === 'string' && name.length > 0) {
-      return name;
-    }
-    // if neither MRN nor name -- "Patient " + patient_resource_id
-    if (typeof mrn === 'string' && mrn.length > 0) {
-      return mrn;
-    }
-  }
-
-  // if no patient resource ID -- return "Patient " + props.id
-  let label = 'Patient';
-  label = label.concat(' ').concat(id.toString());
-  return label;
-}
+import { getLabel } from './patientUtils';
 
 function SaveOutputForm(props) {
-  const [selectAll, setSelectAll] = useState(true);
   const [saveLogs, setSaveLogs] = useState(false);
 
   const [showSavedAlert, setShowSavedAlert] = useState(false);
@@ -44,10 +13,7 @@ function SaveOutputForm(props) {
   let defaultWhichFiles = {};
   props.extractedData.forEach((bundle, i) => {
     const label = getLabel(bundle, i);
-    defaultWhichFiles = {
-      ...defaultWhichFiles,
-      [label]: true,
-    };
+    defaultWhichFiles[label] = true;
   });
   const [whichFiles, setWhichFiles] = useState({ ...defaultWhichFiles });
 
@@ -55,23 +21,19 @@ function SaveOutputForm(props) {
     setSaveLogs(!saveLogs);
   }
 
+  function isAllSelected() {
+    let isAll = true;
+    props.extractedData.forEach((bundle, i) => {
+      const label = getLabel(bundle, i);
+      if (whichFiles[label] === false) {
+        isAll = false;
+      }
+    });
+    return isAll;
+  }
+
   function togglePatientCheckbox(e) {
     setWhichFiles({ ...whichFiles, [e.target.id]: e.target.checked });
-    if (e.target.checked) {
-      let isAll = true;
-      props.extractedData.forEach((bundle, i) => {
-        const label = getLabel(bundle, i);
-        // don't check current key, because state won't be updated yet
-        if (label !== e.target.id && whichFiles[label] === false) {
-          isAll = false;
-        }
-      });
-      setSelectAll(isAll);
-    }
-    // if unchecking a checkbox, selectAll should be false
-    if (!e.target.checked) {
-      setSelectAll(false);
-    }
   }
 
   function getPatientCheckboxes() {
@@ -93,7 +55,7 @@ function SaveOutputForm(props) {
 
   function toggleSelectAll() {
     // modify which files will be saved first, so that there's no issues with state update delays
-    if (!selectAll) {
+    if (!isAllSelected()) {
       props.extractedData.forEach((bundle, i) => {
         const label = getLabel(bundle, i);
         defaultWhichFiles = {
@@ -112,8 +74,6 @@ function SaveOutputForm(props) {
       });
       setWhichFiles({ ...defaultWhichFiles });
     }
-    // set select all
-    setSelectAll(!selectAll);
   }
 
   function onSave() {
@@ -173,7 +133,7 @@ function SaveOutputForm(props) {
             <Col>
               <Form.Group controlId="selectFiles" className="mb-3">
                 <Form.Label className="form-label">Select Files to Save</Form.Label>
-                <Form.Check type="checkbox" label="Select All" checked={selectAll} onChange={toggleSelectAll} />
+                <Form.Check type="checkbox" label="Select All" checked={isAllSelected()} onChange={toggleSelectAll} />
                 {getPatientCheckboxes()}
               </Form.Group>
             </Col>
@@ -185,7 +145,7 @@ function SaveOutputForm(props) {
               Cancel
             </Button>
             <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
-              Save As
+              Save to Folder
             </Button>
           </div>
         )}
