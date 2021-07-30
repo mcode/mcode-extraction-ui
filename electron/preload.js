@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('api', {
   getFile: async () => ipcRenderer.invoke('get-file'),
   readFile: async (filePath) => ipcRenderer.invoke('read-file', filePath),
   getOutputPath: async () => ipcRenderer.invoke('get-output-path'),
-  saveOutput: async (savePath, extractedData) => ipcRenderer.invoke('save-output', savePath, extractedData),
+  saveOutput: async (savePath, outputBundles, saveLogs) =>
+    ipcRenderer.invoke('save-output', savePath, outputBundles, saveLogs),
   saveConfigAs: async (configJSON) => ipcRenderer.invoke('save-config-as', configJSON),
 });

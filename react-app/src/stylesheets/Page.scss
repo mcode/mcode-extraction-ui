@@ -78,7 +78,6 @@
 .page-text {
   color: $dark-shade;
   font-size: 20px;
-  text-align: center;
 }
 
 .emphasized-list-text {
@@ -112,6 +111,7 @@
   display: flex;
   justify-content: space-between;
   margin: 20px;
+  margin-bottom: 0px;
 }
 
 .button-container {
