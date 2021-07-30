@@ -88,7 +88,7 @@ function SaveOutputForm(props) {
         })
         .then((outputPath) => {
           if (outputPath !== null) {
-            return window.api.saveOutput(outputPath, outputBundles, props.loggedMessages, saveLogs);
+            return window.api.saveOutput(outputPath, outputBundles, saveLogs);
           }
           return null;
         })
@@ -133,7 +133,7 @@ function SaveOutputForm(props) {
           </Row>
           <Row>
             <Col>
-              <Form.Group controlId="saveLogs" className="mb-3">
+              <Form.Group controlId="saveLogsCheckbox" className="mb-3">
                 <p className="page-text">Additional Save Options</p>
                 <Form.Check type="checkbox" label="Save logger messages" checked={saveLogs} onChange={toggleSaveLogs} />
               </Form.Group>
