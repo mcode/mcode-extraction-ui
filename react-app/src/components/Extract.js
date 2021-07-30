@@ -171,11 +171,13 @@ function Extract(props) {
         </div>
       )}
       {submitted && (
-        <div>
-          <p>The form as been submitted. Running extraction...</p>
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onReset}>
-            Reset
-          </Button>
+        <div className="flex-start-container">
+          <p className="page-text text-centered">The form as been submitted. Running extraction...</p>
+          <div className="button-container">
+            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onReset}>
+              Cancel
+            </Button>
+          </div>
         </div>
       )}
     </div>
