@@ -2,7 +2,7 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
-const { logger } = require('mcode-extraction-framework');
+const { configSchema, logger } = require('mcode-extraction-framework');
 const runExtraction = require('./extraction');
 const Transport = require('./InMemoryTransport');
 
@@ -63,19 +63,17 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
-  loggedMessages.length = 0;
-  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
-  return { extractedData, loggedMessages };
+ipcMain.handle('get-config-schema', async () => {
+  console.log('electron.js: ', configSchema);
+  return configSchema;
 });
+
 ipcMain.handle('get-file', async () =>
   dialog.showOpenDialog(mainWindow, {
     filters: [{ name: 'JSON', extensions: ['json'] }],
     properties: ['openFile'],
   }),
 );
-
-ipcMain.handle('read-file', async (event, filePath) => fs.readFileSync(filePath, 'utf8'));
 
 ipcMain.handle('get-output-path', async () => {
   const options = {
@@ -87,21 +85,12 @@ ipcMain.handle('get-output-path', async () => {
   return dialog.showOpenDialog(null, options, (savePath) => savePath);
 });
 
-ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) => {
-  if (saveLogs) {
-    const logPath = path.join(savePath, 'logged-messages.log');
-    let messages = '';
-    loggedMessages.forEach((log) => {
-      messages = messages.concat(`${log.timestamp} [${log.level}]:${log.message}\n`);
-    });
-    fs.writeFileSync(logPath, messages, 'utf8');
-  }
-  outputBundles.forEach((data) => {
-    const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
-    fs.writeFileSync(outputFile, JSON.stringify(data.bundle, null, 2), 'utf8');
-  });
-  // returning true indicates that the save process succeeded
-  return true;
+ipcMain.handle('read-file', async (event, filePath) => fs.readFileSync(filePath, 'utf8'));
+
+ipcMain.handle('run-extraction', async (event, fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) => {
+  loggedMessages.length = 0;
+  const extractedData = await runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries);
+  return { extractedData, loggedMessages };
 });
 
 ipcMain.handle('save-config-as', async (event, configJSON) => {
@@ -126,4 +115,21 @@ ipcMain.handle('save-config-as', async (event, configJSON) => {
       // returning null indicates that the save process was cancelled
       return savePath;
     });
+});
+
+ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) => {
+  if (saveLogs) {
+    const logPath = path.join(savePath, 'logged-messages.log');
+    let messages = '';
+    loggedMessages.forEach((log) => {
+      messages = messages.concat(`${log.timestamp} [${log.level}]:${log.message}\n`);
+    });
+    fs.writeFileSync(logPath, messages, 'utf8');
+  }
+  outputBundles.forEach((data) => {
+    const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
+    fs.writeFileSync(outputFile, JSON.stringify(data.bundle, null, 2), 'utf8');
+  });
+  // returning true indicates that the save process succeeded
+  return true;
 });

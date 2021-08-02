@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
+import { getConfigSchema } from './SchemaFormUtils';
 
 function ConfigForm(props) {
   const [showSavedAlert, setShowSavedAlert] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // DELETE ME
+  getConfigSchema().then((schema) => {
+    console.log(schema);
+  });
+
   function onSaveAs() {
     window.api
       .saveConfigAs(props.configJSON)
