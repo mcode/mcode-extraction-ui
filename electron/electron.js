@@ -63,10 +63,7 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle('get-config-schema', async () => {
-  console.log('electron.js: ', configSchema);
-  return configSchema;
-});
+ipcMain.handle('get-config-schema', async () => configSchema);
 
 ipcMain.handle('get-file', async () =>
   dialog.showOpenDialog(mainWindow, {
