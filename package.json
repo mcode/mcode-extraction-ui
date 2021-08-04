@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mcode-extraction-framework": "git+https://github.com/mcode/mcode-extraction-framework.git#develop",
+    "mcode-extraction-framework": "github:mcode/mcode-extraction-framework#develop",
     "strip-ansi": "^6.0.0",
     "winston-transport": "^4.4.0"
   },

@@ -1,4 +1,4 @@
-const { logger, mcodeApp, MCODEClient } = require('mcode-extraction-framework');
+const { getConfig, logger, mcodeApp, MCODEClient } = require('mcode-extraction-framework');
 
 async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) {
   try {
@@ -14,11 +14,12 @@ async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, d
     if (!debug) {
       defaultDebug = undefined;
     }
+    const config = getConfig(configFilepath);
     const extractedData = await mcodeApp(
       MCODEClient,
       defaultFromDate,
       defaultToDate,
-      configFilepath,
+      config,
       runLogFilepath,
       defaultDebug,
       allEntries,

@@ -6,6 +6,7 @@ function ConfigForm(props) {
   const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
   function onSaveAs() {
     window.api
       .saveConfigAs(props.configJSON)
