@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
+import Form from '@rjsf/core';
+import { uiSchema } from './schemaFormUtils';
 
 function ConfigForm(props) {
   const [showSavedAlert, setShowSavedAlert] = useState(false);
@@ -27,9 +29,11 @@ function ConfigForm(props) {
   function onBack() {
     props.setShowForm(false);
   }
+
   return (
     <div className="flex-space-between-container">
       <p className="page-text text-centered">The config editor form will display here.</p>
+      <Form schema={props.schema} uiSchema={uiSchema} />
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
           <Alert.Heading>Files saved</Alert.Heading>

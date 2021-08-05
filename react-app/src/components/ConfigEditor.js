@@ -3,11 +3,13 @@ import { Alert, Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
 import LinkButton from './LinkButton';
+import { getConfigSchema } from './schemaFormUtils';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [configSchema, setConfigSchema] = useState({});
   const [configJSON, setConfigJSON] = useState({
     $id: 'https://example.com/person.schema.json',
     $schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -22,10 +24,16 @@ function ConfigEditor() {
   });
 
   function toggleForm() {
+    getConfigSchema().then((schema) => {
+      setConfigSchema(schema);
+    });
     setShowForm(!showForm);
   }
 
   function loadFile() {
+    getConfigSchema().then((schema) => {
+      setConfigSchema(schema);
+    });
     window.api
       .getFile()
       .then((result) => {
@@ -74,7 +82,7 @@ function ConfigEditor() {
           </Alert>
         </div>
       )}
-      {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} />}
+      {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />}
     </div>
   );
 }
