@@ -3,108 +3,76 @@ function getConfigSchema() {
 }
 
 const uiSchema = {
-  patientIdCsvPath: {
-    'ui:title': {
-      'classNames': 'page-text',
+  'patientIdCsvPath': {
+    "classNames": "page-text"
+  },
+  'commonExtractorArgs': {
+    "classNames": "page-text",
+    'baseFhirUrl': {
+      "classNames": "page-text"
+    },
+    'requestHeaders': {
+      "classNames": "page-text"
     },
   },
-  commonExtractorArgs: {
-    'ui:title': {
-      'classNames': 'page-text',
+  'notificationInfo': {
+    "classNames": "page-text",
+    'host': {
+      "classNames": "page-text"
     },
-    baseFhirUrl: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
+    'port': {
+      "classNames": "page-text"
     },
-    requestHeaders: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
+    'from': {
+      "classNames": "page-text"
     },
-  },
-  notificationInfo: {
-    'ui:title': {
-      'classNames': 'page-text',
+    'to': {
+      "classNames": "page-text"
     },
-    host: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
-    },
-    port: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
-    },
-    from: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
-    },
-    to: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
-    },
-    tlsRejectUnauthorized: {
-      'ui:title': {
-        'classNames': 'page-text',
-      },
+    'tlsRejectUnauthorized': {
+      "classNames": "page-text"
     },
   },
-  extractors: {
-    extractor: {
-      'ui:title': {
-        'classNames': 'page-text',
+  'extractors': {
+    'extractor': {
+      "classNames": "page-text",
+      'label': {
+        "classNames": "page-text"
       },
-      label: {
-        'ui:title': {
-          'classNames': 'page-text',
-        },
+      'type': {
+        "classNames": "page-text"
       },
-      type: {
-        'ui:title': {
-          'classNames': 'page-text',
+      'constructorArgs': {
+        "classNames": "page-text",
+        'filePath': {
+          "classNames": "page-text"
         },
-      },
-      constructorArgs: {
-        'ui:title': {
-          'classNames': 'page-text',
+        "url": {
+          "classNames": "page-text"
         },
-        filePath: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
+        "clinicalSiteID": {
+          "classNames": "page-text"
         },
-        url: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
+        "clinicalSiteSystem": {
+          "classNames": "page-text"
         },
-        clinicalSiteID: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
+        "type": {
+          "classNames": "page-text"
         },
-        clinicalSiteSystem: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
-        },
-        type: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
-        },
-        mask: {
-          'ui:title': {
-            'classNames': 'page-text',
-          },
+        "mask": {
+          "classNames": "page-text"
         },
       },
     },
   },
 };
 
-module.exports = { getConfigSchema, uiSchema };
+const widgets = {
+
+}
+
+const fields = {
+
+}
+
+module.exports = { getConfigSchema, uiSchema, widgets, fields };
