@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, FloatingLabel, Form } from 'react-bootstrap';
+import { Accordion, Button, Dropdown } from 'react-bootstrap';
 
 function getConfigSchema() {
   return window.api.getConfigSchema();
@@ -114,9 +114,9 @@ function ExtractorArray(props) {
 
   const getFormattedTypes = () =>
     types.map((type) => (
-      <option value={type} key={type}>
+      <Dropdown.Item value={type} eventKey={type} key={type}>
         {type}
-      </option>
+      </Dropdown.Item>
     ));
 
   function getDefaultExtractorObj(type = '') {
@@ -129,12 +129,12 @@ function ExtractorArray(props) {
     };
   }
 
-  function addExtractor(e) {
+  function addExtractor(eventKey) {
     // Remove selected type from dropdown
-    const newTypes = types.filter((type) => type !== e.target.value);
+    const newTypes = types.filter((type) => type !== eventKey);
 
     // update list of extractors, the JSX display, and the formData object
-    const tempExtractors = [...extractors, getDefaultExtractorObj(e.target.value)];
+    const tempExtractors = [...extractors, getDefaultExtractorObj(eventKey)];
     const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
       <Extractor formData={extractor} eventKey={i} key={i} />
     ));
@@ -142,19 +142,50 @@ function ExtractorArray(props) {
     setExtractors(tempExtractors);
     props.onChange(tempExtractors);
     setTypes(newTypes);
-    e.target.value = 'default';
+  }
+
+  function sortExtractorsByType() {
+    // alphabetize
+    const tempExtractors = extractors;
+    tempExtractors.sort((a, b) => {
+      if (a.type > b.type) {
+        return 1;
+      }
+      if (a.type < b.type) {
+        return -1;
+      }
+      return 0;
+    });
+    // update list of extractors, the JSX display, and the formData object
+    const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
+      <Extractor formData={extractor} eventKey={i} key={i} />
+    ));
+    setExtractorsJSX(tempExtractorsJSX);
+    setExtractors(tempExtractors);
+    props.onChange(tempExtractors);
   }
 
   return (
     <div>
       <h1 className="form-header-text">Extractors</h1>
-      <Accordion defaultActiveKey="0">{extractorsJSX}</Accordion>
       <div className="form-button-container">
-        <Form.Select onChange={addExtractor} className="form-select">
-          <option value="default">Add new extractor</option>
-          {getFormattedTypes()}
-        </Form.Select>
+        <Button
+          variant="outline-info"
+          className="narrow-button form-button"
+          onClick={sortExtractorsByType}
+          disabled={extractors.length < 1}
+        >
+          Sort by Type
+        </Button>
+        <Dropdown onSelect={addExtractor}>
+          <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
+            Add new extractor
+          </Dropdown.Toggle>
+          <Dropdown.Menu>{getFormattedTypes()}</Dropdown.Menu>
+        </Dropdown>
       </div>
+      <Accordion defaultActiveKey="0">{extractorsJSX}</Accordion>
+      <div className="form-button-container"></div>
     </div>
   );
 }
