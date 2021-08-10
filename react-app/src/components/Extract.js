@@ -99,6 +99,7 @@ function Extract(props) {
                   filePath={configPath}
                   onClick={setConfig}
                   onClear={clearConfig}
+                  required={true}
                 />
                 <FilePicker
                   controlId="formLogPath"
