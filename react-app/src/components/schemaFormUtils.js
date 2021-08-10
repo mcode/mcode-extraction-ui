@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown } from 'react-bootstrap';
+import FilePicker from './FilePicker';
 
 function getConfigSchema() {
   return window.api.getConfigSchema();
@@ -7,7 +8,8 @@ function getConfigSchema() {
 
 const uiSchema = {
   patientIdCsvPath: {
-    classNames: 'page-text',
+    'ui:label': false,
+    'ui:widget': 'file',
   },
   commonExtractorArgs: {
     classNames: 'page-text',
@@ -171,7 +173,46 @@ function ExtractorArray(props) {
   );
 }
 
-const widgets = {};
+function FileWidget(props) {
+  let startingPath = 'No File Selected';
+  if (props.value) {
+    startingPath = props.value;
+  }
+  const [path, setPath] = useState(startingPath);
+
+  function setFilePath(newPath) {
+    setPath(newPath);
+    props.onChange(newPath);
+  }
+
+  function onClear() {
+    setPath('No File Selected');
+  }
+  function getFile() {
+    window.api.getFile().then((promise) => {
+      if (promise.filePaths[0] !== undefined) {
+        setPath(promise.filePaths[0]);
+        props.onChange(promise.filePaths[0]);
+      }
+    });
+  }
+  return (
+    <FilePicker
+      buttonText="Select File"
+      controlId={props.label}
+      onClick={getFile}
+      setFilePath={setFilePath}
+      filePath={path}
+      label={props.label}
+      onClear={onClear}
+      required={props.required}
+    />
+  );
+}
+
+const widgets = {
+  FileWidget,
+};
 
 const fields = {
   ArrayField: ExtractorArray,
