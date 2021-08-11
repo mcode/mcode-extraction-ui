@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, Button, Dropdown } from 'react-bootstrap';
+import { Accordion, Button, Dropdown, Form } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
 function getConfigSchema() {
@@ -79,12 +79,18 @@ function Extractor(props) {
       <Accordion.Header>{props.formData.type}</Accordion.Header>
       <Accordion.Body>
         <p>This is a placeholder for an extractor. An input form will be added here.</p>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Label</Form.Label>
+          <Form.Control type="text" />
+        </Form.Group>
       </Accordion.Body>
     </Accordion.Item>
   );
 }
 
 function ExtractorArray(props) {
+  console.log(props);
+
   const [extractors, setExtractors] = useState([]);
   const [extractorsJSX, setExtractorsJSX] = useState([]);
   const types = [
