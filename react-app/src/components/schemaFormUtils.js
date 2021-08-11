@@ -84,8 +84,7 @@ function Extractor(props) {
 function ExtractorArray(props) {
   const [extractors, setExtractors] = useState([]);
   const [extractorsJSX, setExtractorsJSX] = useState([]);
-  const [types, setTypes] = useState([
-    'BaseFHIRExtractor',
+  const types = [
     'CSVAdverseEventExtractor',
     'CSVCancerDiseaseStatusExtractor',
     'CSVCancerRelatedMedicationExtractor',
@@ -96,21 +95,7 @@ function ExtractorArray(props) {
     'CSVProcedureExtractor',
     'CSVStagingExtractor',
     'CSVTreatmentPlanChangeExtractor',
-    'Extractor',
-    'FHIRAdverseEventExtractor',
-    'FHIRAllergyIntoleranceExtractor',
-    'FHIRConditionExtractor',
-    'FHIRDocumentReferenceExtractor',
-    'FHIREncounterExtractor',
-    'FHIRMedicationOrderExtractor',
-    'FHIRMedicationRequestExtractor',
-    'FHIRMedicationStatementExtractor',
-    'FHIRObservationExtractor',
-    'FHIRPatientExtractor',
-    'FHIRProcedureExtractor',
-    'MCODERadiationProcedureExtractor',
-    'MCODESurgicalProcedureExtractor',
-  ]);
+  ];
 
   const getFormattedTypes = () =>
     types.map((type) => (
@@ -130,9 +115,6 @@ function ExtractorArray(props) {
   }
 
   function addExtractor(eventKey) {
-    // Remove selected type from dropdown
-    const newTypes = types.filter((type) => type !== eventKey);
-
     // update list of extractors, the JSX display, and the formData object
     const tempExtractors = [...extractors, getDefaultExtractorObj(eventKey)];
     const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
@@ -141,7 +123,6 @@ function ExtractorArray(props) {
     setExtractorsJSX(tempExtractorsJSX);
     setExtractors(tempExtractors);
     props.onChange(tempExtractors);
-    setTypes(newTypes);
   }
 
   function sortExtractorsByType() {
