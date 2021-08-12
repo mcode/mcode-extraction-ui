@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Tray } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
@@ -18,6 +18,8 @@ if (squirrel) {
 // declare mainWindow ahead of time so that it can be accessed in .handle('get-file')
 let mainWindow;
 const createWindow = () => {
+  // get app icon
+  const appIcon = new Tray(path.join(__dirname, './icon.png'));
   // Create the browser window.
   mainWindow = new BrowserWindow({
     webPreferences: {
@@ -25,6 +27,7 @@ const createWindow = () => {
     },
   });
   mainWindow.maximize();
+  mainWindow.show();
 
   // load build assets if production, localhost URL otherwise
   const mainUrl = app.isPackaged
