@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, Button, Dropdown, Form } from 'react-bootstrap';
+import { Accordion, Button, Dropdown } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
 function getConfigSchema() {
