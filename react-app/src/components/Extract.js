@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
+import FilePicker from './FilePicker';
 import LinkButton from './LinkButton';
 
 function Extract(props) {
@@ -91,34 +92,23 @@ function Extract(props) {
           <Form className="form-container">
             <Row>
               <Col>
-                <Form.Group controlId="formConfigPath" className="mb-3">
-                  <Form.Label className="form-label">Select Configuration File</Form.Label>
-                  <div className="file-picker-box">
-                    <div className="file-button-container">
-                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setConfig}>
-                        Upload File
-                      </Button>
-                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearConfig}>
-                        Clear
-                      </Button>
-                    </div>
-                    <Form.Label className="form-label file-name">{configPath}</Form.Label>
-                  </div>
-                </Form.Group>
-                <Form.Group controlId="formLogPath">
-                  <Form.Label className="form-label">Select Log File</Form.Label>
-                  <div className="file-picker-box">
-                    <div className="file-button-container">
-                      <Button className="generic-button narrow-button" variant="outline-info" onClick={setLog}>
-                        Upload File
-                      </Button>
-                      <Button className="generic-button narrow-button" variant="outline-info" onClick={clearLog}>
-                        Clear
-                      </Button>
-                    </div>
-                    <Form.Label className="form-label file-name">{logPath}</Form.Label>
-                  </div>
-                </Form.Group>
+                <FilePicker
+                  controlId="formConfigPath"
+                  label="Select Configuration File"
+                  buttonText="Upload File"
+                  filePath={configPath}
+                  onClick={setConfig}
+                  onClear={clearConfig}
+                  required={true}
+                />
+                <FilePicker
+                  controlId="formLogPath"
+                  label="Select Log File"
+                  buttonText="Upload File"
+                  filePath={logPath}
+                  onClick={setLog}
+                  onClear={clearLog}
+                />
                 <Form.Group controlId="formIncludeDebug">
                   <Form.Check
                     type="checkbox"
