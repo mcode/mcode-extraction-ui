@@ -211,26 +211,12 @@ function FileWidget(props) {
   );
 }
 
-function StringInput(props) {
-  console.log(props);
-  return (
-    <Form.Group className="mb-3" controlId="props.name">
-      <Form.Label>
-        {props.schema.title}
-        {props.required && '*'}
-      </Form.Label>
-      <Form.Control type="text" />
-    </Form.Group>
-  );
-}
-
 const widgets = {
   FileWidget,
 };
 
 const fields = {
   ArrayField: ExtractorArray,
-  StringField: StringInput,
 };
 
 export { getConfigSchema, uiSchema, widgets, fields };
