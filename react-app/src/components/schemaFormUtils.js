@@ -10,62 +10,63 @@ const uiSchema = {
   patientIdCsvPath: {
     'ui:label': false,
     'ui:widget': 'file',
+    classNames: '',
   },
   commonExtractorArgs: {
-    classNames: 'page-text',
+    classNames: '',
     baseFhirUrl: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
     requestHeaders: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
   },
   notificationInfo: {
-    classNames: 'page-text',
+    classNames: '',
     host: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
     port: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
     from: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
     to: {
-      classNames: 'page-text',
+      classNames: 'input-width-limit',
     },
     tlsRejectUnauthorized: {
-      classNames: 'page-text',
+      classNames: '',
     },
   },
   extractors: {
     extractor: {
-      classNames: 'page-text',
+      classNames: '',
       label: {
-        classNames: 'page-text',
+        classNames: 'input-width-limit',
       },
       type: {
-        classNames: 'page-text',
+        classNames: '',
       },
       constructorArgs: {
-        classNames: 'page-text',
+        classNames: '',
         filePath: {
-          classNames: 'page-text',
+          classNames: '',
         },
         url: {
-          classNames: 'page-text',
+          classNames: 'input-width-limit',
         },
         clinicalSiteID: {
-          classNames: 'page-text',
+          classNames: 'input-width-limit',
         },
         clinicalSiteSystem: {
-          classNames: 'page-text',
+          classNames: 'input-width-limit',
         },
         type: {
-          classNames: 'page-text',
+          classNames: '',
         },
         mask: {
-          classNames: 'page-text',
+          classNames: '',
         },
       },
     },
