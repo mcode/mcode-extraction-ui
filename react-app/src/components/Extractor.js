@@ -8,16 +8,14 @@ function Extractor(props) {
     props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
   );
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label ? props.formData.label : '');
-  const [args, setArgs] = useState({
-    filePath: props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
-  });
-  const [argOptions, setArgOptions] = useState([
+
+  // Variables for constructor arg management
+  // defaultArgs must be declared in a non-state variable so that it can be used to set the values of both args and argsJSX
+  const defaultArgs = [
     {
-      defaultObj: {
-        filePath: '',
-      },
+      filePath: props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
       title: 'File Path',
-      type: 'string',
+      type: 'file',
       included: true,
       key: 'filePath',
       validExtractors: [
@@ -34,9 +32,7 @@ function Extractor(props) {
       ],
     },
     {
-      defaultObj: {
-        url: '',
-      },
+      url: '',
       title: 'URL',
       type: 'string',
       format: 'url',
@@ -56,9 +52,7 @@ function Extractor(props) {
       ],
     },
     {
-      defaultObj: {
-        clinicalSiteID: '',
-      },
+      clinicalSiteID: '',
       title: 'Clinical Site ID',
       type: 'string',
       included: false,
@@ -66,9 +60,7 @@ function Extractor(props) {
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
     {
-      defaultObj: {
-        value: '',
-      },
+      clinicalSiteSystem: '',
       title: 'Clinical Site System',
       type: 'string',
       included: false,
@@ -76,19 +68,15 @@ function Extractor(props) {
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
     {
-      defaultObj: {
-        type: '',
-      },
+      cancerType: '',
       title: 'Type',
       type: 'string',
       included: false,
-      key: 'type',
+      key: 'cancerType',
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
-      defaultObj: {
-        mask: '',
-      },
+      mask: '',
       title: 'Masked Fields',
       type: 'array',
       included: false,
@@ -98,7 +86,17 @@ function Extractor(props) {
       },
       validExtractors: ['CSVPatientExtractor'],
     },
-  ]);
+  ];
+  const [args, setArgs] = useState(defaultArgs);
+  const [argsJSX, setArgsJSX] = useState(
+    defaultArgs
+      .filter((arg) => arg.included === true)
+      .map((arg, i) => (
+        <p key={arg.key}>
+          This is a placeholder for arg {i}: {arg.title}
+        </p>
+      )),
+  );
 
   function onExtractorLabelChange(e) {
     console.log(e);
@@ -124,35 +122,35 @@ function Extractor(props) {
     });
   }
 
-  function updateArgs(tempExtractors) {
-    const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
-      <Extractor
-        formData={extractor}
-        eventKey={i}
-        key={i}
-        onCsvPathChange={(newPath, index) => {
-          const tempArray = [...tempExtractors];
-          tempArray[index].constructorArgs.filePath = newPath;
-          updateExtractors(tempArray);
-        }}
-        onExtractorLabelChange={(label, index) => {
-          const tempArray = [...tempExtractors];
-          tempArray[index].label = label;
-          updateExtractors(tempArray);
-        }}
-      />
-    ));
-    setExtractorsJSX(tempExtractorsJSX);
-    setExtractors(tempExtractors);
-    props.onChange(tempExtractors);
+  // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
+  function addArg(eventKey) {
+    const tempArgs = [...args];
+    tempArgs[eventKey].included = true;
+    const tempArgsJSX = tempArgs.map((arg, i) => {
+      if (arg.included === true) {
+        return (
+          <p key={arg.key}>
+            This is a placeholder for argument {i}: {arg.key}
+          </p>
+        );
+      }
+    });
+    const formData = {};
+    // add all args and values to formData object used by react-jsonschema-form when form submits
+    tempArgs.forEach((arg) => {
+      formData[arg.key] = arg[arg.key];
+    });
+    setArgsJSX(tempArgsJSX);
+    setArgs(tempArgs);
+    props.onChange(formData);
   }
 
-  function addArg(eventKey) {
-    const tempArgs = { ...args, [argOptions[eventKey].key]: argOptions[eventKey].defaultObj };
-    const tempArgOptions = argOptions;
-    tempArgOptions[eventKey].included = true;
-    setArgOptions(tempArgOptions);
-    updateArgs(tempArgs);
+  function getArgOptions() {
+    return args.map((arg, i) => (
+      <Dropdown.Item value={arg.title} eventKey={i} key={arg.key}>
+        {arg.title}
+      </Dropdown.Item>
+    ));
   }
 
   return (
@@ -178,8 +176,9 @@ function Extractor(props) {
           <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
             Add constructor argument
           </Dropdown.Toggle>
-          <Dropdown.Menu>{getFormattedArgs()}</Dropdown.Menu>
+          <Dropdown.Menu>{getArgOptions()}</Dropdown.Menu>
         </Dropdown>
+        {argsJSX}
       </Accordion.Body>
     </Accordion.Item>
   );

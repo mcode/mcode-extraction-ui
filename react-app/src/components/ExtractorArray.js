@@ -53,6 +53,9 @@ function ExtractorArray(props) {
           tempArray[index].label = label;
           updateExtractors(tempArray);
         }}
+        onChange={(extractorObj) => {
+          console.log('Extractor attempted to update value stored in formData');
+        }}
       />
     ));
     setExtractorsJSX(tempExtractorsJSX);
