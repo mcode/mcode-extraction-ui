@@ -4,9 +4,6 @@ import FilePicker from './FilePicker';
 
 function Extractor(props) {
   console.log(props);
-  const [csvPath, setCsvPath] = useState(
-    props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
-  );
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label ? props.formData.label : '');
 
   // Variables for constructor arg management
@@ -14,7 +11,7 @@ function Extractor(props) {
   const defaultArgs = [
     {
       filePath: props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
-      title: 'File Path',
+      label: 'CSV File Path',
       type: 'file',
       included: true,
       key: 'filePath',
@@ -33,9 +30,8 @@ function Extractor(props) {
     },
     {
       url: '',
-      title: 'URL',
-      type: 'string',
-      format: 'url',
+      label: 'URL',
+      type: 'url',
       included: false,
       key: 'url',
       validExtractors: [
@@ -53,15 +49,15 @@ function Extractor(props) {
     },
     {
       clinicalSiteID: '',
-      title: 'Clinical Site ID',
+      label: 'Clinical Site ID',
       type: 'string',
       included: false,
-      key: 'clinicalSiteiD',
+      key: 'clinicalSiteID',
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
     {
       clinicalSiteSystem: '',
-      title: 'Clinical Site System',
+      label: 'Clinical Site System',
       type: 'string',
       included: false,
       key: 'clinicalSiteSystem',
@@ -69,7 +65,7 @@ function Extractor(props) {
     },
     {
       cancerType: '',
-      title: 'Type',
+      label: 'Type',
       type: 'string',
       included: false,
       key: 'cancerType',
@@ -77,7 +73,7 @@ function Extractor(props) {
     },
     {
       mask: '',
-      title: 'Masked Fields',
+      label: 'Masked Fields',
       type: 'array',
       included: false,
       key: 'mask',
@@ -88,12 +84,13 @@ function Extractor(props) {
     },
   ];
   const [args, setArgs] = useState(defaultArgs);
+  // this function has to be declared here so that it can be used to set the value of argsJSX
   const [argsJSX, setArgsJSX] = useState(
     defaultArgs
       .filter((arg) => arg.included === true)
       .map((arg, i) => (
         <p key={arg.key}>
-          This is a placeholder for arg {i}: {arg.title}
+          This is a placeholder for arg {i}: {arg.label}
         </p>
       )),
   );
@@ -104,53 +101,96 @@ function Extractor(props) {
     setExtractorLabel(e.target.value);
   }
 
-  function onCsvPathChange(newPath) {
-    setCsvPath(newPath);
-    props.onCsvPathChange(newPath, props.eventKey);
-  }
-
-  function onClear() {
-    setCsvPath('No File Selected');
-    props.onCsvPathChange('No File Selected', props.eventKey);
-  }
-  function getFile() {
-    window.api.getFile().then((promise) => {
-      if (promise.filePaths[0] !== undefined) {
-        setCsvPath(promise.filePaths[0]);
-        props.onCsvPathChange(promise.filePaths[0], props.eventKey);
-      }
-    });
-  }
-
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
-  function addArg(eventKey) {
-    const tempArgs = [...args];
-    tempArgs[eventKey].included = true;
-    const tempArgsJSX = tempArgs.map((arg, i) => {
-      if (arg.included === true) {
-        return (
-          <p key={arg.key}>
-            This is a placeholder for argument {i}: {arg.key}
-          </p>
-        );
-      }
-    });
-    const formData = {};
+
+  function updateArgs(tempArgs) {
+    const tempArgsJSX = tempArgs
+      .filter((arg) => arg.included === true)
+      .map((arg, i) => {
+        switch (arg.type) {
+          case 'string':
+            return (
+              <Form.Group className="mb-3" controlId="formBasicEmail" key={arg.key}>
+                <Form.Label>{arg.label}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={arg[arg.key]}
+                  onChange={(e) => {
+                    const newArgs = [...tempArgs];
+                    newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                    updateArgs(newArgs);
+                  }}
+                />
+              </Form.Group>
+            );
+          case 'file':
+            return (
+              <FilePicker
+                buttonText="Select File"
+                controlId={arg.label}
+                onClick={() => {
+                  window.api.getFile().then((promise) => {
+                    if (promise.filePaths[0] !== undefined) {
+                      const newArgs = [...args];
+                      [newArgs[i][arg.key]] = promise.filePaths;
+                      updateArgs(newArgs);
+                    }
+                  });
+                }}
+                filePath={arg[arg.key]}
+                label={arg.label}
+                onClear={() => {
+                  // do something to change value of file path and update state
+                  const newArgs = [...args];
+                  newArgs[i][arg.key] = 'No File Chosen';
+                  updateArgs(newArgs);
+                }}
+                key={arg.key}
+                required={props.required}
+              />
+            );
+          case 'url':
+            return (
+              <p key={arg.key}>
+                This is a placeholder for url argument {i}: {arg.key}
+              </p>
+            );
+          default:
+            return (
+              <p key={arg.key}>
+                This is a placeholder for unidentified argument {i}: {arg.key}
+              </p>
+            );
+        }
+      });
+    const formData = {
+      type: props.formData.type,
+      label: extractorLabel,
+      constructorArgs: {},
+    };
     // add all args and values to formData object used by react-jsonschema-form when form submits
     tempArgs.forEach((arg) => {
-      formData[arg.key] = arg[arg.key];
+      formData.constructorArgs[arg.key] = arg[arg.key];
     });
     setArgsJSX(tempArgsJSX);
     setArgs(tempArgs);
     props.onChange(formData);
   }
 
+  function addArg(eventKey) {
+    const tempArgs = [...args];
+    tempArgs.find((arg) => arg.key === eventKey).included = true;
+    updateArgs(tempArgs);
+  }
+
   function getArgOptions() {
-    return args.map((arg, i) => (
-      <Dropdown.Item value={arg.title} eventKey={i} key={arg.key}>
-        {arg.title}
-      </Dropdown.Item>
-    ));
+    return args
+      .filter((arg) => arg.included === false)
+      .map((arg) => (
+        <Dropdown.Item value={arg.label} eventKey={arg.key} key={arg.key}>
+          {arg.label}
+        </Dropdown.Item>
+      ));
   }
 
   return (
@@ -161,17 +201,6 @@ function Extractor(props) {
           <Form.Label>Extractor Label</Form.Label>
           <Form.Control type="text" value={extractorLabel} onChange={onExtractorLabelChange} />
         </Form.Group>
-        <p>Constructor Arguments</p>
-        <FilePicker
-          buttonText="Select File"
-          controlId={props.label}
-          onClick={getFile}
-          setFilePath={onCsvPathChange}
-          filePath={csvPath}
-          label="CSV File Path"
-          onClear={onClear}
-          required={props.required}
-        />
         <Dropdown onSelect={addArg}>
           <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
             Add constructor argument
