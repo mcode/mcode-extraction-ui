@@ -29,7 +29,7 @@ function Extractor(props) {
       ],
     },
     {
-      url: '',
+      url: props.formData.constructorArgs.url ? props.formData.constructorArgs.url : '',
       label: 'URL',
       type: 'url',
       included: false,
@@ -48,7 +48,9 @@ function Extractor(props) {
       ],
     },
     {
-      clinicalSiteID: '',
+      clinicalSiteID: props.formData.constructorArgs.clinicalSiteID
+        ? props.formData.constructorArgs.clinicalSiteID
+        : '',
       label: 'Clinical Site ID',
       type: 'string',
       included: false,
@@ -56,7 +58,9 @@ function Extractor(props) {
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
     {
-      clinicalSiteSystem: '',
+      clinicalSiteSystem: props.formData.constructorArgs.clinicalSiteSystem
+        ? props.formData.constructorArgs.clinicalSiteSystem
+        : '',
       label: 'Clinical Site System',
       type: 'string',
       included: false,
@@ -64,7 +68,7 @@ function Extractor(props) {
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
     {
-      cancerType: '',
+      cancerType: props.formData.constructorArgs.cancerType ? props.formData.constructorArgs.cancerType : '',
       label: 'Type',
       type: 'string',
       included: false,
@@ -72,7 +76,7 @@ function Extractor(props) {
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
-      mask: '',
+      mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : '',
       label: 'Masked Fields',
       type: 'array',
       included: false,
@@ -96,14 +100,19 @@ function Extractor(props) {
   );
 
   function onExtractorLabelChange(e) {
-    console.log(e);
     props.onExtractorLabelChange(e.target.value, props.eventKey);
     setExtractorLabel(e.target.value);
   }
 
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
 
-  function updateArgs(tempArgs) {
+  function updateArgs(inputArgs, isAccordion = true) {
+    let tempArgs;
+    if (isAccordion === true) {
+      tempArgs = [...args];
+    } else {
+      tempArgs = [...inputArgs];
+    }
     const tempArgsJSX = tempArgs
       .filter((arg) => arg.included === true)
       .map((arg, i) => {
@@ -118,7 +127,7 @@ function Extractor(props) {
                   onChange={(e) => {
                     const newArgs = [...tempArgs];
                     newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
-                    updateArgs(newArgs);
+                    updateArgs(newArgs, false);
                   }}
                 />
               </Form.Group>
@@ -133,7 +142,7 @@ function Extractor(props) {
                     if (promise.filePaths[0] !== undefined) {
                       const newArgs = [...args];
                       [newArgs[i][arg.key]] = promise.filePaths;
-                      updateArgs(newArgs);
+                      updateArgs(newArgs, false);
                     }
                   });
                 }}
@@ -143,7 +152,7 @@ function Extractor(props) {
                   // do something to change value of file path and update state
                   const newArgs = [...args];
                   newArgs[i][arg.key] = 'No File Chosen';
-                  updateArgs(newArgs);
+                  updateArgs(newArgs, false);
                 }}
                 key={arg.key}
                 required={props.required}
@@ -180,7 +189,7 @@ function Extractor(props) {
   function addArg(eventKey) {
     const tempArgs = [...args];
     tempArgs.find((arg) => arg.key === eventKey).included = true;
-    updateArgs(tempArgs);
+    updateArgs(tempArgs, false);
   }
 
   function getArgOptions() {
@@ -195,7 +204,7 @@ function Extractor(props) {
 
   return (
     <Accordion.Item eventKey={props.eventKey}>
-      <Accordion.Header>{props.formData.type}</Accordion.Header>
+      <Accordion.Header onClick={updateArgs}>{props.formData.type}</Accordion.Header>
       <Accordion.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Extractor Label</Form.Label>

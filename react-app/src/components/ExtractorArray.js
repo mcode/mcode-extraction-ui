@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Accordion, Button, Dropdown } from 'react-bootstrap';
 import Extractor from './Extractor';
 
@@ -37,41 +37,47 @@ function ExtractorArray(props) {
     };
   }
 
-  function updateExtractors(tempExtractors) {
-    const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
-      <Extractor
-        formData={extractor}
-        eventKey={i}
-        key={i}
-        onCsvPathChange={(newPath, index) => {
-          const tempArray = [...tempExtractors];
-          tempArray[index].constructorArgs.filePath = newPath;
-          updateExtractors(tempArray);
-        }}
-        onExtractorLabelChange={(label, index) => {
-          const tempArray = [...tempExtractors];
-          tempArray[index].label = label;
-          updateExtractors(tempArray);
-        }}
-        onChange={(extractorObj) => {
-          console.log('Extractor attempted to update value stored in formData');
-        }}
-      />
-    ));
-    setExtractorsJSX(tempExtractorsJSX);
-    setExtractors(tempExtractors);
-    props.onChange(tempExtractors);
-  }
+  // DELETE ME
+  //   function updateExtractors(tempExtractors) {
+
+  //     const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
+  //       <Extractor
+  //         formData={extractor}
+  //         eventKey={i}
+  //         key={i}
+  //         onCsvPathChange={(newPath, index) => {
+  //           const tempArray = [...tempExtractors];
+  //           tempArray[index].constructorArgs.filePath = newPath;
+  //           updateExtractors(tempArray);
+  //         }}
+  //         onExtractorLabelChange={(label, index) => {
+  //           const tempArray = [...tempExtractors];
+  //           tempArray[index].label = label;
+  //           updateExtractors(tempArray);
+  //         }}
+  //         onChange={(extractorObj) => {
+  //           console.log('Extractor attempted to update value stored in formData with this data: ');
+  //           console.log(extractorObj);
+  //         }}
+  //       />
+  //     ));
+  //     setExtractorsJSX(tempExtractorsJSX);
+
+  //     props.onChange(tempExtractors);
+  //   }
 
   function addExtractor(eventKey) {
     // update list of extractors, the JSX display, and the formData object
     const tempExtractors = [...extractors, getDefaultExtractorObj(eventKey)];
-    updateExtractors(tempExtractors);
+    setExtractors(tempExtractors);
   }
 
   function sortExtractorsByType() {
     // alphabetize
-    const tempExtractors = extractors;
+    const tempExtractors = [...extractors];
+    console.log('tempExtracts before sorting: ');
+    console.log(tempExtractors[2]);
+    console.log(tempExtractors);
     tempExtractors.sort((a, b) => {
       if (a.type > b.type) {
         return 1;
@@ -81,14 +87,41 @@ function ExtractorArray(props) {
       }
       return 0;
     });
-    // update list of extractors, the JSX display, and the formData object
-    const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
-      <Extractor formData={extractor} eventKey={i} key={i} />
+    console.log('sorted tempExtractors. New array: ');
+    console.log(tempExtractors[2]);
+    console.log(tempExtractors);
+
+    // trigger update of list of extractors, the JSX display, and the formData object
+    setExtractors(tempExtractors);
+  }
+
+  const updateFormData = props.onChange;
+  useEffect(() => {
+    const tempExtractorsJSX = extractors.map((extractor, i) => (
+      <Extractor
+        formData={extractor}
+        eventKey={i}
+        key={i}
+        onCsvPathChange={(newPath, index) => {
+          const tempArray = [...extractors];
+          tempArray[index].constructorArgs.filePath = newPath;
+          setExtractors(tempArray);
+        }}
+        onExtractorLabelChange={(label, index) => {
+          const tempArray = [...extractors];
+          tempArray[index].label = label;
+          setExtractors(tempArray);
+        }}
+        onChange={(extractorObj) => {
+          console.log('Extractor attempted to update value stored in formData with this data: ');
+          console.log(extractorObj);
+        }}
+      />
     ));
     setExtractorsJSX(tempExtractorsJSX);
-    setExtractors(tempExtractors);
-    props.onChange(tempExtractors);
-  }
+
+    updateFormData(extractors);
+  }, [extractors, updateFormData]);
 
   return (
     <div>
