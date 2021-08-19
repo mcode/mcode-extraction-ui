@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Accordion, Dropdown, Form } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
 function Extractor(props) {
-  console.log(props);
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label ? props.formData.label : '');
 
   // Variables for constructor arg management
@@ -72,7 +71,7 @@ function Extractor(props) {
       },
       {
         cancerType: props.formData.constructorArgs.cancerType ? props.formData.constructorArgs.cancerType : '',
-        label: 'Type',
+        label: 'Cancer Type',
         type: 'string',
         included: false,
         key: 'cancerType',
@@ -180,18 +179,15 @@ function Extractor(props) {
       tempArgs = [...inputArgs];
     }
 
-    const formData = {
-      type: props.formData.type,
-      label: extractorLabel,
-      constructorArgs: {},
-    };
-    // add all args and values to formData object used by react-jsonschema-form when form submits
-    tempArgs.forEach((arg) => {
-      formData.constructorArgs[arg.key] = arg[arg.key];
-    });
+    const constructorArgs = {};
+    tempArgs
+      .filter((arg) => arg.included === true)
+      .forEach((arg) => {
+        constructorArgs[arg.key] = arg[arg.key];
+      });
     setArgsJSX(getArgsJSX(tempArgs, updateArgs));
     setArgs(tempArgs);
-    props.onChange(formData);
+    props.onArgsChange(constructorArgs);
   }
 
   function addArg(eventKey) {
@@ -209,12 +205,6 @@ function Extractor(props) {
         </Dropdown.Item>
       ));
   }
-  // useEffect(() => {
-  //   setArgsJSX([...args]);
-  // }, [args, getArgValues]);
-  // useEffect(() => {
-  //   setArgs(getArgValues());
-  // }, [props.formData]);
 
   return (
     <Accordion.Item eventKey={props.eventKey}>

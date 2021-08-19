@@ -1,10 +1,9 @@
+import _ from 'lodash';
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown } from 'react-bootstrap';
 import Extractor from './Extractor';
 
 function ExtractorArray(props) {
-  console.log(props);
-
   const [extractors, setExtractors] = useState([]);
   const [extractorsJSX, setExtractorsJSX] = useState([]);
   const types = [
@@ -34,6 +33,7 @@ function ExtractorArray(props) {
       constructorArgs: {
         filePath: 'No File Chosen',
       },
+      id: _.uniqueId(),
     };
   }
 
@@ -41,30 +41,21 @@ function ExtractorArray(props) {
     const tempExtractorsJSX = tempExtractors.map((extractor, i) => (
       <Extractor
         formData={extractor}
-        eventKey={i}
-        key={i}
+        eventKey={extractor.id}
+        key={extractor.id}
         onCsvPathChange={(newPath, index) => {
           const tempArray = [...tempExtractors];
           tempArray[index].constructorArgs.filePath = newPath;
           updateExtractors(tempArray);
         }}
-        onExtractorLabelChange={(label, index) => {
+        onExtractorLabelChange={(label) => {
           const tempArray = [...tempExtractors];
-          tempArray[index].label = label;
+          tempArray[i].label = label;
           updateExtractors(tempArray);
         }}
-        onChange={(extractorObj) => {
-          console.log(tempExtractors);
+        onArgsChange={(extractorObj) => {
           const newExtractors = [...tempExtractors];
-
-          console.log('Extractor attempting to update extractor #', i, ': ');
-          console.log(newExtractors[i]);
-          console.log('Based off of tempExtractors[', i, ']: ');
-          console.log(tempExtractors[i]);
-          console.log('with this data: ');
-          console.log(extractorObj);
-
-          newExtractors[i] = extractorObj;
+          newExtractors[i].constructorArgs = extractorObj;
           updateExtractors(newExtractors);
         }}
       />
@@ -83,9 +74,6 @@ function ExtractorArray(props) {
   function sortExtractorsByType() {
     // alphabetize
     const tempExtractors = [...extractors];
-    console.log('tempExtracts before sorting: ');
-    console.log(tempExtractors[2]);
-    console.log(tempExtractors);
     tempExtractors.sort((a, b) => {
       if (a.type > b.type) {
         return 1;
@@ -95,9 +83,6 @@ function ExtractorArray(props) {
       }
       return 0;
     });
-    console.log('sorted tempExtractors. New array: ');
-    console.log(tempExtractors[2]);
-    console.log(tempExtractors);
 
     // update list of extractors, the JSX display, and the formData object
     updateExtractors(tempExtractors);
