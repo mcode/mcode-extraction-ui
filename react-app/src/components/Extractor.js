@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Accordion, Dropdown, Form } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
@@ -8,88 +8,100 @@ function Extractor(props) {
 
   // Variables for constructor arg management
   // defaultArgs must be declared in a non-state variable so that it can be used to set the values of both args and argsJSX
-  const defaultArgs = [
-    {
-      filePath: props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
-      label: 'CSV File Path',
-      type: 'file',
-      included: true,
-      key: 'filePath',
-      validExtractors: [
-        'CSVAdverseEventExtractor',
-        'CSVCancerDiseaseStatusExtractor',
-        'CSVCancerRelatedMedicationExtractor',
-        'CSVClinicalTrialInformationExtractor',
-        'CSVConditionExtractor',
-        'CSVObservationExtractor',
-        'CSVPatientExtractor',
-        'CSVProcedureExtractor',
-        'CSVStagingExtractor',
-        'CSVTreatmentPlanChangeExtractor',
-      ],
-    },
-    {
-      url: props.formData.constructorArgs.url ? props.formData.constructorArgs.url : '',
-      label: 'URL',
-      type: 'url',
-      included: false,
-      key: 'url',
-      validExtractors: [
-        'CSVAdverseEventExtractor',
-        'CSVCancerDiseaseStatusExtractor',
-        'CSVCancerRelatedMedicationExtractor',
-        'CSVClinicalTrialInformationExtractor',
-        'CSVConditionExtractor',
-        'CSVObservationExtractor',
-        'CSVPatientExtractor',
-        'CSVProcedureExtractor',
-        'CSVStagingExtractor',
-        'CSVTreatmentPlanChangeExtractor',
-      ],
-    },
-    {
-      clinicalSiteID: props.formData.constructorArgs.clinicalSiteID
-        ? props.formData.constructorArgs.clinicalSiteID
-        : '',
-      label: 'Clinical Site ID',
-      type: 'string',
-      included: false,
-      key: 'clinicalSiteID',
-      validExtractors: ['CSVClinicalTrialInformationExtractor'],
-    },
-    {
-      clinicalSiteSystem: props.formData.constructorArgs.clinicalSiteSystem
-        ? props.formData.constructorArgs.clinicalSiteSystem
-        : '',
-      label: 'Clinical Site System',
-      type: 'string',
-      included: false,
-      key: 'clinicalSiteSystem',
-      validExtractors: ['CSVClinicalTrialInformationExtractor'],
-    },
-    {
-      cancerType: props.formData.constructorArgs.cancerType ? props.formData.constructorArgs.cancerType : '',
-      label: 'Type',
-      type: 'string',
-      included: false,
-      key: 'cancerType',
-      validExtractors: ['CSVCancerDiseaseStatusExtractor'],
-    },
-    {
-      mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : '',
-      label: 'Masked Fields',
-      type: 'array',
-      included: false,
-      key: 'mask',
-      items: {
-        type: 'string',
+  function getArgValues() {
+    return [
+      {
+        filePath: props.formData.constructorArgs.filePath
+          ? props.formData.constructorArgs.filePath
+          : 'No File Selected',
+        label: 'CSV File Path',
+        type: 'file',
+        included: true,
+        key: 'filePath',
+        validExtractors: [
+          'CSVAdverseEventExtractor',
+          'CSVCancerDiseaseStatusExtractor',
+          'CSVCancerRelatedMedicationExtractor',
+          'CSVClinicalTrialInformationExtractor',
+          'CSVConditionExtractor',
+          'CSVObservationExtractor',
+          'CSVPatientExtractor',
+          'CSVProcedureExtractor',
+          'CSVStagingExtractor',
+          'CSVTreatmentPlanChangeExtractor',
+        ],
       },
-      validExtractors: ['CSVPatientExtractor'],
-    },
-  ];
-  const [args, setArgs] = useState(defaultArgs);
+      {
+        url: props.formData.constructorArgs.url ? props.formData.constructorArgs.url : '',
+        label: 'URL',
+        type: 'url',
+        included: false,
+        key: 'url',
+        validExtractors: [
+          'CSVAdverseEventExtractor',
+          'CSVCancerDiseaseStatusExtractor',
+          'CSVCancerRelatedMedicationExtractor',
+          'CSVClinicalTrialInformationExtractor',
+          'CSVConditionExtractor',
+          'CSVObservationExtractor',
+          'CSVPatientExtractor',
+          'CSVProcedureExtractor',
+          'CSVStagingExtractor',
+          'CSVTreatmentPlanChangeExtractor',
+        ],
+      },
+      {
+        clinicalSiteID: props.formData.constructorArgs.clinicalSiteID
+          ? props.formData.constructorArgs.clinicalSiteID
+          : '',
+        label: 'Clinical Site ID',
+        type: 'string',
+        included: false,
+        key: 'clinicalSiteID',
+        validExtractors: ['CSVClinicalTrialInformationExtractor'],
+      },
+      {
+        clinicalSiteSystem: props.formData.constructorArgs.clinicalSiteSystem
+          ? props.formData.constructorArgs.clinicalSiteSystem
+          : '',
+        label: 'Clinical Site System',
+        type: 'string',
+        included: false,
+        key: 'clinicalSiteSystem',
+        validExtractors: ['CSVClinicalTrialInformationExtractor'],
+      },
+      {
+        cancerType: props.formData.constructorArgs.cancerType ? props.formData.constructorArgs.cancerType : '',
+        label: 'Type',
+        type: 'string',
+        included: false,
+        key: 'cancerType',
+        validExtractors: ['CSVCancerDiseaseStatusExtractor'],
+      },
+      {
+        mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : '',
+        label: 'Masked Fields',
+        type: 'array',
+        included: false,
+        key: 'mask',
+        items: {
+          type: 'string',
+        },
+        validExtractors: ['CSVPatientExtractor'],
+      },
+    ];
+  }
+  const [args, setArgs] = useState(getArgValues());
   // this function has to be declared here so that it can be used to set the value of argsJSX
-  const [argsJSX, setArgsJSX] = useState([]);
+  const [argsJSX, setArgsJSX] = useState(
+    getArgValues()
+      .filter((arg) => arg.included === true)
+      .map((arg, i) => (
+        <p key={arg.key}>
+          This is a placeholder for arg {i}: {arg.label}
+        </p>
+      )),
+  );
 
   function onExtractorLabelChange(e) {
     props.onExtractorLabelChange(e.target.value, props.eventKey);
@@ -98,8 +110,8 @@ function Extractor(props) {
 
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
 
-  function getArgsJSX() {
-    return args
+  function getArgsJSX(tempArgs, updateArgData) {
+    return tempArgs
       .filter((arg) => arg.included === true)
       .map((arg, i) => {
         switch (arg.type) {
@@ -111,9 +123,9 @@ function Extractor(props) {
                   type="text"
                   value={arg[arg.key]}
                   onChange={(e) => {
-                    const newArgs = [...args];
+                    const newArgs = [...tempArgs];
                     newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
-                    setArgs(newArgs);
+                    updateArgData(newArgs, false);
                   }}
                 />
               </Form.Group>
@@ -128,7 +140,7 @@ function Extractor(props) {
                     if (promise.filePaths[0] !== undefined) {
                       const newArgs = [...args];
                       [newArgs[i][arg.key]] = promise.filePaths;
-                      setArgs(newArgs);
+                      updateArgData(newArgs, false);
                     }
                   });
                 }}
@@ -138,10 +150,10 @@ function Extractor(props) {
                   // do something to change value of file path and update state
                   const newArgs = [...args];
                   newArgs[i][arg.key] = 'No File Chosen';
-                  setArgs(newArgs);
+                  updateArgData(newArgs, false);
                 }}
                 key={arg.key}
-                required={false}
+                required={props.required}
               />
             );
           case 'url':
@@ -160,10 +172,32 @@ function Extractor(props) {
       });
   }
 
+  function updateArgs(inputArgs, isAccordion = true) {
+    let tempArgs;
+    if (isAccordion === true) {
+      tempArgs = [...args];
+    } else {
+      tempArgs = [...inputArgs];
+    }
+
+    const formData = {
+      type: props.formData.type,
+      label: extractorLabel,
+      constructorArgs: {},
+    };
+    // add all args and values to formData object used by react-jsonschema-form when form submits
+    tempArgs.forEach((arg) => {
+      formData.constructorArgs[arg.key] = arg[arg.key];
+    });
+    setArgsJSX(getArgsJSX(tempArgs, updateArgs));
+    setArgs(tempArgs);
+    props.onChange(formData);
+  }
+
   function addArg(eventKey) {
-    const newArgs = [...args];
-    newArgs.find((arg) => arg.key === eventKey).included = true;
-    setArgs(newArgs);
+    const tempArgs = [...args];
+    tempArgs.find((arg) => arg.key === eventKey).included = true;
+    updateArgs(tempArgs, false);
   }
 
   function getArgOptions() {
@@ -175,40 +209,16 @@ function Extractor(props) {
         </Dropdown.Item>
       ));
   }
-
-  const updateFormData = props.onChange;
-  const extractorType = props.formData.type;
-  const getArgsJSXCallback = useCallback(getArgsJSX, [args]);
-  useEffect(() => {
-    const formData = {
-      type: extractorType,
-      label: extractorLabel,
-      constructorArgs: {},
-    };
-    // add all args and values to formData object used by react-jsonschema-form when form submits
-    args.forEach((arg) => {
-      formData.constructorArgs[arg.key] = arg[arg.key];
-    });
-    setArgsJSX(getArgsJSXCallback());
-    // try checking if the new formData matches the original one
-    updateFormData(formData);
-  }, [args, extractorLabel, extractorType, getArgsJSXCallback, updateFormData]);
-
   // useEffect(() => {
-  //   console.log('useEffect for props called');
-  //   // const newArgs = [...args];
-  //   // args.forEach((arg, i) => {
-  //   //   if (props.formData.constructorArgs[arg.key] && arg[arg.key] !== props.formData.constructorArgs[arg.key]) {
-  //   //     newArgs[i][arg.key] = props.formData.constructorArgs[arg.key];
-  //   //     newArgs[i].included = true;
-  //   //   }
-  //   // });
-  //   // setArgs(args);
-  // }, [args, props]);
+  //   setArgsJSX([...args]);
+  // }, [args, getArgValues]);
+  // useEffect(() => {
+  //   setArgs(getArgValues());
+  // }, [props.formData]);
 
   return (
     <Accordion.Item eventKey={props.eventKey}>
-      <Accordion.Header>{props.formData.type}</Accordion.Header>
+      <Accordion.Header onClick={updateArgs}>{props.formData.type}</Accordion.Header>
       <Accordion.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Extractor Label</Form.Label>
