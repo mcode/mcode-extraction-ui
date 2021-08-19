@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Accordion, Dropdown, Form } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
@@ -89,15 +89,7 @@ function Extractor(props) {
   ];
   const [args, setArgs] = useState(defaultArgs);
   // this function has to be declared here so that it can be used to set the value of argsJSX
-  const [argsJSX, setArgsJSX] = useState(
-    defaultArgs
-      .filter((arg) => arg.included === true)
-      .map((arg, i) => (
-        <p key={arg.key}>
-          This is a placeholder for arg {i}: {arg.label}
-        </p>
-      )),
-  );
+  const [argsJSX, setArgsJSX] = useState([]);
 
   function onExtractorLabelChange(e) {
     props.onExtractorLabelChange(e.target.value, props.eventKey);
@@ -106,14 +98,8 @@ function Extractor(props) {
 
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
 
-  function updateArgs(inputArgs, isAccordion = true) {
-    let tempArgs;
-    if (isAccordion === true) {
-      tempArgs = [...args];
-    } else {
-      tempArgs = [...inputArgs];
-    }
-    const tempArgsJSX = tempArgs
+  function getArgsJSX() {
+    return args
       .filter((arg) => arg.included === true)
       .map((arg, i) => {
         switch (arg.type) {
@@ -125,9 +111,9 @@ function Extractor(props) {
                   type="text"
                   value={arg[arg.key]}
                   onChange={(e) => {
-                    const newArgs = [...tempArgs];
+                    const newArgs = [...args];
                     newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
-                    updateArgs(newArgs, false);
+                    setArgs(newArgs);
                   }}
                 />
               </Form.Group>
@@ -142,7 +128,7 @@ function Extractor(props) {
                     if (promise.filePaths[0] !== undefined) {
                       const newArgs = [...args];
                       [newArgs[i][arg.key]] = promise.filePaths;
-                      updateArgs(newArgs, false);
+                      setArgs(newArgs);
                     }
                   });
                 }}
@@ -152,10 +138,10 @@ function Extractor(props) {
                   // do something to change value of file path and update state
                   const newArgs = [...args];
                   newArgs[i][arg.key] = 'No File Chosen';
-                  updateArgs(newArgs, false);
+                  setArgs(newArgs);
                 }}
                 key={arg.key}
-                required={props.required}
+                required={false}
               />
             );
           case 'url':
@@ -172,24 +158,12 @@ function Extractor(props) {
             );
         }
       });
-    const formData = {
-      type: props.formData.type,
-      label: extractorLabel,
-      constructorArgs: {},
-    };
-    // add all args and values to formData object used by react-jsonschema-form when form submits
-    tempArgs.forEach((arg) => {
-      formData.constructorArgs[arg.key] = arg[arg.key];
-    });
-    setArgsJSX(tempArgsJSX);
-    setArgs(tempArgs);
-    props.onChange(formData);
   }
 
   function addArg(eventKey) {
-    const tempArgs = [...args];
-    tempArgs.find((arg) => arg.key === eventKey).included = true;
-    updateArgs(tempArgs, false);
+    const newArgs = [...args];
+    newArgs.find((arg) => arg.key === eventKey).included = true;
+    setArgs(newArgs);
   }
 
   function getArgOptions() {
@@ -202,9 +176,39 @@ function Extractor(props) {
       ));
   }
 
+  const updateFormData = props.onChange;
+  const extractorType = props.formData.type;
+  const getArgsJSXCallback = useCallback(getArgsJSX, [args]);
+  useEffect(() => {
+    const formData = {
+      type: extractorType,
+      label: extractorLabel,
+      constructorArgs: {},
+    };
+    // add all args and values to formData object used by react-jsonschema-form when form submits
+    args.forEach((arg) => {
+      formData.constructorArgs[arg.key] = arg[arg.key];
+    });
+    setArgsJSX(getArgsJSXCallback());
+    // try checking if the new formData matches the original one
+    updateFormData(formData);
+  }, [args, extractorLabel, extractorType, getArgsJSXCallback, updateFormData]);
+
+  // useEffect(() => {
+  //   console.log('useEffect for props called');
+  //   // const newArgs = [...args];
+  //   // args.forEach((arg, i) => {
+  //   //   if (props.formData.constructorArgs[arg.key] && arg[arg.key] !== props.formData.constructorArgs[arg.key]) {
+  //   //     newArgs[i][arg.key] = props.formData.constructorArgs[arg.key];
+  //   //     newArgs[i].included = true;
+  //   //   }
+  //   // });
+  //   // setArgs(args);
+  // }, [args, props]);
+
   return (
     <Accordion.Item eventKey={props.eventKey}>
-      <Accordion.Header onClick={updateArgs}>{props.formData.type}</Accordion.Header>
+      <Accordion.Header>{props.formData.type}</Accordion.Header>
       <Accordion.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Extractor Label</Form.Label>
