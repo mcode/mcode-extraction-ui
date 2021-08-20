@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, Dropdown, Form } from 'react-bootstrap';
+import { Accordion, Button, Dropdown, Form } from 'react-bootstrap';
 import FilePicker from './FilePicker';
 
 function Extractor(props) {
@@ -80,12 +80,10 @@ function Extractor(props) {
       {
         mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : '',
         label: 'Masked Fields',
-        type: 'array',
+        type: 'dropdown',
         included: false,
         key: 'mask',
-        items: {
-          type: 'string',
-        },
+        options: [`gender`, `mrn`, `name`, `address`, `birthDate`, `language`, `ethnicity`, `birthsex`, `race`],
         validExtractors: ['CSVPatientExtractor'],
       },
     ];
@@ -116,7 +114,7 @@ function Extractor(props) {
         switch (arg.type) {
           case 'string':
             return (
-              <Form.Group className="mb-3" controlId="formBasicEmail" key={arg.key}>
+              <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
                 <Form.Label>{arg.label}</Form.Label>
                 <Form.Control
                   type="text"
@@ -131,35 +129,93 @@ function Extractor(props) {
             );
           case 'file':
             return (
-              <FilePicker
-                buttonText="Select File"
-                controlId={arg.label}
-                onClick={() => {
-                  window.api.getFile().then((promise) => {
-                    if (promise.filePaths[0] !== undefined) {
-                      const newArgs = [...args];
-                      [newArgs[i][arg.key]] = promise.filePaths;
-                      updateArgData(newArgs, false);
-                    }
-                  });
-                }}
-                filePath={arg[arg.key]}
-                label={arg.label}
-                onClear={() => {
-                  // do something to change value of file path and update state
-                  const newArgs = [...args];
-                  newArgs[i][arg.key] = 'No File Chosen';
-                  updateArgData(newArgs, false);
-                }}
-                key={arg.key}
-                required={props.required}
-              />
+              <div key={arg.key}>
+                <FilePicker
+                  buttonText="Select File"
+                  controlId={arg.label}
+                  onClick={() => {
+                    window.api.getFile().then((promise) => {
+                      if (promise.filePaths[0] !== undefined) {
+                        const newArgs = [...args];
+                        [newArgs[i][arg.key]] = promise.filePaths;
+                        updateArgData(newArgs, false);
+                      }
+                    });
+                  }}
+                  filePath={arg[arg.key]}
+                  onClear={() => {
+                    // do something to change value of file path and update state
+                    const newArgs = [...args];
+                    newArgs[i][arg.key] = 'No File Chosen';
+                    updateArgData(newArgs, false);
+                  }}
+                  label={arg.label}
+                  key={arg.key}
+                  required={props.required}
+                  extraButton={
+                    <Button
+                      onClick={() => {
+                        const newArgs = [...args];
+                        newArgs.find((temp) => temp.key === 'filePath').included = false;
+                        newArgs.find((temp) => temp.key === 'url').included = true;
+                        updateArgData(newArgs, false);
+                      }}
+                      className="generic-button narrow-button"
+                      variant="outline-info"
+                    >
+                      Switch to URL
+                    </Button>
+                  }
+                />
+              </div>
             );
           case 'url':
             return (
-              <p key={arg.key}>
-                This is a placeholder for url argument {i}: {arg.key}
-              </p>
+              <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
+                <Form.Label>{arg.label}</Form.Label>
+                <div className="file-button-container">
+                  <Button
+                    onClick={() => {
+                      const newArgs = [...args];
+                      newArgs.find((temp) => temp.key === 'url').included = false;
+                      newArgs.find((temp) => temp.key === 'filePath').included = true;
+                      updateArgData(newArgs, false);
+                    }}
+                    className="generic-button narrow-button"
+                    variant="outline-info"
+                  >
+                    Switch to CSV File
+                  </Button>
+                  <Form.Control
+                    type="text"
+                    value={arg[arg.key]}
+                    onChange={(e) => {
+                      const newArgs = [...tempArgs];
+                      newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                      updateArgData(newArgs, false);
+                    }}
+                  />
+                </div>
+              </Form.Group>
+            );
+          case 'dropdown':
+            return (
+              <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
+                <Form.Label>{arg.label}</Form.Label>
+                <Form.Text>
+                  Enter field(s) as a list separated by commas. The options are gender, mrn, name, address, birthDate,
+                  language, ethnicity, birthsex, and race.
+                </Form.Text>
+                <Form.Control
+                  type="text"
+                  value={arg[arg.key]}
+                  onChange={(e) => {
+                    const newArgs = [...tempArgs];
+                    newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                    updateArgData(newArgs, false);
+                  }}
+                />
+              </Form.Group>
             );
           default:
             return (
@@ -198,7 +254,7 @@ function Extractor(props) {
 
   function getArgOptions() {
     return args
-      .filter((arg) => arg.included === false)
+      .filter((arg) => arg.included === false && arg.validExtractors.includes(props.formData.type))
       .map((arg) => (
         <Dropdown.Item value={arg.label} eventKey={arg.key} key={arg.key}>
           {arg.label}
@@ -214,8 +270,14 @@ function Extractor(props) {
           <Form.Label>Extractor Label</Form.Label>
           <Form.Control type="text" value={extractorLabel} onChange={onExtractorLabelChange} />
         </Form.Group>
-        <Dropdown onSelect={addArg}>
-          <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
+        <p className="form-subheader-text">Constructor Arguments</p>
+        <Dropdown onSelect={addArg} className="form-button-container">
+          <Dropdown.Toggle
+            variant="outline-info"
+            id="dropdown-basic"
+            className="form-button"
+            disabled={getArgOptions().length < 1}
+          >
             Add constructor argument
           </Dropdown.Toggle>
           <Dropdown.Menu>{getArgOptions()}</Dropdown.Menu>
