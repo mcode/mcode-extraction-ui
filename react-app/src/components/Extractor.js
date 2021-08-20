@@ -17,18 +17,7 @@ function Extractor(props) {
         type: 'file',
         included: true,
         key: 'filePath',
-        validExtractors: [
-          'CSVAdverseEventExtractor',
-          'CSVCancerDiseaseStatusExtractor',
-          'CSVCancerRelatedMedicationExtractor',
-          'CSVClinicalTrialInformationExtractor',
-          'CSVConditionExtractor',
-          'CSVObservationExtractor',
-          'CSVPatientExtractor',
-          'CSVProcedureExtractor',
-          'CSVStagingExtractor',
-          'CSVTreatmentPlanChangeExtractor',
-        ],
+        validExtractors: [],
       },
       {
         url: props.formData.constructorArgs.url ? props.formData.constructorArgs.url : '',
@@ -36,18 +25,7 @@ function Extractor(props) {
         type: 'url',
         included: false,
         key: 'url',
-        validExtractors: [
-          'CSVAdverseEventExtractor',
-          'CSVCancerDiseaseStatusExtractor',
-          'CSVCancerRelatedMedicationExtractor',
-          'CSVClinicalTrialInformationExtractor',
-          'CSVConditionExtractor',
-          'CSVObservationExtractor',
-          'CSVPatientExtractor',
-          'CSVProcedureExtractor',
-          'CSVStagingExtractor',
-          'CSVTreatmentPlanChangeExtractor',
-        ],
+        validExtractors: [],
       },
       {
         clinicalSiteID: props.formData.constructorArgs.clinicalSiteID
@@ -124,6 +102,7 @@ function Extractor(props) {
                     newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
                     updateArgData(newArgs, false);
                   }}
+                  className="input-width-limit"
                 />
               </Form.Group>
             );
@@ -136,7 +115,7 @@ function Extractor(props) {
                   onClick={() => {
                     window.api.getFile().then((promise) => {
                       if (promise.filePaths[0] !== undefined) {
-                        const newArgs = [...args];
+                        const newArgs = [...tempArgs];
                         [newArgs[i][arg.key]] = promise.filePaths;
                         updateArgData(newArgs, false);
                       }
@@ -145,7 +124,7 @@ function Extractor(props) {
                   filePath={arg[arg.key]}
                   onClear={() => {
                     // do something to change value of file path and update state
-                    const newArgs = [...args];
+                    const newArgs = [...tempArgs];
                     newArgs[i][arg.key] = 'No File Chosen';
                     updateArgData(newArgs, false);
                   }}
@@ -194,6 +173,8 @@ function Extractor(props) {
                       newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
                       updateArgData(newArgs, false);
                     }}
+                    className="input-width-limit"
+                    placeholder="Enter URL"
                   />
                 </div>
               </Form.Group>
@@ -271,17 +252,19 @@ function Extractor(props) {
           <Form.Control type="text" value={extractorLabel} onChange={onExtractorLabelChange} />
         </Form.Group>
         <p className="form-subheader-text">Constructor Arguments</p>
-        <Dropdown onSelect={addArg} className="form-button-container">
-          <Dropdown.Toggle
-            variant="outline-info"
-            id="dropdown-basic"
-            className="form-button"
-            disabled={getArgOptions().length < 1}
-          >
-            Add constructor argument
-          </Dropdown.Toggle>
-          <Dropdown.Menu>{getArgOptions()}</Dropdown.Menu>
-        </Dropdown>
+        {args.filter((arg) => arg.validExtractors.includes(props.formData.type)).length > 0 && (
+          <Dropdown onSelect={addArg} className="form-button-container">
+            <Dropdown.Toggle
+              variant="outline-info"
+              id="dropdown-basic"
+              className="form-button"
+              disabled={getArgOptions().length < 1}
+            >
+              Add constructor argument
+            </Dropdown.Toggle>
+            <Dropdown.Menu>{getArgOptions()}</Dropdown.Menu>
+          </Dropdown>
+        )}
         {argsJSX}
       </Accordion.Body>
     </Accordion.Item>
