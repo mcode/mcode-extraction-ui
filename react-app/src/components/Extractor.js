@@ -182,7 +182,9 @@ function Extractor(props) {
           case 'dropdown':
             return (
               <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
-                <Form.Label>{arg.label}</Form.Label>
+                <div>
+                  <Form.Label>{arg.label}</Form.Label>
+                </div>
                 <Form.Text>
                   Enter field(s) as a list separated by commas. The options are gender, mrn, name, address, birthDate,
                   language, ethnicity, birthsex, and race.
