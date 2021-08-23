@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown, Form } from 'react-bootstrap';
+import { Trash2 } from 'react-feather';
 import FilePicker from './FilePicker';
 
 function Extractor(props) {
@@ -247,7 +248,9 @@ function Extractor(props) {
 
   return (
     <Accordion.Item eventKey={props.eventKey}>
-      <Accordion.Header onClick={updateArgs}>{props.formData.type}</Accordion.Header>
+      <Accordion.Header onClick={updateArgs}>
+        {props.formData.type} <Trash2 />
+      </Accordion.Header>
       <Accordion.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Extractor Label</Form.Label>
