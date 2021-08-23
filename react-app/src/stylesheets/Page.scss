@@ -188,3 +188,9 @@
 .input-width-limit {
   max-width: 300px;
 }
+
+.label-and-icon-container {
+  display: flex;
+  justify-content: space-between;
+  min-width: 95%;
+}

@@ -43,6 +43,11 @@ function ExtractorArray(props) {
         formData={extractor}
         eventKey={extractor.id}
         key={extractor.id}
+        deleteExtractor={() => {
+          const tempArray = [...tempExtractors];
+          tempArray.splice(i, 1);
+          updateExtractors(tempArray);
+        }}
         onCsvPathChange={(newPath, index) => {
           const tempArray = [...tempExtractors];
           tempArray[index].constructorArgs.filePath = newPath;

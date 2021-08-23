@@ -218,16 +218,17 @@ function Extractor(props) {
     } else {
       tempArgs = [...inputArgs];
     }
-
-    const constructorArgs = {};
-    tempArgs
-      .filter((arg) => arg.included === true)
-      .forEach((arg) => {
-        constructorArgs[arg.key] = arg[arg.key];
-      });
     setArgsJSX(getArgsJSX(tempArgs, updateArgs));
-    setArgs(tempArgs);
-    props.onArgsChange(constructorArgs);
+    if (isAccordion !== true) {
+      const constructorArgs = {};
+      tempArgs
+        .filter((arg) => arg.included === true)
+        .forEach((arg) => {
+          constructorArgs[arg.key] = arg[arg.key];
+        });
+      setArgs(tempArgs);
+      props.onArgsChange(constructorArgs);
+    }
   }
 
   function addArg(eventKey) {
@@ -249,7 +250,10 @@ function Extractor(props) {
   return (
     <Accordion.Item eventKey={props.eventKey}>
       <Accordion.Header onClick={updateArgs}>
-        {props.formData.type} <Trash2 />
+        <div className="label-and-icon-container">
+          {props.formData.type}
+          <Trash2 onClick={props.deleteExtractor} />
+        </div>
       </Accordion.Header>
       <Accordion.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
