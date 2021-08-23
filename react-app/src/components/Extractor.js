@@ -195,7 +195,7 @@ function Extractor(props) {
                   <Form.Label>{arg.label}</Form.Label>
                 </div>
                 <Form.Text>
-                  Enter field(s) as a list separated by commas. The options are gender, mrn, name, address, birthDate,
+                  Enter field(s) as a list separated by a commas. The options are gender, mrn, name, address, birthDate,
                   language, ethnicity, birthsex, and race.
                 </Form.Text>
                 <div className="label-and-icon-container">
@@ -204,7 +204,9 @@ function Extractor(props) {
                     value={arg[arg.key]}
                     onChange={(e) => {
                       const newArgs = [...tempArgs];
-                      newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                      newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value
+                        .split(',')
+                        .map((word) => word.trim());
                       updateArgData(newArgs, false);
                     }}
                     className="arg-input-width-limit"
