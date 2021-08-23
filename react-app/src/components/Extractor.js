@@ -95,16 +95,25 @@ function Extractor(props) {
             return (
               <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
                 <Form.Label>{arg.label}</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={arg[arg.key]}
-                  onChange={(e) => {
-                    const newArgs = [...tempArgs];
-                    newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
-                    updateArgData(newArgs, false);
-                  }}
-                  className="input-width-limit"
-                />
+                <div className="label-and-icon-container">
+                  <Form.Control
+                    type="text"
+                    value={arg[arg.key]}
+                    onChange={(e) => {
+                      const newArgs = [...tempArgs];
+                      newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                      updateArgData(newArgs, false);
+                    }}
+                    className="arg-input-width-limit"
+                  />
+                  <Trash2
+                    onClick={() => {
+                      const newArgs = [...tempArgs];
+                      newArgs.find((temp) => arg.key === temp.key).included = false;
+                      updateArgData(newArgs, false);
+                    }}
+                  />
+                </div>
               </Form.Group>
             );
           case 'file':
@@ -174,7 +183,6 @@ function Extractor(props) {
                       newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
                       updateArgData(newArgs, false);
                     }}
-                    className="input-width-limit"
                     placeholder="Enter URL"
                   />
                 </div>
@@ -190,15 +198,25 @@ function Extractor(props) {
                   Enter field(s) as a list separated by commas. The options are gender, mrn, name, address, birthDate,
                   language, ethnicity, birthsex, and race.
                 </Form.Text>
-                <Form.Control
-                  type="text"
-                  value={arg[arg.key]}
-                  onChange={(e) => {
-                    const newArgs = [...tempArgs];
-                    newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
-                    updateArgData(newArgs, false);
-                  }}
-                />
+                <div className="label-and-icon-container">
+                  <Form.Control
+                    type="text"
+                    value={arg[arg.key]}
+                    onChange={(e) => {
+                      const newArgs = [...tempArgs];
+                      newArgs.find((temp) => arg.key === temp.key)[arg.key] = e.target.value;
+                      updateArgData(newArgs, false);
+                    }}
+                    className="arg-input-width-limit"
+                  />
+                  <Trash2
+                    onClick={() => {
+                      const newArgs = [...tempArgs];
+                      newArgs.find((temp) => arg.key === temp.key).included = false;
+                      updateArgData(newArgs, false);
+                    }}
+                  />
+                </div>
               </Form.Group>
             );
           default:

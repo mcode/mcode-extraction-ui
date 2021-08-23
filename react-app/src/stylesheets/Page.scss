@@ -186,11 +186,16 @@
 }
 
 .input-width-limit {
+  margin-right: 0px;
   max-width: 300px;
+}
+.arg-input-width-limit {
+  margin-right: 0px;
+  max-width: 95%;
 }
 
 .label-and-icon-container {
   display: flex;
   justify-content: space-between;
-  min-width: 95%;
+  width: 95%;
 }
