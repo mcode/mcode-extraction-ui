@@ -86,8 +86,8 @@ function FileWidget(props) {
   }
 
   function onClear() {
-    setPath('No File Selected');
-    props.onChange('No File Selected');
+    setPath('No File Chosen');
+    props.onChange('No File Chosen');
   }
   function getFile() {
     window.api.getFile(['csv']).then((promise) => {

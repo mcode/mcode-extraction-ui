@@ -7,7 +7,6 @@ function Extractor(props) {
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label ? props.formData.label : '');
 
   // Variables for constructor arg management
-  // defaultArgs must be declared in a non-state variable so that it can be used to set the values of both args and argsJSX
   function getArgValues() {
     return [
       {
@@ -68,7 +67,6 @@ function Extractor(props) {
     ];
   }
   const [args, setArgs] = useState(getArgValues());
-  // this function has to be declared here so that it can be used to set the value of argsJSX
   const [argsJSX, setArgsJSX] = useState(
     getArgValues()
       .filter((arg) => arg.included === true)
