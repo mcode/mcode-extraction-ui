@@ -65,9 +65,9 @@ app.on('activate', () => {
 
 ipcMain.handle('get-config-schema', async () => configSchema);
 
-ipcMain.handle('get-file', async () =>
+ipcMain.handle('get-file', async (event, extensions) =>
   dialog.showOpenDialog(mainWindow, {
-    filters: [{ name: 'JSON', extensions: ['json'] }],
+    filters: [{ name: 'extensions', extensions }],
     properties: ['openFile'],
   }),
 );
