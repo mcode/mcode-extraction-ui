@@ -112,6 +112,7 @@ function Extractor(props) {
                       newArgs.find((temp) => arg.key === temp.key).included = false;
                       updateArgData(newArgs, false);
                     }}
+                    className="mouse-pointer"
                   />
                 </div>
               </Form.Group>
@@ -217,6 +218,7 @@ function Extractor(props) {
                       newArgs.find((temp) => arg.key === temp.key).included = false;
                       updateArgData(newArgs, false);
                     }}
+                    className="mouse-pointer"
                   />
                 </div>
               </Form.Group>
@@ -272,7 +274,7 @@ function Extractor(props) {
       <Accordion.Header onClick={updateArgs}>
         <div className="label-and-icon-container">
           {props.formData.type}
-          <Trash2 onClick={props.deleteExtractor} />
+          <Trash2 onClick={props.deleteExtractor} className="mouse-pointer" />
         </div>
       </Accordion.Header>
       <Accordion.Body>
