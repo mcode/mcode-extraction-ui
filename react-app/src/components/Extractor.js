@@ -67,11 +67,6 @@ function Extractor(props) {
     ];
   }
   const [args, setArgs] = useState(getArgValues());
-  const [argsJSX, setArgsJSX] = useState(
-    getArgValues()
-      .filter((arg) => arg.included === true)
-      .map((arg) => <div key={arg.key} />),
-  );
 
   function onExtractorLabelChange(e) {
     props.onExtractorLabelChange(e.target.value, props.eventKey);
@@ -80,8 +75,30 @@ function Extractor(props) {
 
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
 
-  function getArgsJSX(tempArgs, updateArgData) {
-    return tempArgs
+  function updateArgs(inputArgs, isAccordion = true) {
+    let tempArgs;
+    if (isAccordion === true) {
+      tempArgs = [...args];
+    } else {
+      tempArgs = [...inputArgs];
+    }
+
+    if (isAccordion !== true) {
+      const constructorArgs = {};
+      tempArgs
+        .filter((arg) => arg.included === true)
+        .forEach((arg) => {
+          constructorArgs[arg.key] = arg[arg.key];
+        });
+      setArgs(tempArgs);
+      props.onArgsChange(constructorArgs);
+    }
+  }
+
+  const getArg = (newArgs, key) => newArgs.find((temp) => key === temp.key);
+
+  function getArgsJSX() {
+    return args
       .filter((arg) => arg.included === true)
       .map((arg, i) => {
         switch (arg.type) {
@@ -94,19 +111,19 @@ function Extractor(props) {
                     type="text"
                     value={arg[arg.key]}
                     onChange={(e) => {
-                      const newArgs = [...tempArgs];
-                      const currentArg = newArgs.find((temp) => arg.key === temp.key);
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
                       currentArg[arg.key] = e.target.value;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     className="arg-input-width-limit"
                   />
                   <Trash2
                     onClick={() => {
-                      const newArgs = [...tempArgs];
-                      const currentArg = newArgs.find((temp) => arg.key === temp.key);
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
                       currentArg.included = false;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     className="mouse-pointer"
                   />
@@ -122,18 +139,18 @@ function Extractor(props) {
                   onClick={() => {
                     window.api.getFile().then((promise) => {
                       if (promise.filePaths[0] !== undefined) {
-                        const newArgs = [...tempArgs];
+                        const newArgs = [...args];
                         [newArgs[i][arg.key]] = promise.filePaths;
-                        updateArgData(newArgs, false);
+                        updateArgs(newArgs, false);
                       }
                     });
                   }}
                   filePath={arg[arg.key]}
                   onClear={() => {
                     // do something to change value of file path and update state
-                    const newArgs = [...tempArgs];
+                    const newArgs = [...args];
                     newArgs[i][arg.key] = 'No File Chosen';
-                    updateArgData(newArgs, false);
+                    updateArgs(newArgs, false);
                   }}
                   label={arg.label}
                   key={arg.key}
@@ -142,11 +159,11 @@ function Extractor(props) {
                     <Button
                       onClick={() => {
                         const newArgs = [...args];
-                        const fileArg = newArgs.find((temp) => temp.key === 'filePath');
+                        const fileArg = getArg(newArgs, 'filePath');
                         fileArg.included = false;
-                        const urlArg = newArgs.find((temp) => temp.key === 'url');
+                        const urlArg = getArg(newArgs, 'url');
                         urlArg.included = true;
-                        updateArgData(newArgs, false);
+                        updateArgs(newArgs, false);
                       }}
                       className="generic-button narrow-button"
                       variant="outline-info"
@@ -165,11 +182,11 @@ function Extractor(props) {
                   <Button
                     onClick={() => {
                       const newArgs = [...args];
-                      const urlArg = newArgs.find((temp) => temp.key === 'url');
+                      const urlArg = getArg(newArgs, 'url');
                       urlArg.included = false;
-                      const fileArg = newArgs.find((temp) => temp.key === 'filePath');
+                      const fileArg = getArg(newArgs, 'filePath');
                       fileArg.included = true;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     className="generic-button narrow-button"
                     variant="outline-info"
@@ -180,10 +197,10 @@ function Extractor(props) {
                     type="text"
                     value={arg[arg.key]}
                     onChange={(e) => {
-                      const newArgs = [...tempArgs];
-                      const currentArg = newArgs.find((temp) => arg.key === temp.key);
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
                       currentArg[arg.key] = e.target.value;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     placeholder="Enter URL"
                   />
@@ -205,19 +222,19 @@ function Extractor(props) {
                     type="text"
                     value={arg[arg.key]}
                     onChange={(e) => {
-                      const newArgs = [...tempArgs];
-                      const currentArg = newArgs.find((temp) => arg.key === temp.key);
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
                       currentArg[arg.key] = e.target.value;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     className="arg-input-width-limit"
                   />
                   <Trash2
                     onClick={() => {
-                      const newArgs = [...tempArgs];
-                      const currentArg = newArgs.find((temp) => arg.key === temp.key);
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
                       currentArg.included = false;
-                      updateArgData(newArgs, false);
+                      updateArgs(newArgs, false);
                     }}
                     className="mouse-pointer"
                   />
@@ -234,34 +251,14 @@ function Extractor(props) {
       });
   }
 
-  function updateArgs(inputArgs, isAccordion = true) {
-    let tempArgs;
-    if (isAccordion === true) {
-      tempArgs = [...args];
-    } else {
-      tempArgs = [...inputArgs];
-    }
-    setArgsJSX(getArgsJSX(tempArgs, updateArgs));
-    if (isAccordion !== true) {
-      const constructorArgs = {};
-      tempArgs
-        .filter((arg) => arg.included === true)
-        .forEach((arg) => {
-          constructorArgs[arg.key] = arg[arg.key];
-        });
-      setArgs(tempArgs);
-      props.onArgsChange(constructorArgs);
-    }
-  }
-
   function addArg(eventKey) {
-    const tempArgs = [...args];
-    const currentArg = tempArgs.find((arg) => arg.key === eventKey);
+    const newArgs = [...args];
+    const currentArg = getArg(newArgs, eventKey);
     currentArg.included = true;
-    updateArgs(tempArgs, false);
+    updateArgs(newArgs, false);
   }
 
-  function getHasArgs() {
+  function hasArgs() {
     return args.filter((arg) => arg.validExtractors.includes(props.formData.type)).length > 0;
   }
   function getArgOptions() {
@@ -288,14 +285,14 @@ function Extractor(props) {
           <Form.Control type="text" value={extractorLabel} onChange={onExtractorLabelChange} />
         </Form.Group>
         <p className="form-subheader-text">Constructor Arguments</p>
-        {getHasArgs() && getArgOptions().length < 1 && (
+        {hasArgs() && getArgOptions().length < 1 && (
           <div className="form-button-container">
             <Button variant="outline-info" className="form-button" disabled={true}>
               All arguments added
             </Button>
           </div>
         )}
-        {getHasArgs() && getArgOptions().length >= 1 && (
+        {hasArgs() && getArgOptions().length >= 1 && (
           <Dropdown onSelect={addArg} className="form-button-container">
             <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
               Add constructor argument
@@ -303,7 +300,7 @@ function Extractor(props) {
             <Dropdown.Menu>{getArgOptions()}</Dropdown.Menu>
           </Dropdown>
         )}
-        {argsJSX}
+        {getArgsJSX()}
       </Accordion.Body>
     </Accordion.Item>
   );
