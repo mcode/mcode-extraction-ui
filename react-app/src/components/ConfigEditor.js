@@ -35,7 +35,7 @@ function ConfigEditor() {
       setConfigSchema(schema);
     });
     window.api
-      .getFile()
+      .getFile(['json'])
       .then((result) => {
         if (result.filePaths[0] !== undefined) {
           return window.api.readFile(result.filePaths[0]);

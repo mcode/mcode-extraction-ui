@@ -190,7 +190,7 @@ function FileWidget(props) {
     setPath('No File Selected');
   }
   function getFile() {
-    window.api.getFile().then((promise) => {
+    window.api.getFile(['csv']).then((promise) => {
       if (promise.filePaths[0] !== undefined) {
         setPath(promise.filePaths[0]);
         props.onChange(promise.filePaths[0]);

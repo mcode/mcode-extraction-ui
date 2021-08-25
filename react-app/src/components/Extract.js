@@ -18,7 +18,7 @@ function Extract(props) {
   const history = useHistory();
 
   function setConfig() {
-    window.api.getFile().then((promise) => {
+    window.api.getFile(['json']).then((promise) => {
       // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
       if (promise.filePaths[0] !== undefined) {
         setConfigPath(promise.filePaths[0]);
@@ -31,7 +31,7 @@ function Extract(props) {
   }
 
   function setLog() {
-    window.api.getFile().then((promise) => {
+    window.api.getFile(['json']).then((promise) => {
       // after file is picked, call setConfigPath(file_name). This will both set the path and change the button text
       if (promise.filePaths[0] !== undefined) {
         setLogPath(promise.filePaths[0]);
