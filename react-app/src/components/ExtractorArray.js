@@ -18,6 +18,7 @@ function ExtractorArray(props) {
     'CSVStagingExtractor',
     'CSVTreatmentPlanChangeExtractor',
   ];
+  const [activeAccordion, setActiveAccordion] = useState(0);
 
   const getFormattedTypes = () =>
     types.map((type) => (
@@ -63,6 +64,9 @@ function ExtractorArray(props) {
           newExtractors[i].constructorArgs = extractorObj;
           updateExtractors(newExtractors);
         }}
+        onOpenAccordion={() => {
+          setActiveAccordion(extractor.id);
+        }}
       />
     ));
     setExtractorsJSX(tempExtractorsJSX);
@@ -73,6 +77,7 @@ function ExtractorArray(props) {
   function addExtractor(eventKey) {
     // update list of extractors, the JSX display, and the formData object
     const tempExtractors = [...extractors, getDefaultExtractorObj(eventKey)];
+    setActiveAccordion(tempExtractors[tempExtractors.length - 1].id);
     updateExtractors(tempExtractors);
   }
 
@@ -112,7 +117,7 @@ function ExtractorArray(props) {
           <Dropdown.Menu>{getFormattedTypes()}</Dropdown.Menu>
         </Dropdown>
       </div>
-      <Accordion defaultActiveKey="0">{extractorsJSX}</Accordion>
+      <Accordion activeKey={activeAccordion}>{extractorsJSX}</Accordion>
       <div className="form-button-container"></div>
     </div>
   );

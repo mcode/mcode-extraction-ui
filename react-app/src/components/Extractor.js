@@ -273,7 +273,7 @@ function Extractor(props) {
 
   return (
     <Accordion.Item eventKey={props.eventKey}>
-      <Accordion.Header onClick={updateArgs}>
+      <Accordion.Header onClick={props.onOpenAccordion}>
         <div className="label-and-icon-container">
           {props.formData.type}
           <Trash2 onClick={props.deleteExtractor} className="mouse-pointer" />
