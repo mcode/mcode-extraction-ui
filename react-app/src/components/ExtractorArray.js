@@ -49,11 +49,6 @@ function ExtractorArray(props) {
           tempArray.splice(i, 1);
           updateExtractors(tempArray);
         }}
-        onCsvPathChange={(newPath, index) => {
-          const tempArray = [...tempExtractors];
-          tempArray[index].constructorArgs.filePath = newPath;
-          updateExtractors(tempArray);
-        }}
         onExtractorLabelChange={(label) => {
           const tempArray = [...tempExtractors];
           tempArray[i].label = label;
