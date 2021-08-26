@@ -8,6 +8,8 @@ function Extractor(props) {
 
   // Variables for constructor arg management
   // key value must match up with the name of the field that stores the field's value
+  // File inputs must have an array of strings called fileTypes. This array lists the file extensions that the user will be allowed to select.
+  // Dropdown inputs must have an options array. This array lists the values that will appear in the dropdown.
   const defaultArgValues = [
     {
       filePath: props.formData.constructorArgs.filePath ? props.formData.constructorArgs.filePath : 'No File Selected',
@@ -15,6 +17,7 @@ function Extractor(props) {
       type: 'file',
       included: true,
       key: 'filePath',
+      fileTypes: ['csv'],
       validExtractors: [],
     },
     {
@@ -126,7 +129,7 @@ function Extractor(props) {
                   buttonText="Select File"
                   controlId={arg.label}
                   onClick={() => {
-                    window.api.getFile().then((promise) => {
+                    window.api.getFile(arg.fileTypes).then((promise) => {
                       if (promise.filePaths[0] !== undefined) {
                         const newArgs = [...args];
                         [newArgs[i][arg.key]] = promise.filePaths;
