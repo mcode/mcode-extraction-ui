@@ -91,6 +91,13 @@
   margin-top: 20px;
 }
 
+.form-subheader-text {
+  color: $secondary;
+  font-size: 20px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
 .text-centered {
   text-align: center;
 }
@@ -165,7 +172,7 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: 30px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .form-button {
   font-family: 'Courier New', 'Monaco', monospace;
@@ -175,8 +182,24 @@
 .file-name {
   color: $secondary;
   font-weight: bold;
+  text-align: right;
 }
 
 .input-width-limit {
+  margin-right: 0px;
   max-width: 300px;
+}
+.arg-input-width-limit {
+  margin-right: 0px;
+  max-width: 95%;
+}
+
+.label-and-icon-container {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.mouse-pointer {
+  cursor: pointer;
 }

@@ -9,6 +9,7 @@ filePath - variable to store the file path (type string) selected by the user.
 onClick - function to call when the first button is clicked
 onClear - function to reset filePath
 required - boolean telling the picker whether to use required styling or not. Optional.
+extraButton = optional first button, so that there are three instead of two
 */
 export default function FilePicker(props) {
   return (
@@ -21,6 +22,7 @@ export default function FilePicker(props) {
       )}
       <div className="file-picker-box">
         <div className="file-button-container">
+          {props.extraButton && props.extraButton}
           <Button className="generic-button narrow-button" variant="outline-info" onClick={props.onClick}>
             {props.buttonText}
           </Button>
