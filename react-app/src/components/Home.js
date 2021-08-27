@@ -9,7 +9,7 @@ import LinkButton from './LinkButton';
 function Home() {
   return (
     <div>
-      <Navbar page="Home" />
+      <Navbar />
       <h1 className="page-title">Extractor UI</h1>
       <div className="button-container">
         <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Extract New" path="/extract" />

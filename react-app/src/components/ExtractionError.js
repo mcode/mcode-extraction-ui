@@ -1,11 +1,13 @@
 import React from 'react';
+import Navbar from './Navbar';
 import LogList from './LogList';
 import LinkButton from './LinkButton';
 
 function ExtractionError(props) {
   return (
     <div>
-      <h3 className="page-subtitle text-centered">An error occurred during extraction.</h3>
+      <Navbar />
+      <h1 className="page-title">An error occurred during extraction.</h1>
       <p className="page-text text-centered">
         For more information, view the logs below and/or run extraction again with "Log output debugging information"
         checked.

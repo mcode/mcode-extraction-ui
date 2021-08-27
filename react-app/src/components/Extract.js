@@ -87,7 +87,7 @@ function Extract(props) {
   }
   return (
     <div className="page-container">
-      <Navbar page="Extractor" />
+      <Navbar />
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
         <div className="page-container">
