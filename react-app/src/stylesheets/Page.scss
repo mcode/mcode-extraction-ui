@@ -65,7 +65,7 @@
   font-family: 'Courier New', 'Monaco', monospace;
   font-size: 80px;
   margin: 50px;
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: center;
 }
 
@@ -205,5 +205,5 @@
 }
 
 .navbar {
-  height: 300px;
+  background: $dark-shade;
 }

@@ -63,7 +63,7 @@ function ConfigEditor() {
 
   return (
     <div className="flex-start-container">
-      <Navbar />
+      <Navbar page="Configuration Editor" />
       <h1 className="page-title">Configuration Editor</h1>
       {!showForm && (
         <div className="button-container">

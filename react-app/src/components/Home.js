@@ -3,11 +3,13 @@ This is the landing page that will display when users first open the app. It has
 */
 
 import React from 'react';
+import Navbar from './Navbar';
 import LinkButton from './LinkButton';
 
 function Home() {
   return (
     <div>
+      <Navbar page="Home" />
       <h1 className="page-title">Extractor UI</h1>
       <div className="button-container">
         <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Extract New" path="/extract" />
@@ -17,7 +19,6 @@ function Home() {
           text="Configuration File Editor"
           path="/config-editor"
         />
-        <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Test Page" path="/test-page" />
       </div>
     </div>
   );
