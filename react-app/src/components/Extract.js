@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
+import Navbar from './Navbar';
 import FilePicker from './FilePicker';
 import LinkButton from './LinkButton';
 
@@ -85,10 +86,11 @@ function Extract(props) {
     setSubmitted(!submitted);
   }
   return (
-    <div className="page-container">
+    <div className="">
+      <Navbar />
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
-        <div className="page-container">
+        <div className="">
           <Form className="form-container">
             <Row>
               <Col>

@@ -17,6 +17,7 @@ function Home() {
           text="Configuration File Editor"
           path="/config-editor"
         />
+        <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Test Page" path="/test-page" />
       </div>
     </div>
   );

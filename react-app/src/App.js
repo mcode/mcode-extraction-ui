@@ -6,6 +6,7 @@ import Extract from './components/Extract';
 import ResultPage from './components/ResultPage';
 import ExtractionError from './components/ExtractionError';
 import ConfigEditor from './components/ConfigEditor';
+import TestPage from './components/TestPage';
 
 import './stylesheets/custom.scss';
 import './stylesheets/Page.scss';
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route path="/config-editor">
               <ConfigEditor />
+            </Route>
+            <Route path="/test-page">
+              <TestPage />
             </Route>
             <Route path="/">
               <Home />

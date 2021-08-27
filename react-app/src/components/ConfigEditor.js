@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
+import Navbar from './Navbar';
 import LinkButton from './LinkButton';
 import { getConfigSchema } from './schemaFormUtils';
 
@@ -62,6 +63,7 @@ function ConfigEditor() {
 
   return (
     <div className="flex-start-container">
+      <Navbar />
       <h1 className="page-title">Configuration Editor</h1>
       {!showForm && (
         <div className="button-container">
