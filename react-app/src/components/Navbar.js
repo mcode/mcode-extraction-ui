@@ -6,8 +6,8 @@ function Navbar() {
   return (
     <NavBar variant="dark" expand="lg" className="navbar">
       <Container>
-        <NavBar.Brand as={Link} to="/">
-          Extraction UI
+        <NavBar.Brand as={Link} to="/" className="navbar-brand">
+          UniFHIR
         </NavBar.Brand>
         <NavBar.Toggle aria-controls="basic-navbar-nav" />
         <NavBar.Collapse id="basic-navbar-nav">

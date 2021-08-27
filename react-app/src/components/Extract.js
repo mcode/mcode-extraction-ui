@@ -86,11 +86,11 @@ function Extract(props) {
     setSubmitted(!submitted);
   }
   return (
-    <div className="">
+    <div className="page-container">
       <Navbar page="Extractor" />
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
-        <div className="">
+        <div className="page-container">
           <Form className="form-container">
             <Row>
               <Col>
