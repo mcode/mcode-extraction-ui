@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
-import Navbar from './Navbar';
 import LinkButton from './LinkButton';
 import { getConfigSchema } from './schemaFormUtils';
 
@@ -62,30 +61,35 @@ function ConfigEditor() {
   }
 
   return (
-    <div className="flex-start-container">
-      <Navbar />
+    <>
       <h1 className="page-title">Configuration Editor</h1>
-      {!showForm && (
-        <div className="button-container">
-          <Button className="vertical-menu-button" variant="outline-secondary" onClick={toggleForm}>
-            Create New
-          </Button>
-          <Button className="vertical-menu-button" variant="outline-secondary" onClick={loadFile}>
-            Load File
-          </Button>
-          <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Back" path="/" />
-        </div>
-      )}
-      {showErrorAlert && (
-        <div className="flex-end-container">
-          <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
-            <Alert.Heading>Error: Unable to load file</Alert.Heading>
-            <p>{errorMessage}</p>
-          </Alert>
-        </div>
-      )}
-      {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />}
-    </div>
+      <div className="page-content">
+        {!showForm && (
+          <>
+            <div className="button-container">
+              <Button className="vertical-menu-button" variant="outline-secondary" onClick={toggleForm}>
+                Create New
+              </Button>
+              <Button className="vertical-menu-button" variant="outline-secondary" onClick={loadFile}>
+                Load File
+              </Button>
+            </div>
+            {!showErrorAlert && (
+              <div className="nav-button-container">
+                <LinkButton className="generic-button btn-lg" variant="outline-secondary" text="Back" path="/" />
+              </div>
+            )}
+            {showErrorAlert && (
+              <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+                <Alert.Heading>Error: Unable to load file</Alert.Heading>
+                <p>{errorMessage}</p>
+              </Alert>
+            )}
+          </>
+        )}
+        {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />}
+      </div>
+    </>
   );
 }
 

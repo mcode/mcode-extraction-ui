@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import Extract from './components/Extract';
+import Navbar from './components/Navbar';
 import ResultPage from './components/ResultPage';
 import ExtractionError from './components/ExtractionError';
 import ConfigEditor from './components/ConfigEditor';
@@ -15,9 +16,10 @@ function App() {
   const [loggedMessages, setLoggedMessages] = useState([]);
 
   return (
-    <div className="page">
+    <div>
       <Router>
-        <div>
+        <Navbar />
+        <div className="page">
           <Switch>
             <Route path="/extract">
               <Extract setExtractedData={setExtractedData} setLoggedMessages={setLoggedMessages} />
