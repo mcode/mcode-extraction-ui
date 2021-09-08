@@ -8,7 +8,7 @@ import LinkButton from './LinkButton';
 function Home() {
   return (
     <div>
-      <h1 className="page-title">Extractor UI</h1>
+      <h1 className="page-title">mCODE Extractor</h1>
       <div className="button-container">
         <LinkButton className="vertical-menu-button" variant="outline-secondary" text="Extract New" path="/extract" />
         <LinkButton
