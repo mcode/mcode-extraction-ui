@@ -4,8 +4,8 @@ import { Container, Nav, Navbar as NavBar } from 'react-bootstrap';
 
 function Navbar() {
   return (
-    <NavBar variant="dark" expand="lg" className="navbar">
-      <Container>
+    <NavBar fixed="top" variant="dark" expand="lg" className="navbar">
+      <Container fluid>
         <NavBar.Brand as={Link} to="/" className="navbar-brand">
           mCODE Extractor
         </NavBar.Brand>

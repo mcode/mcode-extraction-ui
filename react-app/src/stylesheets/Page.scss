@@ -2,6 +2,7 @@
 
 .page {
   height: calc(100vh - 56px);
+  padding-top: 56px;
 }
 
 .page-content {
@@ -200,7 +201,6 @@
 
 .navbar {
   background: $dark-shade;
-  height: 56px;
 }
 
 .navbar-brand {
