@@ -1,4 +1,4 @@
-# mCODE Extraction UI
+# mCODE Extractor
 
 An Electron app for configuring and running the various mCODE Extraction Clients. This project is based on [this GitHub template](https://github.com/mgramigna/electron-cra-template) for using [Electron](https://www.electronjs.org/) with [Create React App](https://create-react-app.dev/) (CRA). This template uses a monorepo-esque approach, with one `package.json` for the electron app at the root, and another for the CRA code in the `react-app` directory.
 
@@ -9,19 +9,26 @@ An Electron app for configuring and running the various mCODE Extraction Clients
 ```
 npm install
 ```
+
 If using Windows Subsystem for Linux:
+
 ```
 npm install --platform=win32
 ```
+
 2. Install React dependencies:
+
 ```
 cd react-app
 npm install
 ```
+
 3. Start Electron and React app, from the root:
+
 ```
 npm start
 ```
+
 This command will concurrently start the React app and Electron app
 
 ## Preload Script
@@ -30,7 +37,7 @@ This command will concurrently start the React app and Electron app
 
 To include a more verbose API between the React app and the main process, modify `./electron/preload.js` to expose more information to the `window` object. E.g.
 
-``` JavaScript
+```JavaScript
 // ./electron/preload.js
 const { ipcRenderer, contextBridge } = require('electron');
 

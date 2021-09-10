@@ -1,10 +1,23 @@
 @import './_variables.scss';
 
+.page {
+  height: calc(100vh - 56px);
+  padding-top: 56px;
+}
+
+.page-content {
+  height: calc(100vh - 56px - 57px); // navbar - h1 height
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 100vh;
+  height: 100%;
   justify-content: space-between;
 }
 
@@ -20,7 +33,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 100vh;
+  height: 100%;
   justify-content: flex-start;
 }
 
@@ -28,24 +41,15 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 100vh;
+  height: 100%;
   justify-content: flex-end;
 }
 
 .form-container {
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.page-background {
-  background-color: $light-shade;
-  background-size: cover;
-  height: 100vh;
-}
-.page-card {
-  background-color: $light-shade;
-  height: 80%;
-  width: 80%;
+  max-width: 100%;
+  overflow: scroll;
 }
 
 .row {
@@ -62,22 +66,23 @@
 
 .page-title {
   color: $primary;
+  box-shadow: 0px 2px 4px 0px $lighter-accent;
   font-family: 'Courier New', 'Monaco', monospace;
-  font-size: 80px;
-  margin: 50px;
-  margin-top: 100px;
+  padding: 5px;
+  margin: 0px;
   text-align: center;
 }
 
 .page-subtitle {
   color: $primary;
   font-family: 'Courier New', 'Monaco', monospace;
-  font-size: 60px;
+  background-color: $lighter-accent;
+  text-align: center;
 }
 
 .page-text {
   color: $dark-shade;
-  font-size: 20px;
+  padding-top: 20px;
 }
 
 .emphasized-list-text {
@@ -102,29 +107,24 @@
   text-align: center;
 }
 
-.sticky-item {
-  background-color: white;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
 .padding-100 {
   padding-top: 100px;
 }
 
 .generic-button {
   font-family: 'Courier New', 'Monaco', monospace;
-  font-size: 18px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .nav-button-container {
   display: flex;
   justify-content: space-between;
-  margin: 20px;
-  margin-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 0px -2px 4px 0px $lighter-accent;
+  z-index: 1;
 }
 
 .button-container {
@@ -163,10 +163,6 @@
   margin-top: 0px;
 }
 
-.form-container {
-  max-width: 100%;
-}
-
 .form-button-container {
   display: flex;
   flex-direction: row;
@@ -176,7 +172,6 @@
 }
 .form-button {
   font-family: 'Courier New', 'Monaco', monospace;
-  //font-size: 18px;
 }
 
 .file-name {
@@ -202,4 +197,12 @@
 
 .mouse-pointer {
   cursor: pointer;
+}
+
+.navbar {
+  background: $dark-shade;
+}
+
+.navbar-brand {
+  font-family: 'Courier New', 'Monaco', monospace;
 }

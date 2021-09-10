@@ -27,7 +27,12 @@ function LogList(props) {
       {log.timestamp}: {log.message}
     </ListGroup.Item>
   ));
-  return <ListGroup className={props.listType}>{list}</ListGroup>;
+  return (
+    <ListGroup className={props.listType}>
+      <h1 className="page-subtitle">Log File</h1>
+      {list}
+    </ListGroup>
+  );
 }
 
 export default LogList;

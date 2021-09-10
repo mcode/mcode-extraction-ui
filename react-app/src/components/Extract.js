@@ -85,10 +85,10 @@ function Extract(props) {
     setSubmitted(!submitted);
   }
   return (
-    <div className="page-container">
+    <>
       <h1 className="page-title">Extract New</h1>
       {!submitted && (
-        <div className="page-container">
+        <div className="page-content">
           <Form className="form-container">
             <Row>
               <Col>
@@ -170,7 +170,7 @@ function Extract(props) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

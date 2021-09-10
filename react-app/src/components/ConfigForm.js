@@ -31,11 +31,8 @@ function ConfigForm(props) {
   }
 
   return (
-    <div className="flex-space-between-container">
-      <p className="page-text text-centered">The config editor form will display here.</p>
-      <div className="form-container">
-        <Form schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} />
-      </div>
+    <>
+      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} />
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
           <Alert.Heading>Files saved</Alert.Heading>
@@ -58,7 +55,7 @@ function ConfigForm(props) {
           </Button>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
