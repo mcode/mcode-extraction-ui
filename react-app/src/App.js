@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './components/Home';
 import Extract from './components/Extract';
 import Navbar from './components/Navbar';
 import ResultPage from './components/ResultPage';
@@ -21,24 +20,21 @@ function App() {
         <Navbar />
         <div className="page">
           <Switch>
-            <Route path="/extract">
+            <Route exact path="/">
               <Extract setExtractedData={setExtractedData} setLoggedMessages={setLoggedMessages} />
             </Route>
-            <Route path="/results">
+            <Route exact path="/results">
               <ResultPage
                 extractedData={extractedData}
                 setExtractedData={setExtractedData}
                 loggedMessages={loggedMessages}
               />
             </Route>
-            <Route path="/extraction-error">
+            <Route exact path="/extraction-error">
               <ExtractionError loggedMessages={loggedMessages} />
             </Route>
-            <Route path="/config-editor">
+            <Route exact path="/config-editor">
               <ConfigEditor />
-            </Route>
-            <Route path="/">
-              <Home />
             </Route>
           </Switch>
         </div>

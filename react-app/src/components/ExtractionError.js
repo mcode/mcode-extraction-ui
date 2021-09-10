@@ -11,7 +11,7 @@ function ExtractionError(props) {
         checked.
       </p>
       <div className="button-container">
-        <LinkButton className="generic-button" variant="outline-secondary" text="Extract New" path="/extract" />
+        <LinkButton className="generic-button" variant="outline-secondary" text="Extract New" path="/" />
       </div>
       <LogList loggedMessages={props.loggedMessages} listType="" />
     </div>
