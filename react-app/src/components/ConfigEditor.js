@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 
 import ConfigForm from './ConfigForm';
-import LinkButton from './LinkButton';
 import { getConfigSchema } from './schemaFormUtils';
 
 function ConfigEditor() {
@@ -74,11 +73,6 @@ function ConfigEditor() {
                 Load File
               </Button>
             </div>
-            {!showErrorAlert && (
-              <div className="nav-button-container">
-                <LinkButton className="generic-button btn-lg" variant="outline-secondary" text="Back" path="/" />
-              </div>
-            )}
             {showErrorAlert && (
               <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
                 <Alert.Heading>Error: Unable to load file</Alert.Heading>

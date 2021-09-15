@@ -14,7 +14,7 @@ function ResultPage(props) {
 
   function onExitResultPage() {
     // reset data values and return to home page
-    history.push('/extract');
+    history.push('/');
   }
 
   function onSave() {

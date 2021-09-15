@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
 import FilePicker from './FilePicker';
-import LinkButton from './LinkButton';
 
 function Extract(props) {
   const [configPath, setConfigPath] = useState('No File Chosen');
@@ -152,8 +151,7 @@ function Extract(props) {
               </Col>
             </Row>
           </Form>
-          <div className="nav-button-container">
-            <LinkButton className="generic-button" size="lg" variant="outline-secondary" text="Cancel" path="/" />
+          <div className="nav-button-container justify-content-end">
             <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>

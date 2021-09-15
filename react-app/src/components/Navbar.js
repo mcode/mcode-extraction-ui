@@ -12,10 +12,7 @@ function Navbar() {
         <NavBar.Toggle aria-controls="basic-navbar-nav" />
         <NavBar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link eventKey="home" exact as={NavLink} to="/">
-              Home
-            </Nav.Link>
-            <Nav.Link eventKey="extract" exact as={NavLink} to="/extract">
+            <Nav.Link eventKey="extract" exact as={NavLink} to="/">
               Extract New
             </Nav.Link>
             <Nav.Link eventKey="config-editor" exact as={NavLink} to="/config-editor">
