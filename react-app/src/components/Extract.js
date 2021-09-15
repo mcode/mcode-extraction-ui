@@ -151,7 +151,7 @@ function Extract(props) {
               </Col>
             </Row>
           </Form>
-          <div className="nav-button-container left-aligned">
+          <div className="nav-button-container justify-content-end">
             <Button className="generic-button" size="lg" variant="outline-secondary" onClick={useSubmit}>
               Submit
             </Button>
