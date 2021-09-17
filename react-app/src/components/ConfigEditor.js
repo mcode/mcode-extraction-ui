@@ -24,13 +24,21 @@ function ConfigEditor() {
 
   function toggleForm() {
     getConfigSchema().then((schema) => {
+      // eslint-disable-next-line no-param-reassign
+      delete schema.description;
       setConfigSchema(schema);
     });
     setShowForm(!showForm);
   }
 
+  function closeForm() {
+    setShowForm(false);
+  }
+
   function loadFile() {
     getConfigSchema().then((schema) => {
+      // eslint-disable-next-line no-param-reassign
+      delete schema.description;
       setConfigSchema(schema);
     });
     window.api
@@ -81,7 +89,16 @@ function ConfigEditor() {
             )}
           </>
         )}
-        {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />}
+        {showForm && ( 
+          <>
+            <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />
+            <div className="nav-button-container">
+              <Button className="generic-button" size="lg" variant="outline-secondary" onClick={closeForm}>
+                Back
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
