@@ -9,9 +9,9 @@ function ConfigForm(props) {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  function onSaveAs() {
+  function onSaveAs(configJSON) {
     window.api
-      .saveConfigAs(props.configJSON)
+      .saveConfigAs(configJSON)
       .then((result) => {
         if (result !== null) {
           // if saveOutput() returns true, then the save process succeeded
@@ -26,13 +26,27 @@ function ConfigForm(props) {
         setShowSavedAlert(false);
       });
   }
-  function onBack() {
-    props.setShowForm(false);
+
+  function cleanFormData(formData){
+    formData.extractors.forEach(extractor => {
+      // eslint-disable-next-line no-param-reassign
+      delete extractor.id;
+    })
+    return formData;
+  }
+
+  function onSubmit({formData}) {
+    const configObj = cleanFormData(formData);
+    onSaveAs(configObj);
+    props.resetFormData(formData);
+
   }
 
   return (
     <>
-      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} />
+      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} formData={props.configJSON} onSubmit={onSubmit} noValidate={true}>
+        <Button className="generic-button" variant="outline-primary" type="submit">Save</Button>
+      </Form>
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
           <Alert.Heading>Files saved</Alert.Heading>
@@ -44,16 +58,6 @@ function ConfigForm(props) {
           <Alert.Heading>Error: Unable to save file</Alert.Heading>
           <p>{errorMessage}</p>
         </Alert>
-      )}
-      {!showSavedAlert && !showErrorAlert && (
-        <div className="nav-button-container">
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onBack}>
-            Back
-          </Button>
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onSaveAs}>
-            Save As
-          </Button>
-        </div>
       )}
     </>
   );

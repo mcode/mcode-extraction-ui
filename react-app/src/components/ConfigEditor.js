@@ -9,28 +9,25 @@ function ConfigEditor() {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [configSchema, setConfigSchema] = useState({});
-  const [configJSON, setConfigJSON] = useState({
-    $id: 'https://example.com/person.schema.json',
-    $schema: 'https://json-schema.org/draft/2020-12/schema',
-    title: 'Person',
-    type: 'object',
-    properties: {
-      placeholder: {
-        type: 'string',
-        description: 'This is a placeholder for an actual config JSON',
-      },
-    },
-  });
+  const [configJSON, setConfigJSON] = useState({});
 
   function toggleForm() {
     getConfigSchema().then((schema) => {
+      // eslint-disable-next-line no-param-reassign
+      delete schema.description;
       setConfigSchema(schema);
     });
     setShowForm(!showForm);
   }
 
+  function closeForm() {
+    setShowForm(false);
+  }
+
   function loadFile() {
     getConfigSchema().then((schema) => {
+      // eslint-disable-next-line no-param-reassign
+      delete schema.description;
       setConfigSchema(schema);
     });
     window.api
@@ -81,7 +78,16 @@ function ConfigEditor() {
             )}
           </>
         )}
-        {showForm && <ConfigForm configJSON={configJSON} setShowForm={setShowForm} schema={configSchema} />}
+        {showForm && ( 
+          <>
+            <ConfigForm configJSON={configJSON} resetFormData={setConfigJSON} setShowForm={setShowForm} schema={configSchema} />
+            <div className="nav-button-container">
+              <Button className="generic-button" size="lg" variant="outline-secondary" onClick={closeForm}>
+                Back
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
