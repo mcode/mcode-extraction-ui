@@ -35,15 +35,16 @@ function ConfigForm(props) {
     return formData;
   }
 
-  /* eslint-disable no-console */
-  function onSubmit(returnData) {
-    const configObj = cleanFormData(returnData.formData);
+  function onSubmit({formData}) {
+    const configObj = cleanFormData(formData);
     onSaveAs(configObj);
+    props.resetFormData(formData);
+
   }
 
   return (
     <>
-      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} onSubmit={onSubmit} noValidate={true}>
+      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} formData={props.configJSON} onSubmit={onSubmit} noValidate={true}>
         <Button className="generic-button" variant="outline-primary" type="submit">Save</Button>
       </Form>
       {showSavedAlert && (
