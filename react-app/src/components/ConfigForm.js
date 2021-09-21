@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import Form from '@rjsf/core';
+import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import { uiSchema, widgets, fields } from './schemaFormUtils';
 
 function ConfigForm(props) {
@@ -27,25 +28,37 @@ function ConfigForm(props) {
       });
   }
 
-  function cleanFormData(formData){
-    formData.extractors.forEach(extractor => {
+  function cleanFormData(formData) {
+    formData.extractors.forEach((extractor) => {
       // eslint-disable-next-line no-param-reassign
       delete extractor.id;
-    })
+    });
     return formData;
   }
 
-  function onSubmit({formData}) {
+  function onSubmit({ formData }) {
     const configObj = cleanFormData(formData);
     onSaveAs(configObj);
     props.resetFormData(formData);
-
   }
 
   return (
     <>
-      <Form className="form-container" schema={props.schema} uiSchema={uiSchema} widgets={widgets} fields={fields} formData={props.configJSON} onSubmit={onSubmit} noValidate={true}>
-        <Button className="generic-button" variant="outline-primary" type="submit">Save</Button>
+      {console.log(props.configJSON)}
+      <Form
+        className="form-container"
+        schema={props.schema}
+        uiSchema={uiSchema}
+        widgets={widgets}
+        fields={fields}
+        formData={props.configJSON}
+        onSubmit={onSubmit}
+        additionalMetaSchemas={[metaSchemaDraft06]}
+        liveValidate
+      >
+        <Button className="generic-button" variant="outline-primary" type="submit">
+          Save
+        </Button>
       </Form>
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
