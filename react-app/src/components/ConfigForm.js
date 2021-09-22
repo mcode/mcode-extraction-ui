@@ -47,14 +47,18 @@ function ConfigForm(props) {
       {console.log(props.configJSON)}
       <Form
         className="form-container"
+        // Content for the editor
         schema={props.schema}
         uiSchema={uiSchema}
         widgets={widgets}
         fields={fields}
         formData={props.configJSON}
+        // Submission routing
         onSubmit={onSubmit}
+        // Validation information
         additionalMetaSchemas={[metaSchemaDraft06]}
-        liveValidate
+        liveValidate={true}
+        // showErrorList={true}
       >
         <Button className="generic-button" variant="outline-primary" type="submit">
           Save
