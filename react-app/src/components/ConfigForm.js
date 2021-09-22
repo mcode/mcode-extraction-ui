@@ -58,7 +58,6 @@ function ConfigForm(props) {
         // Validation information
         additionalMetaSchemas={[metaSchemaDraft06]}
         liveValidate={true}
-        // showErrorList={true}
       >
         <Button className="generic-button" variant="outline-primary" type="submit">
           Save
