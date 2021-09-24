@@ -53,7 +53,6 @@ function ConfigForm(props) {
         widgets={widgets}
         fields={fields}
         formData={props.configJSON}
-        // Submission routing
         onSubmit={onSubmit}
         // Validation information
         additionalMetaSchemas={[metaSchemaDraft06]}
