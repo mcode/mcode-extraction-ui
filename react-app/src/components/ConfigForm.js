@@ -44,7 +44,6 @@ function ConfigForm(props) {
 
   return (
     <>
-      {console.log(props.configJSON)}
       <Form
         className="form-container"
         // Content for the editor
@@ -56,7 +55,28 @@ function ConfigForm(props) {
         onSubmit={onSubmit}
         // Validation information
         additionalMetaSchemas={[metaSchemaDraft06]}
-        liveValidate={true}
+        customFormats={{
+          'comma-separated-emails': {
+            type: 'string',
+            validate: (emails) => {
+              // this is Ajv's regex for email format (https://github.com/ajv-validator/ajv-formats/blob/master/src/formats.ts#L106)
+              const emailRegex = new RegExp(
+                /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/i,
+              );
+              return emails.split(',').every((email) => emailRegex.test(email.trim()));
+            },
+          },
+          'email-with-name': {
+            type: 'string',
+            validate: (email) => {
+              // this is Ajv's regex for email format (https://github.com/ajv-validator/ajv-formats/blob/master/src/formats.ts#L106)
+              const emailRegex = new RegExp(
+                /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/i,
+              );
+              return emailRegex.test(email.trim().split(' ').pop());
+            },
+          },
+        }}
       >
         <Button className="generic-button" variant="outline-primary" type="submit">
           Save

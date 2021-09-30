@@ -31,9 +31,7 @@ function ExtractorArray(props) {
     return {
       label: '',
       type,
-      constructorArgs: {
-        filePath: 'No File Chosen',
-      },
+      constructorArgs: {},
       id: _.uniqueId(),
     };
   }
