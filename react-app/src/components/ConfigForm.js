@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import Form from '@rjsf/core';
+import Form from '@rjsf/bootstrap-4';
 import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import { uiSchema, widgets, fields } from './schemaFormUtils';
 
@@ -78,7 +78,7 @@ function ConfigForm(props) {
           },
         }}
       >
-        <Button className="generic-button" variant="outline-primary" type="submit">
+        <Button className="generic-button mt-4" variant="outline-primary" type="submit">
           Save
         </Button>
       </Form>

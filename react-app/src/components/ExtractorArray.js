@@ -111,7 +111,6 @@ function ExtractorArray(props) {
         </Dropdown>
       </div>
       <Accordion activeKey={activeAccordion}>{extractorsJSX}</Accordion>
-      <div className="form-button-container"></div>
     </div>
   );
 }
