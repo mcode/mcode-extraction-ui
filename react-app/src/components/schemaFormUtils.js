@@ -40,6 +40,7 @@ const uiSchema = {
     },
   },
   extractors: {
+    'ui:field': 'extractorArray',
     extractor: {
       classNames: '',
       label: {
@@ -116,7 +117,7 @@ const widgets = {
 };
 
 const fields = {
-  ArrayField: ExtractorArray,
+  extractorArray: ExtractorArray,
 };
 
 export { getConfigSchema, uiSchema, widgets, fields };

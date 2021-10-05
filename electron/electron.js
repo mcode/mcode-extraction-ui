@@ -19,12 +19,11 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
     webPreferences: {
       preload: path.join(__dirname, './preload.js'),
     },
   });
+  mainWindow.maximize();
 
   // load build assets if production, localhost URL otherwise
   const mainUrl = app.isPackaged
