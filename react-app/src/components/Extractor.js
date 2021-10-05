@@ -243,7 +243,6 @@ function Extractor(props) {
                     className="mouse-pointer"
                   />
                 </div>
-                <div className="label-and-icon-container"></div>
                 {arg.options.map((option) => (
                   <Form.Check
                     label={option}
