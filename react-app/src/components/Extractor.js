@@ -62,7 +62,24 @@ function Extractor(props) {
       type: 'dropdown',
       included: false,
       key: 'mask',
-      options: ['gender', 'mrn', 'name', 'address', 'birthDate', 'language', 'ethnicity', 'birthsex', 'race'],
+      options: [
+        'gender',
+        'mrn',
+        'name',
+        'address',
+        'birthDate',
+        'language',
+        'ethnicity',
+        'birthsex',
+        'race',
+        'telecom',
+        'multipleBirth',
+        'photo',
+        'contact',
+        'generalPractitioner',
+        'managingOrganization',
+        'link',
+      ],
       validExtractors: ['CSVPatientExtractor'],
     },
   ];
@@ -213,28 +230,9 @@ function Extractor(props) {
           case 'dropdown':
             return (
               <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
-                <div>
-                  <Form.Label>{arg.label}</Form.Label>
-                </div>
-                <Form.Text>Select fields to be masked in the extracted Patient resource</Form.Text>
                 <div className="label-and-icon-container">
-                  {arg.options.map((option) => (
-                    <Form.Check
-                      inline
-                      label={option}
-                      name={option}
-                      type="checkbox"
-                      value={option}
-                      key={`mask-${option}`}
-                      className="arg-input-width-limit"
-                      onChange={(e) => {
-                        const newArgs = [...args];
-                        const currentArg = getArg(newArgs, arg.key);
-                        updateOptions(currentArg, e.target.value, arg.key);
-                        updateArgs(newArgs);
-                      }}
-                    />
-                  ))}
+                  <Form.Label>{arg.label}</Form.Label>
+                  <Form.Text>Select fields to be masked in the extracted Patient resource</Form.Text>
                   <Trash2
                     onClick={() => {
                       const newArgs = [...args];
@@ -245,6 +243,23 @@ function Extractor(props) {
                     className="mouse-pointer"
                   />
                 </div>
+                <div className="label-and-icon-container"></div>
+                {arg.options.map((option) => (
+                  <Form.Check
+                    label={option}
+                    name={option}
+                    type="checkbox"
+                    value={option}
+                    key={`mask-${option}`}
+                    className="arg-input-width-limit"
+                    onChange={(e) => {
+                      const newArgs = [...args];
+                      const currentArg = getArg(newArgs, arg.key);
+                      updateOptions(currentArg, e.target.value, arg.key);
+                      updateArgs(newArgs);
+                    }}
+                  />
+                ))}
               </Form.Group>
             );
           default:
