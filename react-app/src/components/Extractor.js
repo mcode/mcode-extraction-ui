@@ -57,7 +57,7 @@ function Extractor(props) {
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
-      mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : '',
+      mask: props.formData.constructorArgs.mask ? props.formData.constructorArgs.mask : [],
       label: 'Masked Fields',
       type: 'dropdown',
       included: false,
@@ -85,6 +85,17 @@ function Extractor(props) {
       });
     setArgs(inputArgs);
     props.onArgsChange(constructorArgs);
+  }
+
+  // Handles updates to multi-select arg fields such as "mask"
+  function updateOptions(argObj, changedValue, propertyName) {
+    const currentOptions = argObj[propertyName];
+    const changedIndex = currentOptions.indexOf(changedValue);
+    if (changedIndex > -1) {
+      currentOptions.splice(changedIndex, 1);
+    } else {
+      currentOptions.push(changedValue);
+    }
   }
 
   const getArg = (newArgs, key) => newArgs.find((temp) => key === temp.key);
@@ -205,22 +216,25 @@ function Extractor(props) {
                 <div>
                   <Form.Label>{arg.label}</Form.Label>
                 </div>
-                <Form.Text>
-                  Enter field(s) as a list separated by a commas. The options are gender, mrn, name, address, birthDate,
-                  language, ethnicity, birthsex, and race.
-                </Form.Text>
+                <Form.Text>Select fields to be masked in the extracted Patient resource</Form.Text>
                 <div className="label-and-icon-container">
-                  <Form.Control
-                    type="text"
-                    value={arg[arg.key]}
-                    onChange={(e) => {
-                      const newArgs = [...args];
-                      const currentArg = getArg(newArgs, arg.key);
-                      currentArg[arg.key] = e.target.value;
-                      updateArgs(newArgs);
-                    }}
-                    className="arg-input-width-limit"
-                  />
+                  {arg.options.map((option) => (
+                    <Form.Check
+                      inline
+                      label={option}
+                      name={option}
+                      type="checkbox"
+                      value={option}
+                      key={`mask-${option}`}
+                      className="arg-input-width-limit"
+                      onChange={(e) => {
+                        const newArgs = [...args];
+                        const currentArg = getArg(newArgs, arg.key);
+                        updateOptions(currentArg, e.target.value, arg.key);
+                        updateArgs(newArgs);
+                      }}
+                    />
+                  ))}
                   <Trash2
                     onClick={() => {
                       const newArgs = [...args];
