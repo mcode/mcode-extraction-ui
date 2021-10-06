@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-
+import _ from 'lodash';
 import ConfigForm from './ConfigForm';
 import { getConfigSchema } from './schemaFormUtils';
 
@@ -40,7 +40,12 @@ function ConfigEditor() {
       })
       .then((result) => {
         if (result !== null) {
-          setConfigJSON(JSON.parse(result));
+          const config = JSON.parse(result);
+          // Add ids to the extractors
+          if (config.extractors) {
+            config.extractors = config.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
+          }
+          setConfigJSON(config);
           return true;
         }
         return null;
@@ -78,9 +83,14 @@ function ConfigEditor() {
             )}
           </>
         )}
-        {showForm && ( 
+        {showForm && (
           <>
-            <ConfigForm configJSON={configJSON} resetFormData={setConfigJSON} setShowForm={setShowForm} schema={configSchema} />
+            <ConfigForm
+              configJSON={configJSON}
+              resetFormData={setConfigJSON}
+              setShowForm={setShowForm}
+              schema={configSchema}
+            />
             <div className="nav-button-container">
               <Button className="generic-button" size="lg" variant="outline-secondary" onClick={closeForm}>
                 Back
