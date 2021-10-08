@@ -250,6 +250,7 @@ function Extractor(props) {
                     type="checkbox"
                     value={option}
                     key={`mask-${option}`}
+                    id={`mask-${option}`}
                     className="arg-input-width-limit"
                     onChange={(e) => {
                       const newArgs = [...args];
