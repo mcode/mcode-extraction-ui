@@ -5,7 +5,7 @@ import Extractor from './Extractor';
 
 function ExtractorArray(props) {
   const [activeAccordion, setActiveAccordion] = useState(0);
-  const extractors = props.formData;
+  const extractors = props.formData || [];
   const types = [
     'CSVAdverseEventExtractor',
     'CSVCancerDiseaseStatusExtractor',
