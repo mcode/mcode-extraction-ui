@@ -16,6 +16,7 @@ const uiSchema = {
     classNames: '',
     baseFhirUrl: {
       classNames: 'input-width-limit',
+      'ui:placeholder': 'http://',
     },
     requestHeaders: {
       classNames: 'input-width-limit',
