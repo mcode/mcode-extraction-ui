@@ -17,8 +17,8 @@ function ConfigEditor() {
       delete schema.description;
       setConfigSchema(schema);
       setConfigJSON({});
+      setShowForm(!showForm);
     });
-    setShowForm(!showForm);
   }
 
   function closeForm() {
