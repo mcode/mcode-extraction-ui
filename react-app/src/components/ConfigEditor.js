@@ -16,6 +16,7 @@ function ConfigEditor() {
       // eslint-disable-next-line no-param-reassign
       delete schema.description;
       setConfigSchema(schema);
+      setConfigJSON({});
     });
     setShowForm(!showForm);
   }
