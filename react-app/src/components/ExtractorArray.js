@@ -88,7 +88,8 @@ function ExtractorArray(props) {
             formData={extractor}
             eventKey={extractor.id}
             key={extractor.id}
-            deleteExtractor={() => {
+            deleteExtractor={(e) => {
+              e.stopPropagation();
               const tempArray = [...extractors];
               tempArray.splice(i, 1);
               updateExtractors(tempArray);
