@@ -4,7 +4,7 @@ import { Trash2 } from 'react-feather';
 import FilePicker from './FilePicker';
 
 function Extractor(props) {
-  const [extractorLabel, setExtractorLabel] = useState(props.formData.label ? props.formData.label : '');
+  const extractorLabel = props.formData.label || '';
 
   // Variables for constructor arg management
   // key value must match up with the name of the field that stores the field's value
@@ -88,7 +88,6 @@ function Extractor(props) {
 
   function onExtractorLabelChange(e) {
     props.onExtractorLabelChange(e.target.value, props.eventKey);
-    setExtractorLabel(e.target.value);
   }
 
   // FUNCTIONS FOR CONSTRUCTOR ARG MANAGEMENT
