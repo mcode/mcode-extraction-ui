@@ -35,6 +35,14 @@ function ExtractorArray(props) {
     };
   }
 
+  function toggleAccordion(id) {
+    if (activeAccordion === id) {
+      setActiveAccordion(null);
+    } else {
+      setActiveAccordion(id);
+    }
+  }
+
   function updateExtractors(tempExtractors) {
     props.onChange(tempExtractors);
   }
@@ -42,7 +50,7 @@ function ExtractorArray(props) {
   function addExtractor(eventKey) {
     // update list of extractors and the formData object
     const tempExtractors = [...extractors, getDefaultExtractorObj(eventKey)];
-    setActiveAccordion(tempExtractors[tempExtractors.length - 1].id);
+    toggleAccordion(tempExtractors[tempExtractors.length - 1].id);
     updateExtractors(tempExtractors);
   }
 
@@ -88,7 +96,8 @@ function ExtractorArray(props) {
             formData={extractor}
             eventKey={extractor.id}
             key={extractor.id}
-            deleteExtractor={() => {
+            deleteExtractor={(e) => {
+              e.stopPropagation();
               const tempArray = [...extractors];
               tempArray.splice(i, 1);
               updateExtractors(tempArray);
@@ -104,7 +113,7 @@ function ExtractorArray(props) {
               updateExtractors(newExtractors);
             }}
             onOpenAccordion={() => {
-              setActiveAccordion(extractor.id);
+              toggleAccordion(extractor.id);
             }}
           />
         ))}
