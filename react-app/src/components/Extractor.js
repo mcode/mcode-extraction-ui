@@ -45,9 +45,10 @@ function defaultConstructorArgsMetadata(constructorArgs) {
     {
       cancerType: constructorArgs.cancerType || '',
       label: 'Cancer Type',
-      type: 'string',
+      type: 'select',
       hidden: true,
       key: 'cancerType',
+      options: ['primary' ,'secondary', 'all'],
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
@@ -284,6 +285,36 @@ function Extractor(props) {
             ))}
           </Form.Group>
         );
+        case 'select':
+          return (
+            <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
+              <div className="label-and-icon-container">
+                <Form.Label>{arg.label}</Form.Label>
+                <Form.Text>Select cancer types to include (if this argument is not included, 'all' is chosen by default)</Form.Text>
+                <Trash2
+                  onClick={() => {
+                    const newArgs = [...constructorArgsMetadata];
+                  const currentArg = getConstructorArg(newArgs, arg.key);
+                  currentArg.hidden = true;
+                  updateConstructorArgsMetadata(newArgs);
+                  }}
+                  className="mouse-pointer"
+                />
+              </div>
+              <Form.Select
+                onChange={(e) => {
+                  const newArgs = [...constructorArgsMetadata];
+                  const currentArg = getConstructorArg(newArgs, arg.key);
+                  currentArg[arg.key] = e.target.value;
+                  updateConstructorArgsMetadata(newArgs);
+                }}  
+              >
+                {arg.options.map((option) => (
+                  <option value={option}>{option}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          );
       default:
         console.error('Unexpected ConstructorArg type: ', arg.type);
         return (
