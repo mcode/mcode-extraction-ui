@@ -133,7 +133,7 @@ function Extractor(props) {
   const getConstructorArg = (newArgs, key) => newArgs.find((temp) => key === temp.key);
 
   // Given a particular constructorArg's key, turn off the hidden flag
-  function unhideConstructorArg(eventKey) {
+  function showConstructorArg(eventKey) {
     const newArgs = [...constructorArgsMetadata];
     const currentArg = getConstructorArg(newArgs, eventKey);
     currentArg.hidden = false;
@@ -315,7 +315,7 @@ function Extractor(props) {
           </div>
         )}
         {hasConstructorArgs && constructorArgOptions.length >= 1 && (
-          <Dropdown onSelect={unhideConstructorArg} className="form-button-container">
+          <Dropdown onSelect={showConstructorArg} className="form-button-container">
             <Dropdown.Toggle variant="outline-info" id="dropdown-basic" className="form-button">
               Add constructor argument
             </Dropdown.Toggle>
