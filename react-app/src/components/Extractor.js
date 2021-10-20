@@ -81,11 +81,12 @@ function defaultConstructorArgsMetadata(constructorArgs) {
 
 function Extractor(props) {
   // Get a label for the extractor
-  const extractorLabel = props.formData.label || '';
+  const [extractorLabel, setExtractorLabel] = useState(props.formData.label || '');
 
   // Update the extractorLabel as needed
   function onExtractorLabelChange(e) {
-    props.onExtractorLabelChange(e.target.value, props.eventKey);
+    props.onExtractorLabelChange(e.target.value);
+    setExtractorLabel(e.target.value);
   }
 
   // Derive and maintain some metadata about which constructorArgs can/should be rendered

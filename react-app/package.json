@@ -36,7 +36,18 @@
       "react-app/jest",
       "airbnb-base",
       "prettier"
-    ]
+    ],
+    "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [

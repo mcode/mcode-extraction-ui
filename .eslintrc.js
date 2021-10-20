@@ -10,5 +10,6 @@ module.exports = {
   },
   rules: {
     'import/no-extraneous-dependencies': 'off',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
   },
 };
