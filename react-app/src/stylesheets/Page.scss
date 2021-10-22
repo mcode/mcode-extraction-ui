@@ -69,6 +69,12 @@ i.glyphicon {
   overflow-y: auto;
 }
 
+.config-form {
+  // Height needs to be calculated separate here because the submit button must be within
+  // the form, unlike most other navigation buttons, which are outside their container
+  height: calc(100% - 59px); // 59px is the height of the container with Save/Back
+}
+
 .col-xl-3,
 .col-lg-3,
 .col-md-3,
@@ -130,6 +136,13 @@ i.glyphicon {
   font-size: 14px;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+.config-form-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .nav-button-container {
