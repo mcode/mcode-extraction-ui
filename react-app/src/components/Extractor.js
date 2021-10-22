@@ -285,22 +285,12 @@ function Extractor(props) {
             ))}
           </Form.Group>
         );
-        case 'select':
-          return (
-            <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
-              <div className="label-and-icon-container">
-                <Form.Label>{arg.label}</Form.Label>
-                <Form.Text>Select cancer types to include (if this argument is not included, 'all' is chosen by default)</Form.Text>
-                <Trash2
-                  onClick={() => {
-                    const newArgs = [...constructorArgsMetadata];
-                  const currentArg = getConstructorArg(newArgs, arg.key);
-                  currentArg.hidden = true;
-                  updateConstructorArgsMetadata(newArgs);
-                  }}
-                  className="mouse-pointer"
-                />
-              </div>
+      case 'select':
+        return (
+          <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
+            <Form.Label>{arg.label}</Form.Label>
+            <Form.Text className="ps-1">Select cancer types to include (if this argument is not included, 'all' is chosen by default)</Form.Text>
+            <div className="label-and-icon-container">
               <Form.Select
                 onChange={(e) => {
                   const newArgs = [...constructorArgsMetadata];
@@ -308,13 +298,24 @@ function Extractor(props) {
                   currentArg[arg.key] = e.target.value;
                   updateConstructorArgsMetadata(newArgs);
                 }}  
+                className="arg-input-width-limit"
               >
                 {arg.options.map((option) => (
                   <option value={option}>{option}</option>
                 ))}
               </Form.Select>
-            </Form.Group>
-          );
+              <Trash2
+                onClick={() => {
+                  const newArgs = [...constructorArgsMetadata];
+                  const currentArg = getConstructorArg(newArgs, arg.key);
+                  currentArg.hidden = true;
+                  updateConstructorArgsMetadata(newArgs);
+                }}
+                className="mouse-pointer"
+              />
+            </div>
+          </Form.Group>
+        );
       default:
         console.error('Unexpected ConstructorArg type: ', arg.type);
         return (
