@@ -20,7 +20,12 @@
   },
   "keywords": [],
   "contributors": [
-    "Seneca Anderson <Seneca_Anderson@student.uml.edu>"
+    "Julia Afeltra <jafeltra@mitre.org>",
+    "Julian Carter <jacarter@mitre.org>",
+    "Matthew Gramigna <mgramigna@mitre.org>",
+    "Dylan Mendelowitz <dmendelowitz@mitre.org>",
+    "Dylan Phelan <dphelan@mitre.org>",
+    "Seneca Anderson <sanderson@mitre.org>"
   ],
   "license": "Apache-2.0",
   "config": {
