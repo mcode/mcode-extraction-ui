@@ -99,14 +99,16 @@ function ConfigForm(props) {
           },
         }}
       >
-        <div className="config-form-button-container nav-button-container">
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={props.closeForm}>
-            Back
-          </Button>
-          <Button className="generic-button" variant="outline-primary" type="submit">
-            Save
-          </Button>
-        </div>
+        {!showSavedAlert && !showErrorAlert && (
+          <div className="config-form-button-container nav-button-container">
+            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={props.closeForm}>
+              Back
+            </Button>
+            <Button className="generic-button" variant="outline-primary" type="submit">
+              Save
+            </Button>
+          </div>
+        )}
       </Form>
       {showSavedAlert && (
         <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
