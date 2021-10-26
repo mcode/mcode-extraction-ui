@@ -48,8 +48,8 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       type: 'dropdown',
       hidden: true,
       key: 'cancerType',
-      options: ['primary' ,'secondary', 'all'],
-      text: 'Select cancer types to include (if this argument is not included, \'all\' is chosen by default)',
+      options: ['primary', 'secondary', 'all'],
+      text: "Select cancer types to include (if this argument is not included, 'all' is chosen by default)",
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
@@ -299,11 +299,11 @@ function Extractor(props) {
                   const currentArg = getConstructorArg(newArgs, arg.key);
                   currentArg[arg.key] = e.target.value;
                   updateConstructorArgsMetadata(newArgs);
-                }}  
+                }}
                 className="arg-input-width-limit"
               >
                 {arg.options.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>{option}</option>
                 ))}
               </Form.Select>
               <Trash2
