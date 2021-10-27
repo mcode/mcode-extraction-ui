@@ -45,15 +45,17 @@ function defaultConstructorArgsMetadata(constructorArgs) {
     {
       cancerType: constructorArgs.cancerType || '',
       label: 'Cancer Type',
-      type: 'string',
+      type: 'dropdown',
       hidden: true,
       key: 'cancerType',
+      options: ['primary', 'secondary', 'all'],
+      text: "Select cancer types to include (if this argument is not included, 'all' is chosen by default)",
       validExtractors: ['CSVCancerDiseaseStatusExtractor'],
     },
     {
       mask: constructorArgs.mask || [],
       label: 'Masked Fields',
-      type: 'dropdown',
+      type: 'checkbox',
       hidden: true,
       key: 'mask',
       options: [
@@ -74,6 +76,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
         'managingOrganization',
         'link',
       ],
+      text: 'Select fields to be masked in the extracted Patient resource',
       validExtractors: ['CSVPatientExtractor'],
     },
   ];
@@ -249,12 +252,12 @@ function Extractor(props) {
             </div>
           </Form.Group>
         );
-      case 'dropdown':
+      case 'checkbox':
         return (
           <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
             <div className="label-and-icon-container">
               <Form.Label>{arg.label}</Form.Label>
-              <Form.Text>Select fields to be masked in the extracted Patient resource</Form.Text>
+              <Form.Text>{arg.text}</Form.Text>
               <Trash2
                 onClick={() => {
                   const newArgs = [...constructorArgsMetadata];
@@ -282,6 +285,37 @@ function Extractor(props) {
                 }}
               />
             ))}
+          </Form.Group>
+        );
+      case 'dropdown':
+        return (
+          <Form.Group className="mb-3" controlId={arg.key} key={arg.key}>
+            <Form.Label>{arg.label}</Form.Label>
+            <Form.Text className="ps-1">{arg.text}</Form.Text>
+            <div className="label-and-icon-container">
+              <Form.Select
+                onChange={(e) => {
+                  const newArgs = [...constructorArgsMetadata];
+                  const currentArg = getConstructorArg(newArgs, arg.key);
+                  currentArg[arg.key] = e.target.value;
+                  updateConstructorArgsMetadata(newArgs);
+                }}
+                className="arg-input-width-limit"
+              >
+                {arg.options.map((option) => (
+                  <option value={option} key={option}>{option}</option>
+                ))}
+              </Form.Select>
+              <Trash2
+                onClick={() => {
+                  const newArgs = [...constructorArgsMetadata];
+                  const currentArg = getConstructorArg(newArgs, arg.key);
+                  currentArg.hidden = true;
+                  updateConstructorArgsMetadata(newArgs);
+                }}
+                className="mouse-pointer"
+              />
+            </div>
           </Form.Group>
         );
       default:

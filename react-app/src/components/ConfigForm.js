@@ -39,12 +39,18 @@ function ConfigForm(props) {
 
   function transformErrors(errors) {
     const filteredErrors = _.cloneDeep(errors);
-    const emailError = filteredErrors.find(error => error.name === 'format' && error.params.format  === 'comma-separated-emails');
+    const emailError = filteredErrors.find(
+      (error) => error.name === 'format' && error.params.format === 'comma-separated-emails',
+    );
     if (emailError) {
       emailError.message = 'Please include a list of comma separated email addresses';
-      const arrayErrorIndex = filteredErrors.findIndex(error => error.property === '.notificationInfo.to' && error.name === 'type');
+      const arrayErrorIndex = filteredErrors.findIndex(
+        (error) => error.property === '.notificationInfo.to' && error.name === 'type',
+      );
       filteredErrors.splice(arrayErrorIndex, 1);
-      const anyOfErrorIndex =  filteredErrors.findIndex(error => error.property === '.notificationInfo.to' && error.name === 'oneOf');
+      const anyOfErrorIndex = filteredErrors.findIndex(
+        (error) => error.property === '.notificationInfo.to' && error.name === 'oneOf',
+      );
       filteredErrors.splice(anyOfErrorIndex, 1);
     }
     return filteredErrors;
