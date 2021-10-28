@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import _ from 'lodash';
-import ConfigForm from './ConfigForm';
-import { getConfigSchema } from './schemaFormUtils';
+import ConfigForm from './EditorForm';
+import { getConfigSchema } from './helpers/schemaFormUtils';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);

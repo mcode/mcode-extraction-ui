@@ -2,7 +2,7 @@ import React from 'react';
 import { Accordion } from 'react-bootstrap';
 import _ from 'lodash';
 import fhirpath from 'fhirpath';
-import getLabel from './patientUtils';
+import getLabel from './helpers/patientUtils';
 
 function Result(props) {
   function countResources() {

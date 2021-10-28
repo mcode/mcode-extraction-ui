@@ -2,7 +2,8 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
-const { configSchema, logger } = require('mcode-extraction-framework');
+const { logger } = require('mcode-extraction-framework');
+const configSchema = require('./helpers/configSchema.json');
 const runExtraction = require('./extraction');
 const Transport = require('./InMemoryTransport');
 

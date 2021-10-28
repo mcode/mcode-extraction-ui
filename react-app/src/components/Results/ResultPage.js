@@ -4,7 +4,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import OutputDisplay from './OutputDisplay';
 import ResultSidebar from './ResultSidebar';
 
-import '../stylesheets/ResultPage.scss';
+import '../../stylesheets/ResultPage.scss';
 
 function ResultPage(props) {
   const [patientID, setPatientID] = useState(null);

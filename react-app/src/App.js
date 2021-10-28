@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Extract from './components/Extract';
-import Navbar from './components/Navbar';
-import ResultPage from './components/ResultPage';
-import ExtractionError from './components/ExtractionError';
-import ConfigEditor from './components/ConfigEditor';
+import Extract from './components/ExtractNew/Extract';
+import Navbar from './components/CommonComponents/Navbar';
+import ResultPage from './components/Results/ResultPage';
+import ExtractionError from './components/ExtractNew/ExtractionError';
+import ConfigEditor from './components/ConfigEditor/ConfigEditor';
 
 import './stylesheets/custom.scss';
 import './stylesheets/Page.scss';

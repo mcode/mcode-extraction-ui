@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
-import getLabel from './patientUtils';
+import getLabel from './helpers/patientUtils';
 
 function SaveOutputForm(props) {
   const [saveLogs, setSaveLogs] = useState(false);

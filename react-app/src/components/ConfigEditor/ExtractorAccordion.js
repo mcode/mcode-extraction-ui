@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown } from 'react-bootstrap';
-import Extractor from './Extractor';
+import Extractor from './ExtractorObject';
 
-function ExtractorArray(props) {
+function ExtractorAccordion(props) {
   const [activeAccordion, setActiveAccordion] = useState(0);
   const extractors = props.formData || [];
   const types = [
@@ -122,4 +122,4 @@ function ExtractorArray(props) {
   );
 }
 
-export default ExtractorArray;
+export default ExtractorAccordion;

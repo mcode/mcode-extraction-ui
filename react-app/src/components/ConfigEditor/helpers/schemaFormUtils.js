@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import FilePicker from './FilePicker';
-import ExtractorArray from './ExtractorArray';
+import FilePicker from '../../CommonComponents/FilePicker';
+import ExtractorAccordion from '../ExtractorAccordion';
 
 function getConfigSchema() {
   return window.api.getConfigSchema();
@@ -118,7 +118,7 @@ const widgets = {
 };
 
 const fields = {
-  extractorArray: ExtractorArray,
+  extractorArray: ExtractorAccordion,
 };
 
 export { getConfigSchema, uiSchema, widgets, fields };
