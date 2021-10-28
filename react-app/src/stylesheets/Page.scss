@@ -153,6 +153,14 @@ i.glyphicon {
   box-shadow: 0px -2px 4px 0px $lighter-accent;
 }
 
+.nav-button-alert {
+  margin-bottom: 55px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 4; // The focused accordion headers have z-index: 3 so this needs to be higher
+}
+
 .button-container {
   align-items: center;
   display: flex;

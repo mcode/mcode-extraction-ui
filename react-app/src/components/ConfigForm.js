@@ -99,29 +99,37 @@ function ConfigForm(props) {
           },
         }}
       >
-        {!showSavedAlert && !showErrorAlert && (
-          <div className="config-form-button-container nav-button-container">
-            <Button className="generic-button" size="lg" variant="outline-secondary" onClick={props.closeForm}>
-              Back
-            </Button>
-            <Button className="generic-button" variant="outline-primary" type="submit">
-              Save
-            </Button>
-          </div>
-        )}
+        <div className="config-form-button-container nav-button-container">
+          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={props.closeForm}>
+            Back
+          </Button>
+          <Button className="generic-button" variant="outline-primary" type="submit">
+            Save
+          </Button>
+        </div>
       </Form>
-      {showSavedAlert && (
-        <Alert variant="success" show={showSavedAlert} onClose={() => setShowSavedAlert(false)} dismissible>
-          <Alert.Heading>Files saved</Alert.Heading>
-          <p>{savedMessage}</p>
-        </Alert>
-      )}
-      {showErrorAlert && (
-        <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
-          <Alert.Heading>Error: Unable to save file</Alert.Heading>
-          <p>{errorMessage}</p>
-        </Alert>
-      )}
+      <Alert
+        className="nav-button-alert"
+        variant="success"
+        show={showSavedAlert}
+        onClose={() => setShowSavedAlert(false)}
+        dismissible
+        transition
+      >
+        <Alert.Heading>Files saved</Alert.Heading>
+        <p>{savedMessage}</p>
+      </Alert>
+      <Alert
+        className="nav-button-alert"
+        variant="danger"
+        show={showErrorAlert}
+        onClose={() => setShowErrorAlert(false)}
+        dismissible
+        transition
+      >
+        <Alert.Heading>Error: Unable to save file</Alert.Heading>
+        <p>{errorMessage}</p>
+      </Alert>
     </>
   );
 }
