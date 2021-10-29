@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown } from 'react-bootstrap';
-import Extractor from './ExtractorObject';
+import ExtractorObject from './ExtractorObject';
 
 function ExtractorAccordion(props) {
   const [activeAccordion, setActiveAccordion] = useState(0);
@@ -92,7 +92,7 @@ function ExtractorAccordion(props) {
       </div>
       <Accordion activeKey={activeAccordion}>
         {extractors.map((extractor, i) => (
-          <Extractor
+          <ExtractorObject
             formData={extractor}
             eventKey={extractor.id}
             key={extractor.id}

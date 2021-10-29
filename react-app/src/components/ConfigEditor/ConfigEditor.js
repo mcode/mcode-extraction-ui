@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import _ from 'lodash';
-import ConfigForm from './EditorForm';
+import EditorForm from './EditorForm';
 import { getConfigSchema } from './helpers/schemaFormUtils';
 
 function ConfigEditor() {
@@ -86,7 +86,7 @@ function ConfigEditor() {
         )}
         {showForm && (
           <>
-            <ConfigForm
+            <EditorForm
               configJSON={configJSON}
               resetFormData={setConfigJSON}
               setShowForm={setShowForm}

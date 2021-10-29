@@ -82,7 +82,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
   ];
 }
 
-function Extractor(props) {
+function ExtractorObject(props) {
   // Get a label for the extractor
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label || '');
 
@@ -365,4 +365,4 @@ function Extractor(props) {
   );
 }
 
-export default Extractor;
+export default ExtractorObject;

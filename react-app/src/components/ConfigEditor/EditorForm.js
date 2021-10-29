@@ -5,7 +5,7 @@ import _ from 'lodash';
 import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import { uiSchema, widgets, fields } from './helpers/schemaFormUtils';
 
-function ConfigForm(props) {
+function EditorForm(props) {
   const [showSavedAlert, setShowSavedAlert] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
@@ -125,4 +125,4 @@ function ConfigForm(props) {
   );
 }
 
-export default ConfigForm;
+export default EditorForm;
