@@ -69,6 +69,12 @@ i.glyphicon {
   overflow-y: auto;
 }
 
+.config-form {
+  // Height needs to be calculated separate here because the submit button must be within
+  // the form, unlike most other navigation buttons, which are outside their container
+  height: calc(100% - 59px); // 59px is the height of the container with Save/Back
+}
+
 .col-xl-3,
 .col-lg-3,
 .col-md-3,
@@ -132,13 +138,27 @@ i.glyphicon {
   margin-top: 10px;
 }
 
+.config-form-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 .nav-button-container {
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
   box-shadow: 0px -2px 4px 0px $lighter-accent;
-  z-index: 1;
+}
+
+.nav-button-alert {
+  margin-bottom: 55px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 4; // The focused accordion headers have z-index: 3 so this needs to be higher
 }
 
 .button-container {

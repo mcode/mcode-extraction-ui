@@ -91,12 +91,8 @@ function ConfigEditor() {
               resetFormData={setConfigJSON}
               setShowForm={setShowForm}
               schema={configSchema}
+              closeForm={closeForm}
             />
-            <div className="nav-button-container">
-              <Button className="generic-button" size="lg" variant="outline-secondary" onClick={closeForm}>
-                Back
-              </Button>
-            </div>
           </>
         )}
       </div>
