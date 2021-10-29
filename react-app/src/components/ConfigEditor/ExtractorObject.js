@@ -59,7 +59,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       hidden: true,
       key: 'mask',
       options: [
-        'gender',
+        'genderAndSex',
         'mrn',
         'name',
         'address',
