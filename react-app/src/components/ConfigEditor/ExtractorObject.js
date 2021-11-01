@@ -66,7 +66,6 @@ function defaultConstructorArgsMetadata(constructorArgs) {
         'birthDate',
         'language',
         'ethnicity',
-        'birthsex',
         'race',
         'telecom',
         'multipleBirth',
