@@ -3,9 +3,9 @@ import { Alert, Button } from 'react-bootstrap';
 import Form from '@rjsf/bootstrap-4';
 import _ from 'lodash';
 import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
-import { uiSchema, widgets, fields } from './schemaFormUtils';
+import { uiSchema, widgets, fields } from './helpers/schemaFormUtils';
 
-function ConfigForm(props) {
+function EditorForm(props) {
   const [showSavedAlert, setShowSavedAlert] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
@@ -30,11 +30,12 @@ function ConfigForm(props) {
   }
 
   function cleanFormData(formData) {
-    formData.extractors.forEach((extractor) => {
+    const saveData = _.cloneDeep(formData);
+    saveData.extractors.forEach((extractor) => {
       // eslint-disable-next-line no-param-reassign
       delete extractor.id;
     });
-    return formData;
+    return saveData;
   }
 
   function transformErrors(errors) {
@@ -77,16 +78,6 @@ function ConfigForm(props) {
         // Validation information
         additionalMetaSchemas={[metaSchemaDraft06]}
         customFormats={{
-          'comma-separated-emails': {
-            type: 'string',
-            validate: (emails) => {
-              // this is Ajv's regex for email format (https://github.com/ajv-validator/ajv-formats/blob/master/src/formats.ts#L106)
-              const emailRegex = new RegExp(
-                /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/i,
-              );
-              return emails.split(',').every((email) => emailRegex.test(email.trim()));
-            },
-          },
           'email-with-name': {
             type: 'string',
             validate: (email) => {
@@ -134,4 +125,4 @@ function ConfigForm(props) {
   );
 }
 
-export default ConfigForm;
+export default EditorForm;

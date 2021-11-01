@@ -1,6 +1,6 @@
 import React from 'react';
-import LogList from './LogList';
-import LinkButton from './LinkButton';
+import LogList from '../Results/LogList';
+import LinkButton from '../CommonComponents/LinkButton';
 
 function ExtractionError(props) {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, ListGroup } from 'react-bootstrap';
 
-import '../stylesheets/LogList.scss';
+import '../../stylesheets/LogList.scss';
 
 function LogList(props) {
   function getVariant(level) {

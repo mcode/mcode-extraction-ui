@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
-import FilePicker from './FilePicker';
+import FilePicker from '../CommonComponents/FilePicker';
 
 function Extract(props) {
   const [configPath, setConfigPath] = useState('No File Chosen');

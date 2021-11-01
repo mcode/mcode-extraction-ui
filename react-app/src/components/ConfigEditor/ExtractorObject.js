@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Accordion, Button, Dropdown, Form } from 'react-bootstrap';
 import { Trash2 } from 'react-feather';
-import FilePicker from './FilePicker';
+import FilePicker from '../CommonComponents/FilePicker';
 
 // Variables for constructor arg management
 // key value must match up with the name of the field that stores the field's value
@@ -82,7 +82,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
   ];
 }
 
-function Extractor(props) {
+function ExtractorObject(props) {
   // Get a label for the extractor
   const [extractorLabel, setExtractorLabel] = useState(props.formData.label || '');
 
@@ -303,7 +303,9 @@ function Extractor(props) {
                 className="arg-input-width-limit"
               >
                 {arg.options.map((option) => (
-                  <option value={option} key={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </Form.Select>
               <Trash2
@@ -363,4 +365,4 @@ function Extractor(props) {
   );
 }
 
-export default Extractor;
+export default ExtractorObject;
