@@ -17,7 +17,7 @@ if (squirrel) {
 
 // declare mainWindow ahead of time so that it can be accessed in .handle('get-file')
 let mainWindow;
-app.dock.setIcon(path.join(__dirname, './icon.png'));
+app.dock.setIcon(path.join(__dirname, 'static/icon.png'));
 const createWindow = () => {
   // get app icon
 
