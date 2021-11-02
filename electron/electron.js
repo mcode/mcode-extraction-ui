@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain, Dock } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
@@ -15,14 +15,24 @@ if (squirrel) {
   app.quit();
 }
 
+// Helper function
+function downloadBounceOnMac(savePath) {
+  if (process.platform === 'darwin') {
+    app.dock.downloadFinished(path.join(savePath));
+  }
+}
+
 // declare mainWindow ahead of time so that it can be accessed in .handle('get-file')
 let mainWindow;
-app.dock.setIcon(path.join(__dirname, 'static/icon.png'));
+// Path to Icon file
+const iconPath = path.join(__dirname, 'static/icon.png');
+// Set the icon in the Mac OS Dock
+app.dock.setIcon(iconPath);
 const createWindow = () => {
-  // get app icon
-
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    // Sets the icon in the Windows/Linux app bar
+    icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, './preload.js'),
     },
@@ -106,6 +116,7 @@ ipcMain.handle('save-config-as', async (event, configJSON) => {
       if (!savePath.canceled) {
         return savePath.filePath;
       }
+      // returning null indicates that the save process was cancelled
       return null;
     })
     .then((savePath) => {
@@ -113,7 +124,7 @@ ipcMain.handle('save-config-as', async (event, configJSON) => {
         fs.writeFileSync(savePath, JSON.stringify(configJSON), 'utf8');
       }
       // returning a path indicates that the save process succeeded
-      // returning null indicates that the save process was cancelled
+      downloadBounceOnMac(savePath);
       return savePath;
     });
 });
@@ -131,6 +142,7 @@ ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) =
     const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
     fs.writeFileSync(outputFile, JSON.stringify(data.bundle, null, 2), 'utf8');
   });
+  downloadBounceOnMac(savePath);
   // returning true indicates that the save process succeeded
   return true;
 });

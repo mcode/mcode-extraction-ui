@@ -1,6 +1,6 @@
 {
   "name": "mcode-extraction-ui",
-  "productName": "mcode-extraction-ui",
+  "productName": "mCODE Extractor",
   "version": "0.0.1",
   "description": "An Electron-based desktop app for performing mCODE extraction.",
   "main": "electron/electron.js",
