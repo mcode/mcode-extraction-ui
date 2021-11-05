@@ -141,8 +141,8 @@ ipcMain.handle('save-output', async (event, savePath, outputBundles, saveLogs) =
   outputBundles.forEach((data) => {
     const outputFile = path.join(savePath, `mcode-extraction-patient-${data.index + 1}.json`);
     fs.writeFileSync(outputFile, JSON.stringify(data.bundle, null, 2), 'utf8');
+    downloadBounceOnMac(outputFile);
   });
-  downloadBounceOnMac(savePath);
   // returning true indicates that the save process succeeded
   return true;
 });
