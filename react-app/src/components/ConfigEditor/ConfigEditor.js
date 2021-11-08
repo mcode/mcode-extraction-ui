@@ -134,7 +134,7 @@ function ConfigEditor() {
             {showErrorAlert && (
               <Alert variant="info" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
                 <Alert.Heading>Created config from template</Alert.Heading>
-                <p>Extractors have been added for you, but other fields will still need to be filled out</p>
+                <p>Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be added</p>
               </Alert>
             )}
           </>
