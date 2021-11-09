@@ -1,0 +1,48 @@
+{
+  "extractors": [
+    {
+      "label": "patient",
+      "type": "CSVPatientExtractor"
+    },
+    {
+      "label": "condition",
+      "type": "CSVConditionExtractor"
+    },
+    {
+      "label": "cancerDiseaseStatus",
+      "type": "CSVCancerDiseaseStatusExtractor"
+    },
+    {
+      "label": "clinicalTrialInformation",
+      "type": "CSVClinicalTrialInformationExtractor"
+    },
+    {
+      "label": "treatmentPlanChange",
+      "type": "CSVTreatmentPlanChangeExtractor"
+    },
+    {
+      "label": "staging",
+      "type": "CSVStagingExtractor"
+    },
+    {
+      "label": "cancerRelatedMedicationAdministration",
+      "type": "CSVCancerRelatedMedicationAdministrationExtractor"
+    },
+    {
+      "label": "cancerRelatedMedicationRequest",
+      "type": "CSVCancerRelatedMedicationRequestExtractor"
+    },
+    {
+      "label": "genericObservations",
+      "type": "CSVObservationExtractor"
+    },
+    {
+      "label": "genericProcedures",
+      "type": "CSVProcedureExtractor"
+    },
+    {
+      "label": "adverseEvent",
+      "type": "CSVAdverseEventExtractor"
+    }
+  ]
+}

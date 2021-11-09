@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import { Alert, Button, Dropdown } from 'react-bootstrap';
 import _ from 'lodash';
 import EditorForm from './EditorForm';
 import { getConfigSchema } from './helpers/schemaFormUtils';
@@ -62,6 +62,37 @@ function ConfigEditor() {
       });
   }
 
+  function loadTemplate(filePath) {
+    getConfigSchema().then((schema) => {
+      // eslint-disable-next-line no-param-reassign
+      delete schema.description;
+      setConfigSchema(schema);
+    });
+    window.api.readFile(filePath)
+      .then((result) => {
+        if (result !== null) {
+          const config = JSON.parse(result);
+          // Add ids to the extractors
+          if (config.extractors) {
+            config.extractors = config.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
+          }
+          setConfigJSON(config);
+          return true;
+        }
+        return null;
+      })
+      .then((result) => {
+        if (result) {
+          setShowForm(true);
+          setShowErrorAlert(true);
+        }
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+        setShowErrorAlert(true);
+      });
+  }
+
   return (
     <>
       <h1 className="page-title">Configuration Editor</h1>
@@ -75,6 +106,13 @@ function ConfigEditor() {
               <Button className="vertical-menu-button" variant="outline-secondary" onClick={loadFile}>
                 Load File
               </Button>
+              <Dropdown className="vertical-menu-button" variant="outline-secondary">
+                <Dropdown.Toggle className="vertical-menu-button" variant="outline-secondary">Create From Template</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/mcode.json')}>mCODE</Dropdown.Item>
+                  <Dropdown.Item onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/icare.json')}>ICARE</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
             {showErrorAlert && (
               <Alert variant="danger" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
@@ -93,6 +131,12 @@ function ConfigEditor() {
               schema={configSchema}
               closeForm={closeForm}
             />
+            {showErrorAlert && (
+              <Alert variant="info" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
+                <Alert.Heading>Created config from template</Alert.Heading>
+                <p>Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be added</p>
+              </Alert>
+            )}
           </>
         )}
       </div>
