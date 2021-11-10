@@ -8,12 +8,6 @@
       "title": "Patient ID CSV File",
       "type": "string"
     },
-    "commonExtractorArgs": {
-      "$ref": "#/$defs/commonExtractorArgs"
-    },
-    "notificationInfo": {
-      "$ref": "#/$defs/notificationInfo"
-    },
     "extractors": {
       "title": "Extractors",
       "type": "array",

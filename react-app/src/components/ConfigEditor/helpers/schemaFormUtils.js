@@ -10,7 +10,7 @@ const uiSchema = {
   patientIdCsvPath: {
     'ui:label': false,
     'ui:widget': 'file',
-    classNames: '',
+    classNames: 'form-label-header-text',
   },
   commonExtractorArgs: {
     classNames: '',

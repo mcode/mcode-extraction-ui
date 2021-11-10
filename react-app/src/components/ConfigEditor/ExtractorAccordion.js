@@ -73,7 +73,7 @@ function ExtractorAccordion(props) {
 
   return (
     <div>
-      <h1 className="form-header-text">Extractors</h1>
+      <div className="form-header-text">Extractors</div>
       <div className="form-button-container">
         <Button
           variant="outline-info"
