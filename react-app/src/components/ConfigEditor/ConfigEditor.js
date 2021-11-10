@@ -42,9 +42,43 @@ function ConfigEditor() {
       .then((result) => {
         if (result !== null) {
           const config = JSON.parse(result);
-          // Add ids to the extractors
+          // convert a string list of to emails to an array
+          if (config.notificationInfo) {
+            if (typeof(config.notificationInfo.to) === 'string') {
+              config.notificationInfo.to = config.notificationInfo.to.split(',').map((e) => e.trim());
+            }
+          }
+          // Add ids to the extractors and handle mask "all"
           if (config.extractors) {
-            config.extractors = config.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
+            config.extractors = config.extractors.map((e) => {
+              if (e. constructorArgs && e.constructorArgs.mask === 'all') {
+                return {
+                  ...e,
+                  constructorArgs: {
+                    ...e.constructorArgs,
+                    mask: [
+                      'genderAndSex',
+                      'mrn',
+                      'name',
+                      'address',
+                      'birthDate',
+                      'language',
+                      'ethnicity',
+                      'race',
+                      'telecom',
+                      'multipleBirth',
+                      'photo',
+                      'contact',
+                      'generalPractitioner',
+                      'managingOrganization',
+                      'link',
+                    ]
+                  },
+                  id: _.uniqueId(),
+                }
+              }
+              return { ...e, id: _.uniqueId() }
+            });
           }
           setConfigJSON(config);
           return true;

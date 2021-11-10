@@ -15,7 +15,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       filePath: constructorArgs.filePath || 'No File Selected',
       label: 'CSV File Path',
       type: 'file',
-      hidden: false,
+      hidden: (constructorArgs.url),
       key: 'filePath',
       fileTypes: ['csv'],
       validExtractors: [],
@@ -24,7 +24,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       url: constructorArgs.url || '',
       label: 'CSV File URL',
       type: 'url',
-      hidden: true,
+      hidden: !(constructorArgs.url),
       key: 'url',
       validExtractors: [],
     },
@@ -32,7 +32,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       clinicalSiteID: constructorArgs.clinicalSiteID || '',
       label: 'Clinical Site ID',
       type: 'string',
-      hidden: true,
+      hidden: !(constructorArgs.clinicalSiteID),
       key: 'clinicalSiteID',
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
@@ -40,7 +40,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       clinicalSiteSystem: constructorArgs.clinicalSiteSystem || '',
       label: 'Clinical Site System',
       type: 'string',
-      hidden: true,
+      hidden: !(constructorArgs.clinicalSiteSystem),
       key: 'clinicalSiteSystem',
       validExtractors: ['CSVClinicalTrialInformationExtractor'],
     },
@@ -48,7 +48,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       cancerType: constructorArgs.cancerType || '',
       label: 'Cancer Type',
       type: 'dropdown',
-      hidden: true,
+      hidden: !(constructorArgs.cancerType),
       key: 'cancerType',
       options: ['primary', 'secondary', 'all'],
       text: "Select cancer types to include (if this argument is not included, 'all' is chosen by default)",
@@ -58,7 +58,7 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       mask: constructorArgs.mask || [],
       label: 'Masked Fields',
       type: 'checkbox',
-      hidden: true,
+      hidden: !(constructorArgs.mask),
       key: 'mask',
       options: {
         genderAndSex: false,
@@ -345,7 +345,7 @@ function ExtractorObject(props) {
                 className="arg-input-width-limit"
               >
                 {arg.options.map((option) => (
-                  <option value={option} key={option}>
+                  <option value={option} key={option} selected={arg[arg.key] === option}>
                     {option}
                   </option>
                 ))}
