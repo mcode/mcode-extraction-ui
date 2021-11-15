@@ -27,7 +27,7 @@ let mainWindow;
 // Path to Icon file
 const iconPath = path.join(__dirname, 'static/icon.png');
 // Set the icon in the Mac OS Dock
-app.dock.setIcon(iconPath);
+if (process.platform === 'darwin') app.dock.setIcon(iconPath);
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
