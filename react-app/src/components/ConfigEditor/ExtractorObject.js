@@ -5,8 +5,10 @@ import FilePicker from '../CommonComponents/FilePicker';
 
 // Variables for constructor arg management
 // key value must match up with the name of the field that stores the field's value
-// File inputs must have an array of strings called fileTypes. This array lists the file extensions that the user will be allowed to select.
-// Dropdown inputs must have an options array. This array lists the values that will appear in the dropdown.
+// File: Inputs must have an array of strings called fileTypes. This array lists the file extensions that the user will be allowed to select.
+// Dropdown: Inputs must have an options array. This array lists the values that will appear in the dropdown.
+// Checkbox: Inputs must have an options object. The object keys correspond to values to be displayed as checkboxes,
+// (Checkbox cont.) values are a boolean that control whether the corresponding checkbox is selected or not.
 function defaultConstructorArgsMetadata(constructorArgs) {
   return [
     {
@@ -58,23 +60,23 @@ function defaultConstructorArgsMetadata(constructorArgs) {
       type: 'checkbox',
       hidden: true,
       key: 'mask',
-      options: [
-        'genderAndSex',
-        'mrn',
-        'name',
-        'address',
-        'birthDate',
-        'language',
-        'ethnicity',
-        'race',
-        'telecom',
-        'multipleBirth',
-        'photo',
-        'contact',
-        'generalPractitioner',
-        'managingOrganization',
-        'link',
-      ],
+      options: {
+        genderAndSex: false,
+        mrn: false,
+        name: false,
+        address: false,
+        birthDate: false,
+        language: false,
+        ethnicity: false,
+        race: false,
+        telecom: false,
+        multipleBirth: false,
+        photo: false,
+        contact: false,
+        generalPractitioner: false,
+        managingOrganization: false,
+        link: false,
+      },
       text: 'Select fields to be masked in the extracted Patient resource',
       validExtractors: ['CSVPatientExtractor'],
     },
@@ -121,14 +123,42 @@ function ExtractorObject(props) {
     props.onArgsChange(tempConstructorArgsMetadata);
   }
 
-  // Handles updates to multi-select Options fields such as "mask"
+  /** Handles updates to multi-select Options fields such as "mask"
+   * @param {object} argObj - The object corresponding to the constructorArg in memory
+   * @param {string} changedValue - The option being added or removed from the array
+   * @param {string} propertyName - The name of the constructorArg
+   */
   function updateOptions(argObj, changedValue, propertyName) {
+    // eslint-disable-next-line no-param-reassign
+    argObj.options[changedValue] = !argObj.options[changedValue];
     const currentOptions = argObj[propertyName];
     const changedIndex = currentOptions.indexOf(changedValue);
     if (changedIndex > -1) {
       currentOptions.splice(changedIndex, 1);
     } else {
       currentOptions.push(changedValue);
+    }
+  }
+
+  function isAllSelected(optionsObj) {
+    return Object.values(optionsObj).every((value) => value === true);
+  }
+
+  function toggleSelectAll(argObj) {
+    if (isAllSelected(argObj.options)) {
+      // eslint-disable-next-line no-param-reassign
+      argObj[argObj.key] = [];
+      Object.keys(argObj.options).forEach((key) => {
+        // eslint-disable-next-line no-param-reassign
+        argObj.options[key] = false;
+      });
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      argObj[argObj.key] = [...Object.keys(argObj.options)];
+      Object.keys(argObj.options).forEach((key) => {
+        // eslint-disable-next-line no-param-reassign
+        argObj.options[key] = true;
+      });
     }
   }
 
@@ -267,14 +297,27 @@ function ExtractorObject(props) {
                 className="mouse-pointer"
               />
             </div>
-            {arg.options.map((option) => (
+            <Form.Check
+              type="checkbox"
+              label="Select All"
+              checked={isAllSelected(arg.options)}
+              onChange={() => {
+                const newArgs = [...constructorArgsMetadata];
+                const currentArg = getConstructorArg(newArgs, arg.key);
+                toggleSelectAll(currentArg);
+                updateConstructorArgsMetadata(newArgs);
+              }}
+              className="emphasized-list-text"
+            />
+            {Object.entries(arg.options).map(([key, value]) => (
               <Form.Check
-                label={option}
-                name={option}
+                label={key}
+                name={key}
                 type="checkbox"
-                value={option}
-                key={`mask-${option}`}
-                id={`mask-${option}`}
+                value={key}
+                key={`mask-${key}`}
+                id={`mask-${key}`}
+                checked={value}
                 className="arg-input-width-limit"
                 onChange={(e) => {
                   const newArgs = [...constructorArgsMetadata];
