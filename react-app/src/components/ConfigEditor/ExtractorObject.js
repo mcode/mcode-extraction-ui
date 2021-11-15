@@ -343,9 +343,10 @@ function ExtractorObject(props) {
                   updateConstructorArgsMetadata(newArgs);
                 }}
                 className="arg-input-width-limit"
+                defaultValue={arg[arg.key]}
               >
                 {arg.options.map((option) => (
-                  <option value={option} key={option} selected={arg[arg.key] === option}>
+                  <option value={option} key={option}>
                     {option}
                   </option>
                 ))}
