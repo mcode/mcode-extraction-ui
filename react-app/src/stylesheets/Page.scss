@@ -129,6 +129,23 @@ i.glyphicon {
   font-weight: bold;
 }
 
+.additional-properties-width > fieldset > div.form-group > div.row {
+  // RJSF uses react-bootstrap-3 classnames, so apply the current bootstrap-5 styling to the old class names
+  .col-xs-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%;
+  }
+
+  .col-xs-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
+}
+
+.config-section-accordion {
+  margin-bottom: 10px;
+}
+
 .text-centered {
   text-align: center;
 }
@@ -218,6 +235,10 @@ i.glyphicon {
   color: $secondary;
   font-weight: bold;
   text-align: right;
+}
+
+.input-array-label > fieldset > legend {
+  font-size: 1rem;
 }
 
 .input-width-limit {
