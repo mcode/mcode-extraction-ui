@@ -30,6 +30,7 @@ function NotificationInfoAccordion(props) {
                   schema={props.schema.properties.host}
                   uiSchema={props.uiSchema.host}
                   idSchema={props.idSchema.host}
+                  errorSchema={props.errorSchema.host}
                   required={props.schema.required?.some((r) => r === 'host')}
                   registry={props.registry}
                 />
@@ -44,6 +45,7 @@ function NotificationInfoAccordion(props) {
                   schema={props.schema.properties.port}
                   uiSchema={props.uiSchema.port}
                   idSchema={props.idSchema.port}
+                  errorSchema={props.errorSchema.port}
                   required={props.schema.required?.some((r) => r === 'port')}
                   registry={props.registry}
                 />
@@ -60,6 +62,7 @@ function NotificationInfoAccordion(props) {
                   schema={props.schema.properties.to}
                   uiSchema={props.uiSchema.to}
                   idSchema={props.idSchema.to}
+                  errorSchema={props.errorSchema.to}
                   required={props.schema.required?.some((r) => r === 'to')}
                   registry={props.registry}
                 />
@@ -74,6 +77,7 @@ function NotificationInfoAccordion(props) {
                   schema={props.schema.properties.from}
                   uiSchema={props.uiSchema.from}
                   idSchema={props.idSchema.from}
+                  errorSchema={props.errorSchema.from}
                   required={props.schema.required?.some((r) => r === 'from')}
                   registry={props.registry}
                 />
@@ -89,6 +93,7 @@ function NotificationInfoAccordion(props) {
                 schema={props.schema.properties.tlsRejectUnauthorized}
                 uiSchema={props.uiSchema.tlsRejectUnauthorized}
                 idSchema={props.idSchema.tlsRejectUnauthorized}
+                errorSchema={props.errorSchema.tlsRejectUnauthorized}
                 required={props.schema.required?.some((r) => r === 'tlsRejectUnauthorized')}
                 registry={props.registry}
               />

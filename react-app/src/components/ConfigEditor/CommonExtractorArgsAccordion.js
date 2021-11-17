@@ -27,6 +27,7 @@ function CommonExtractorArgs(props) {
                   schema={props.schema.properties.baseFhirUrl}
                   uiSchema={props.uiSchema.baseFhirUrl}
                   idSchema={props.idSchema.baseFhirUrl}
+                  errorSchema={props.errorSchema.baseFhirUrl}
                   required={props.schema.required?.some((r) => r === 'baseFhirUrl')}
                   registry={props.registry}
                 />
@@ -43,6 +44,7 @@ function CommonExtractorArgs(props) {
                   schema={props.schema.properties.requestHeaders}
                   uiSchema={props.uiSchema.requestHeaders}
                   idSchema={props.idSchema.requestHeaders}
+                  errorSchema={props.errorSchema.registry}
                   required={props.schema.required?.some((r) => r === 'requestHeaders')}
                   registry={props.registry}
                 />
