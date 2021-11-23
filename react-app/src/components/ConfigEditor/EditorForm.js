@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import Form from '@rjsf/bootstrap-4';
+import Form from '@rjsf/core';
 import _ from 'lodash';
 import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import { uiSchema, widgets, fields } from './helpers/schemaFormUtils';

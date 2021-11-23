@@ -34,7 +34,10 @@
         },
         "requestHeaders": {
           "title": "Request Headers",
-          "type": "object"
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -72,12 +75,14 @@
       "dependencies": {
         "host": {
           "required": [
+            "host",
             "to"
           ]
         },
         "to": {
           "required": [
-            "host"
+            "host",
+            "to"
           ]
         },
         "from": {
