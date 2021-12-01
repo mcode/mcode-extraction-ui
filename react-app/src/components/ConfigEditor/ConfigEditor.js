@@ -44,14 +44,14 @@ function ConfigEditor() {
           const config = JSON.parse(result);
           // convert a string list of to emails to an array
           if (config.notificationInfo) {
-            if (typeof(config.notificationInfo.to) === 'string') {
+            if (typeof config.notificationInfo.to === 'string') {
               config.notificationInfo.to = config.notificationInfo.to.split(',').map((e) => e.trim());
             }
           }
           // Add ids to the extractors and handle mask "all"
           if (config.extractors) {
             config.extractors = config.extractors.map((e) => {
-              if (e. constructorArgs && e.constructorArgs.mask === 'all') {
+              if (e.constructorArgs && e.constructorArgs.mask === 'all') {
                 return {
                   ...e,
                   constructorArgs: {
@@ -72,12 +72,12 @@ function ConfigEditor() {
                       'generalPractitioner',
                       'managingOrganization',
                       'link',
-                    ]
+                    ],
                   },
                   id: _.uniqueId(),
-                }
+                };
               }
-              return { ...e, id: _.uniqueId() }
+              return { ...e, id: _.uniqueId() };
             });
           }
           setConfigJSON(config);
@@ -102,7 +102,8 @@ function ConfigEditor() {
       delete schema.description;
       setConfigSchema(schema);
     });
-    window.api.readFile(filePath)
+    window.api
+      .readFile(filePath)
       .then((result) => {
         if (result !== null) {
           const config = JSON.parse(result);
@@ -141,10 +142,20 @@ function ConfigEditor() {
                 Load File
               </Button>
               <Dropdown className="vertical-menu-button" variant="outline-secondary">
-                <Dropdown.Toggle className="vertical-menu-button" variant="outline-secondary">Create From Template</Dropdown.Toggle>
+                <Dropdown.Toggle className="vertical-menu-button" variant="outline-secondary">
+                  Create From Template
+                </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/mcode.json')}>mCODE</Dropdown.Item>
-                  <Dropdown.Item onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/icare.json')}>ICARE</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/mcode.json')}
+                  >
+                    mCODE
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/icare.json')}
+                  >
+                    ICARE
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -168,7 +179,10 @@ function ConfigEditor() {
             {showErrorAlert && (
               <Alert variant="info" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
                 <Alert.Heading>Created config from template</Alert.Heading>
-                <p>Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be added</p>
+                <p>
+                  Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be
+                  added
+                </p>
               </Alert>
             )}
           </>
