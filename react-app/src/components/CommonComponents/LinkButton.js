@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 function LinkButton(props) {
+  const history = useHistory();
+  const onClick = () => {
+    history.push(props.path);
+  };
   return (
-    <Link to={props.path}>
-      <Button className={props.className} variant={props.variant} size={props.size}>
-        {props.text}
-      </Button>
-    </Link>
+    <Button className={props.className} size={props.size} variant={props.variant} onClick={onClick}>
+      {props.text}
+    </Button>
   );
 }
 
