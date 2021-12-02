@@ -3,6 +3,8 @@ import { Alert, Button, Dropdown } from 'react-bootstrap';
 import _ from 'lodash';
 import EditorForm from './EditorForm';
 import { getConfigSchema } from './helpers/schemaFormUtils';
+import mcodeTemplate from './templates/mcode.json';
+import icareTemplate from './templates/icare.json';
 
 function ConfigEditor() {
   const [showForm, setShowForm] = useState(false);
@@ -96,34 +98,21 @@ function ConfigEditor() {
       });
   }
 
-  function loadTemplate(filePath) {
-    getConfigSchema().then((schema) => {
-      // eslint-disable-next-line no-param-reassign
-      delete schema.description;
-      setConfigSchema(schema);
-    });
-    window.api
-      .readFile(filePath)
-      .then((result) => {
-        if (result !== null) {
-          const config = JSON.parse(result);
-          // Add ids to the extractors
-          if (config.extractors) {
-            config.extractors = config.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
-          }
-          setConfigJSON(config);
-          return true;
-        }
-        return null;
+  function loadTemplate(template) {
+    getConfigSchema()
+      .then((schema) => {
+        // eslint-disable-next-line no-param-reassign
+        delete schema.description;
+        setConfigSchema(schema);
       })
-      .then((result) => {
-        if (result) {
-          setShowForm(true);
-          setShowErrorAlert(true);
+      .then(() => {
+        // Add ids to the extractors
+        if (template.extractors) {
+          // eslint-disable-next-line no-param-reassign
+          template.extractors = template.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
         }
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
+        setConfigJSON(template);
+        setShowForm(true);
         setShowErrorAlert(true);
       });
   }
@@ -146,16 +135,8 @@ function ConfigEditor() {
                   Create From Template
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/mcode.json')}
-                  >
-                    mCODE
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => loadTemplate('./react-app/src/components/ConfigEditor/templates/icare.json')}
-                  >
-                    ICARE
-                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => loadTemplate(mcodeTemplate)}>mCODE</Dropdown.Item>
+                  <Dropdown.Item onClick={() => loadTemplate(icareTemplate)}>ICARE</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
