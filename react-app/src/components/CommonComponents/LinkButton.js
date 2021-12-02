@@ -8,7 +8,7 @@ function LinkButton(props) {
     history.push(props.path);
   };
   return (
-    <Button className={props.className} variant={props.variant} onClick={onClick}>
+    <Button className={props.className} size={props.size} variant={props.variant} onClick={onClick}>
       {props.text}
     </Button>
   );

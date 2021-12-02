@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import OutputDisplay from './OutputDisplay';
 import ResultSidebar from './ResultSidebar';
+import LinkButton from '../CommonComponents/LinkButton';
 
 import '../../stylesheets/ResultPage.scss';
 
@@ -10,12 +10,6 @@ function ResultPage(props) {
   const [patientID, setPatientID] = useState(null);
   const [showLogs, setShowLogs] = useState(false);
   const [showSaveForm, setShowSaveForm] = useState(false);
-  const history = useHistory();
-
-  function onExitResultPage() {
-    // reset data values and return to home page
-    history.push('/');
-  }
 
   function onSave() {
     setShowSaveForm(true);
@@ -50,10 +44,8 @@ function ResultPage(props) {
           </Row>
         </Container>
         <div className="nav-button-container">
-          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onExitResultPage}>
-            Exit
-          </Button>
-          <Button className="generic-button" siz="lg" variant="outline-secondary" onClick={onSave}>
+          <LinkButton className="generic-button" size="lg" variant="outline-secondary" path={'/'} text="Exit" />
+          <Button className="generic-button" size="lg" variant="outline-secondary" onClick={onSave}>
             Save
           </Button>
         </div>
