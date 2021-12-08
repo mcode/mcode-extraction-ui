@@ -3,10 +3,14 @@
   "productName": "mCODE Extractor",
   "version": "0.0.1",
   "description": "An Electron-based desktop app for performing mCODE extraction.",
+  "author": {
+    "name": "MITRE"
+  },
   "main": "electron/electron.js",
   "scripts": {
-    "build": "npm run build:frontend && npm run make",
+    "build": "npm run build:frontend && npm run dist",
     "build:frontend": "cd ./react-app && PUBLIC_URL=./ npm run build",
+    "dist": "electron-builder -mw",
     "lint": "eslint \"./**/*.js\"",
     "lint:fix": "eslint \"./**/*.js\" --fix",
     "make": "electron-forge make",
@@ -31,6 +35,18 @@
     "Seneca Anderson <sanderson@mitre.org>"
   ],
   "license": "Apache-2.0",
+  "build": {
+    "appId": "mcode.steam",
+    "mac": {
+      "icon": "electron/static/icon.png",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "electron/static/icon.png",
+      "signAndEditExecutable": false
+    }
+  },
   "config": {
     "forge": {
       "packagerConfig": {},
@@ -71,6 +87,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^12.0.6",
+    "electron-builder": "^22.14.5",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
