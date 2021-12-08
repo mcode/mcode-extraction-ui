@@ -14,9 +14,12 @@
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
     "publish": "electron-forge publish",
-    "start": "npm-run-all -p start:frontend start:electron",
+    "start": "node ./start.js",
+    "start:windows": "npm-run-all -p start:frontend:windows start:electron",
+    "start:nonwindows": "npm-run-all -p start:frontend start:electron",
     "start:electron": "wait-on tcp:3000 && electron-forge start",
-    "start:frontend": "cd ./react-app && BROWSER=none npm start"
+    "start:frontend": "cd ./react-app && BROWSER=none npm start",
+    "start:frontend:windows": "cd ./react-app && set BROWSER=none && npm run start:windows"
   },
   "keywords": [],
   "contributors": [
