@@ -13,11 +13,8 @@
     "dist": "electron-builder -mw",
     "lint": "eslint \"./**/*.js\"",
     "lint:fix": "eslint \"./**/*.js\" --fix",
-    "make": "electron-forge make",
-    "package": "electron-forge package",
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
-    "publish": "electron-forge publish",
     "start": "node ./start.js",
     "start:windows": "npm-run-all -p start:frontend:windows start:electron",
     "start:nonwindows": "npm-run-all -p start:frontend start:electron",
@@ -39,39 +36,13 @@
     "appId": "mcode.steam",
     "mac": {
       "icon": "electron/static/icon.png",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "identity": null
     },
     "win": {
       "target": "portable",
       "icon": "electron/static/icon.png",
       "signAndEditExecutable": false
-    }
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_cra_template"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
     }
   },
   "dependencies": {
@@ -82,10 +53,6 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^12.0.6",
     "electron-builder": "^22.14.5",
     "eslint": "^7.25.0",
