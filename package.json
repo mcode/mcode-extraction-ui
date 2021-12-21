@@ -9,8 +9,10 @@
   "main": "electron/electron.js",
   "scripts": {
     "build": "npm run build:frontend && npm run dist",
+    "build:windows": "npm run build:frontend && npm run dist:windows",
     "build:frontend": "cd ./react-app && npm run build",
     "dist": "electron-builder -mw",
+    "dist:windows": "electron-builder -w",
     "lint": "eslint \"./**/*.js\"",
     "lint:fix": "eslint \"./**/*.js\" --fix",
     "prettier": "prettier --check \"**/*.js\"",
