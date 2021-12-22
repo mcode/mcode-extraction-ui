@@ -1,3 +1,4 @@
+const { isAbsolute } = require('path');
 const { getConfig, logger, mcodeApp, MCODEClient } = require('mcode-extraction-framework');
 
 async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, debug, allEntries) {
@@ -15,6 +16,18 @@ async function runExtraction(fromDate, toDate, configFilepath, runLogFilepath, d
       defaultDebug = undefined;
     }
     const config = getConfig(configFilepath);
+    if ('patientIdCsvPath' in config && !isAbsolute(config.patientIdCsvPath)) {
+      throw new Error("Patient ID CSV path must not be a relative path.");
+    }
+    if ('extractors' in config) {
+      config.extractors.forEach((extractor) => {
+        if ('constructorArgs' in extractor && 'filePath' in extractor.constructorArgs) {
+          if (!isAbsolute(extractor.constructorArgs.filePath)) {
+            throw new Error("Extractor file paths must not be relative paths.");
+          }
+        }
+      })
+    }
     const extractedData = await mcodeApp(
       MCODEClient,
       defaultFromDate,
