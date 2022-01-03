@@ -3,17 +3,20 @@
   "productName": "mCODE Extractor",
   "version": "0.0.1",
   "description": "An Electron-based desktop app for performing mCODE extraction.",
+  "author": {
+    "name": "MITRE"
+  },
   "main": "electron/electron.js",
   "scripts": {
-    "build": "npm run build:frontend && npm run make",
-    "build:frontend": "cd ./react-app && PUBLIC_URL=./ npm run build",
+    "build": "npm run build:frontend && npm run dist",
+    "build:windows": "npm run build:frontend && npm run dist:windows",
+    "build:frontend": "cd ./react-app && npm run build",
+    "dist": "electron-builder -mw",
+    "dist:windows": "electron-builder -w",
     "lint": "eslint \"./**/*.js\"",
     "lint:fix": "eslint \"./**/*.js\" --fix",
-    "make": "electron-forge make",
-    "package": "electron-forge package",
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
-    "publish": "electron-forge publish",
     "start": "node ./start.js",
     "start:windows": "npm-run-all -p start:frontend:windows start:electron",
     "start:nonwindows": "npm-run-all -p start:frontend start:electron",
@@ -31,31 +34,17 @@
     "Seneca Anderson <sanderson@mitre.org>"
   ],
   "license": "Apache-2.0",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_cra_template"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
+  "build": {
+    "appId": "mcode.steam",
+    "mac": {
+      "icon": "electron/static/icon.png",
+      "category": "public.app-category.utilities",
+      "identity": null
+    },
+    "win": {
+      "target": "portable",
+      "icon": "electron/static/icon.png",
+      "signAndEditExecutable": false
     }
   },
   "dependencies": {
@@ -66,11 +55,8 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^12.0.6",
+    "electron-builder": "^22.14.5",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
