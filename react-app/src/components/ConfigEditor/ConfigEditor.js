@@ -12,6 +12,7 @@ function ConfigEditor() {
   const [errorMessage, setErrorMessage] = useState('');
   const [configSchema, setConfigSchema] = useState({});
   const [configJSON, setConfigJSON] = useState({});
+  const [templateAlert, setTemplateAlert] = useState(false);
 
   function toggleForm() {
     getConfigSchema().then((schema) => {
@@ -112,8 +113,8 @@ function ConfigEditor() {
           template.extractors = template.extractors.map((e) => ({ ...e, id: _.uniqueId() }));
         }
         setConfigJSON(template);
+        setTemplateAlert(true);
         setShowForm(true);
-        setShowErrorAlert(true);
       });
   }
 
@@ -156,16 +157,8 @@ function ConfigEditor() {
               setShowForm={setShowForm}
               schema={configSchema}
               closeForm={closeForm}
+              templateAlert={templateAlert}
             />
-            {showErrorAlert && (
-              <Alert variant="info" show={showErrorAlert} onClose={() => setShowErrorAlert(false)} dismissible>
-                <Alert.Heading>Created config from template</Alert.Heading>
-                <p>
-                  Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be
-                  added
-                </p>
-              </Alert>
-            )}
           </>
         )}
       </div>

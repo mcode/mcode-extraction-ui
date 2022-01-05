@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import Form from '@rjsf/core';
 import _ from 'lodash';
 import metaSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
@@ -10,6 +10,7 @@ function EditorForm(props) {
   const [savedMessage, setSavedMessage] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showTemplateAlert, setShowTemplateAlert] = useState(props.templateAlert);
 
   function onSaveAs(configJSON) {
     window.api
@@ -99,28 +100,24 @@ function EditorForm(props) {
           </Button>
         </div>
       </Form>
-      <Alert
-        className="nav-button-alert"
-        variant="success"
-        show={showSavedAlert}
-        onClose={() => setShowSavedAlert(false)}
-        dismissible
-        transition
-      >
-        <Alert.Heading>Files saved</Alert.Heading>
-        <p>{savedMessage}</p>
-      </Alert>
-      <Alert
-        className="nav-button-alert"
-        variant="danger"
-        show={showErrorAlert}
-        onClose={() => setShowErrorAlert(false)}
-        dismissible
-        transition
-      >
-        <Alert.Heading>Error: Unable to save file</Alert.Heading>
-        <p>{errorMessage}</p>
-      </Alert>
+      <Modal show={showSavedAlert} onHide={() => setShowSavedAlert(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Files saved</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{savedMessage}</Modal.Body>
+      </Modal>
+      <Modal show={showErrorAlert} onHide={() => setShowErrorAlert(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error: Unable to save file</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{errorMessage}</Modal.Body>
+      </Modal>
+      <Modal show={showTemplateAlert} onHide={() => setShowTemplateAlert(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Created config from template</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Extractors have been added for you, but CSV file paths / URLs and other fields will still need to be added</Modal.Body>
+      </Modal>
     </>
   );
 }
