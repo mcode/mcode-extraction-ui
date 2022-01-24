@@ -1,7 +1,7 @@
 {
   "name": "mcode-extraction-ui",
   "productName": "mCODE Extractor",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An Electron-based desktop app for performing mCODE extraction.",
   "author": {
     "name": "MITRE"
@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mcode-extraction-framework": "github:mcode/mcode-extraction-framework#develop",
+    "mcode-extraction-framework": "github:mcode/mcode-extraction-framework",
     "strip-ansi": "^6.0.0",
     "winston-transport": "^4.4.0"
   },
